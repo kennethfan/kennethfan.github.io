@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Vim系列之初体验(二) | 夜未央</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <meta name="keyword" content="PHP,memcached,PHPUnit,vim">
+  
+  <meta name="description" content="Vim安装Mac OS和Unix系统默认都有安装，所有Vim的安装不多介绍。
+快速开始命令：vim [文件名] 文件名可选
+直接输入vim
+1vim
+效果如图：
+
+vim 文件名 文件不存在将会自动创建。
+1vim quickstart">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Vim系列之初体验(二)">
+<meta property="og:url" content="http://kennethfan.github.io/2016/03/08/vim-quickstart/index.html">
+<meta property="og:site_name" content="夜未央">
+<meta property="og:description" content="Vim安装Mac OS和Unix系统默认都有安装，所有Vim的安装不多介绍。
+快速开始命令：vim [文件名] 文件名可选
+直接输入vim
+1vim
+效果如图：
+
+vim 文件名 文件不存在将会自动创建。
+1vim quickstart">
+<meta property="og:image" content="http://kennethfan.github.io/2016/03/08/vim-quickstart/vim-quickstart-start.png">
+<meta property="og:image" content="http://kennethfan.github.io/2016/03/08/vim-quickstart/vim-quickstart-newfile.png">
+<meta property="og:image" content="http://kennethfan.github.io/2016/03/08/vim-quickstart/vim-quickstart-openfile.png">
+<meta property="og:image" content="http://kennethfan.github.io/2016/03/08/vim-quickstart/vim-quickstart-move.png">
+<meta property="og:image" content="http://kennethfan.github.io/2016/03/08/vim-quickstart/vim-quickstart-insert.png">
+<meta property="og:image" content="http://kennethfan.github.io/2016/03/08/vim-quickstart/vim-quickstart-save.png">
+<meta property="og:image" content="http://kennethfan.github.io/2016/03/08/vim-quickstart/vim-quickstart-quit-notsave.png">
+<meta property="og:updated_time" content="2017-01-22T06:16:42.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Vim系列之初体验(二)">
+<meta name="twitter:description" content="Vim安装Mac OS和Unix系统默认都有安装，所有Vim的安装不多介绍。
+快速开始命令：vim [文件名] 文件名可选
+直接输入vim
+1vim
+效果如图：
+
+vim 文件名 文件不存在将会自动创建。
+1vim quickstart">
+<meta name="twitter:image" content="http://kennethfan.github.io/2016/03/08/vim-quickstart/vim-quickstart-start.png">
+  
+    <link rel="alternate" href="/atom.xml" title="夜未央" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">夜未央</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">感恩 &amp; 回馈 | 理解 &amp; 释怀 | 热爱 &amp; 敬畏</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="Flux RSS"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Rechercher"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://kennethfan.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-vim-quickstart" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/03/08/vim-quickstart/" class="article-date">
+  <time datetime="2016-03-08T11:46:02.000Z" itemprop="datePublished">2016-03-08</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Vim系列之初体验(二)
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="Vim安装"><a href="#Vim安装" class="headerlink" title="Vim安装"></a>Vim安装</h2><p>Mac OS和Unix系统默认都有安装，所有Vim的安装不多介绍。</p>
+<h2 id="快速开始"><a href="#快速开始" class="headerlink" title="快速开始"></a>快速开始</h2><p><strong>命令：vim [文件名] 文件名可选</strong></p>
+<p>直接输入vim</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">vim</div></pre></td></tr></table></figure>
+<p>效果如图：</p>
+<img src="/2016/03/08/vim-quickstart/vim-quickstart-start.png" alt="快速打开vim" title="快速打开vim">
+<p><strong>vim 文件名</strong> 文件不存在将会自动创建。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">vim quickstart</div></pre></td></tr></table></figure>
+<a id="more"></a>
+<p>打开一个不存在的文件；效果如图：</p>
+<img src="/2016/03/08/vim-quickstart/vim-quickstart-newfile.png" alt="打开一个不存在文件" title="打开一个不存在文件">
+<p>打开一个已经存在的文件；效果如图：</p>
+<img src="/2016/03/08/vim-quickstart/vim-quickstart-openfile.png" alt="打开一个已经存在的文件" title="打开一个已经存在的文件">
+<p><strong><em>此时，vim处于普通模式。</em></strong></p>
+<h2 id="简单的移动"><a href="#简单的移动" class="headerlink" title="简单的移动"></a>简单的移动</h2><p>上一节，如果我们用vim打开的是一个已知文件的话，我们是可以上下左右移动光标的</p>
+<ol>
+<li>向左移动：字母h</li>
+<li>向下移动：字母j</li>
+<li>向上移动：字母k</li>
+<li>向右移动：字母l</li>
+</ol>
+<img src="/2016/03/08/vim-quickstart/vim-quickstart-move.png" alt="vim简单移动" title="vim简单移动">
+<h2 id="插入文本"><a href="#插入文本" class="headerlink" title="插入文本"></a>插入文本</h2><p>插入文本需要切换到<strong>插入模式</strong>，按hjkl将光标移动到需要插入文本处按字母i即可切换到插入模式，此时我们就可以输入我们需要插入的文本了。</p>
+<img src="/2016/03/08/vim-quickstart/vim-quickstart-insert.png" alt="vim插入文本" title="vim插入文本">
+<p>输入完毕，按Esc键可以重新切换回到普通模式。</p>
+<h2 id="保存"><a href="#保存" class="headerlink" title="保存"></a>保存</h2><p>在输入了一大串文本之后，最重要的就是要记得保存，想象一下，blablabla…输入了一大串之后忘记保存了。。。</p>
+<p>保存需要在<strong>命令行模式</strong>下操作，在普通模式下按:(冒号)即可进入命令行模式。</p>
+<p>在命令行模式下输入字母w即可保存，如果最初是直接输入vim命令进入vim的，可以输入字母w空格后面跟想要保存的文件名</p>
+<img src="/2016/03/08/vim-quickstart/vim-quickstart-save.png" alt="vim保存输入" title="vim保存输入">
+<h2 id="退出"><a href="#退出" class="headerlink" title="退出"></a>退出</h2><p>退出也需要在命令行模式下进行操作。</p>
+<p>在命令行模式下输入字母q即可退出；如果文件有改动而我们又没有保存的话，vim会提示我们，如下图：</p>
+<img src="/2016/03/08/vim-quickstart/vim-quickstart-quit-notsave.png" alt="为保存的情况下退出" title="为保存的情况下退出">
+<p>此时我们有两种选择</p>
+<ol>
+<li>保存之后再退出，先:w保存一下，然后再:q退出；或者直接:wq保存并退出</li>
+<li>放弃刚才的修改并退出:q!退出，字母q后面加上!(感叹号)</li>
+</ol>
+
+      
+    </div>
+    <footer class="article-footer">
+      <div class="article-footer-tag">
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/vim/">vim</a></li></ul>
+
+      </div>
+      <!-- JiaThis Button BEGIN -->
+      <div class="jiathis_style">
+        <span class="jiathis_txt">分享到：</span>
+        <a class="jiathis_button_qzone">QQ空间</a>
+        <a class="jiathis_button_tsina">新浪微博</a>
+        <a class="jiathis_button_tqq">腾讯微博</a>
+        <a class="jiathis_button_weixin">微信</a>
+        <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+        <a class="jiathis_counter_style"></a>
+      </div>
+      <script type="text/javascript" src="http://v3.jiathis.com/code_mini/jia.js" charset="utf-8"></script>
+      <!-- JiaThis Button END -->
+      <!-- UJian Button BEGIN -->
+      <div class="ujian-hook"></div>
+      <script type="text/javascript" src="http://v1.ujian.cc/code/ujian.js"></script>
+      <!-- UJian Button END -->
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2016/03/29/php-memcached/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Récent</strong>
+      <div class="article-nav-title">
+        
+          PHP安装memcached扩展
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/03/07/vim/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Ancien</strong>
+      <div class="article-nav-title">Vim系列之简介(一)</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+<section id="comments">
+<!-- 多说评论框 start -->
+<div class="ds-thread" data-thread-key="post-vim-quickstart" data-title="Vim系列之初体验(二)" data-url="http://kennethfan.github.io/2016/03/08/vim-quickstart/"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:'kennethfan'};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+  </script>
+<!-- 多说公共JS代码 end -->
+</section>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Mot-clés</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/PHP/">PHP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PHPUnit/">PHPUnit</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/memcached/">memcached</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vim/">vim</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Nuage de mot-clés</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/PHP/" style="font-size: 15px;">PHP</a> <a href="/tags/PHPUnit/" style="font-size: 10px;">PHPUnit</a> <a href="/tags/memcached/" style="font-size: 10px;">memcached</a> <a href="/tags/vim/" style="font-size: 20px;">vim</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">April 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">March 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Articles récents</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/01/22/hello-world/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/2016/04/05/vim-insert/">Vim系列之插入(四)</a>
+          </li>
+        
+          <li>
+            <a href="/2016/03/30/phpunit/">PHP单元测试PHPUnit</a>
+          </li>
+        
+          <li>
+            <a href="/2016/03/29/vim-move/">Vim系列之移动(三)</a>
+          </li>
+        
+          <li>
+            <a href="/2016/03/29/php-memcached/">PHP安装memcached扩展</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+      <div class="widget-wrap">
+    <h3 class="widget-title">友情链接</h3>
+    <div class="widget">
+      <ul>
+          
+          <li>
+            <a href="http://pedroneer.github.io">龙羽</a>
+          </li>
+          
+          <li>
+            <a href="https://github.com/buptzhanghao">好神</a>
+          </li>
+          
+          <li>
+            <a href="http://www.bencaimao.com/">笨财猫</a>
+          </li>
+          
+          <li>
+            <a href="http://www.beva.com">贝瓦网</a>
+          </li>
+          
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 Kenneth Fan<br>
+      Propulsé by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>

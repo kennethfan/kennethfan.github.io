@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Vim系列之插入(四) | 夜未央</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <meta name="keyword" content="PHP,memcached,PHPUnit,vim">
+  
+  <meta name="description" content="普通插入i &amp;amp; a
+在普通模式下，按下按键i即可进入插入模式从光标处开始插入；按下a即可进入插入模式从光标后一个字符处开始插入。
+行首与行尾插入I &amp;amp; A
+在普通模式下，按下按键I即可移动光标至行首第一个非空白字符处开始插入（相当于按下^再按i）；按下按键A即可移动光标至行尾开始插入（相当于按下$再按a）。
+另起一行插入o &amp;amp; O
+在普通模式下，按下字母o即可另起一空白行（">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Vim系列之插入(四)">
+<meta property="og:url" content="http://kennethfan.github.io/2016/04/05/vim-insert/index.html">
+<meta property="og:site_name" content="夜未央">
+<meta property="og:description" content="普通插入i &amp;amp; a
+在普通模式下，按下按键i即可进入插入模式从光标处开始插入；按下a即可进入插入模式从光标后一个字符处开始插入。
+行首与行尾插入I &amp;amp; A
+在普通模式下，按下按键I即可移动光标至行首第一个非空白字符处开始插入（相当于按下^再按i）；按下按键A即可移动光标至行尾开始插入（相当于按下$再按a）。
+另起一行插入o &amp;amp; O
+在普通模式下，按下字母o即可另起一空白行（">
+<meta property="og:updated_time" content="2017-01-22T06:16:42.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Vim系列之插入(四)">
+<meta name="twitter:description" content="普通插入i &amp;amp; a
+在普通模式下，按下按键i即可进入插入模式从光标处开始插入；按下a即可进入插入模式从光标后一个字符处开始插入。
+行首与行尾插入I &amp;amp; A
+在普通模式下，按下按键I即可移动光标至行首第一个非空白字符处开始插入（相当于按下^再按i）；按下按键A即可移动光标至行尾开始插入（相当于按下$再按a）。
+另起一行插入o &amp;amp; O
+在普通模式下，按下字母o即可另起一空白行（">
+  
+    <link rel="alternate" href="/atom.xml" title="夜未央" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">夜未央</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">感恩 &amp; 回馈 | 理解 &amp; 释怀 | 热爱 &amp; 敬畏</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="Flux RSS"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Rechercher"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://kennethfan.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-vim-insert" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/04/05/vim-insert/" class="article-date">
+  <time datetime="2016-04-05T15:21:58.000Z" itemprop="datePublished">2016-04-05</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Vim系列之插入(四)
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="普通插入"><a href="#普通插入" class="headerlink" title="普通插入"></a>普通插入</h1><p>i &amp; a</p>
+<p>在普通模式下，按下按键<b>i</b>即可进入插入模式从光标处开始插入；按下<b>a</b>即可进入插入模式从光标后一个字符处开始插入。</p>
+<h1 id="行首与行尾插入"><a href="#行首与行尾插入" class="headerlink" title="行首与行尾插入"></a>行首与行尾插入</h1><p>I &amp; A</p>
+<p>在普通模式下，按下按键<b>I</b>即可移动光标至行首第一个非空白字符处开始插入（相当于按下^再按i）；按下按键<b>A</b>即可移动光标至行尾开始插入（相当于按下$再按a）。</p>
+<h1 id="另起一行插入"><a href="#另起一行插入" class="headerlink" title="另起一行插入"></a>另起一行插入</h1><p>o &amp; O</p>
+<p>在普通模式下，按下字母<b>o</b>即可另起一空白行（<i>向下</i>），从行首处开始插入（安装了插件或者语法打开之后会自动缩进排版）；按下字母<b>O</b>即可另起一行（<i>向上</i>），从行首处开始插入。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <div class="article-footer-tag">
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/vim/">vim</a></li></ul>
+
+      </div>
+      <!-- JiaThis Button BEGIN -->
+      <div class="jiathis_style">
+        <span class="jiathis_txt">分享到：</span>
+        <a class="jiathis_button_qzone">QQ空间</a>
+        <a class="jiathis_button_tsina">新浪微博</a>
+        <a class="jiathis_button_tqq">腾讯微博</a>
+        <a class="jiathis_button_weixin">微信</a>
+        <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+        <a class="jiathis_counter_style"></a>
+      </div>
+      <script type="text/javascript" src="http://v3.jiathis.com/code_mini/jia.js" charset="utf-8"></script>
+      <!-- JiaThis Button END -->
+      <!-- UJian Button BEGIN -->
+      <div class="ujian-hook"></div>
+      <script type="text/javascript" src="http://v1.ujian.cc/code/ujian.js"></script>
+      <!-- UJian Button END -->
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/01/22/hello-world/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Récent</strong>
+      <div class="article-nav-title">
+        
+          Hello World
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/03/30/phpunit/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Ancien</strong>
+      <div class="article-nav-title">PHP单元测试PHPUnit</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+<section id="comments">
+<!-- 多说评论框 start -->
+<div class="ds-thread" data-thread-key="post-vim-insert" data-title="Vim系列之插入(四)" data-url="http://kennethfan.github.io/2016/04/05/vim-insert/"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:'kennethfan'};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+  </script>
+<!-- 多说公共JS代码 end -->
+</section>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Mot-clés</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/PHP/">PHP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PHPUnit/">PHPUnit</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/memcached/">memcached</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vim/">vim</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Nuage de mot-clés</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/PHP/" style="font-size: 15px;">PHP</a> <a href="/tags/PHPUnit/" style="font-size: 10px;">PHPUnit</a> <a href="/tags/memcached/" style="font-size: 10px;">memcached</a> <a href="/tags/vim/" style="font-size: 20px;">vim</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">April 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">March 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Articles récents</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/01/22/hello-world/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/2016/04/05/vim-insert/">Vim系列之插入(四)</a>
+          </li>
+        
+          <li>
+            <a href="/2016/03/30/phpunit/">PHP单元测试PHPUnit</a>
+          </li>
+        
+          <li>
+            <a href="/2016/03/29/vim-move/">Vim系列之移动(三)</a>
+          </li>
+        
+          <li>
+            <a href="/2016/03/29/php-memcached/">PHP安装memcached扩展</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+      <div class="widget-wrap">
+    <h3 class="widget-title">友情链接</h3>
+    <div class="widget">
+      <ul>
+          
+          <li>
+            <a href="http://pedroneer.github.io">龙羽</a>
+          </li>
+          
+          <li>
+            <a href="https://github.com/buptzhanghao">好神</a>
+          </li>
+          
+          <li>
+            <a href="http://www.bencaimao.com/">笨财猫</a>
+          </li>
+          
+          <li>
+            <a href="http://www.beva.com">贝瓦网</a>
+          </li>
+          
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 Kenneth Fan<br>
+      Propulsé by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>

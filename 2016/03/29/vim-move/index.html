@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Vim系列之移动(三) | 夜未央</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <meta name="keyword" content="PHP,memcached,PHPUnit,vim">
+  
+  <meta name="description" content="约定 除特殊说明以外，本篇所有操作都是在普通模式下进行的。
+上下左右移动（基本操作）k/j/h/l可以操作光标在vim中上下左右移动。
+k：光标向上移动一行
+j：光标向下移动一行
+h：光标向左移动一个字符
+l：光标向右移动一个字符
+数字N加上kjhl相当于连续N次操作，比如5j表示光标向下移动5行。
+以word为单位的移动w/b/W/B可以操作光标在vim中以word为单位移动。
+w：光标向后移动">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Vim系列之移动(三)">
+<meta property="og:url" content="http://kennethfan.github.io/2016/03/29/vim-move/index.html">
+<meta property="og:site_name" content="夜未央">
+<meta property="og:description" content="约定 除特殊说明以外，本篇所有操作都是在普通模式下进行的。
+上下左右移动（基本操作）k/j/h/l可以操作光标在vim中上下左右移动。
+k：光标向上移动一行
+j：光标向下移动一行
+h：光标向左移动一个字符
+l：光标向右移动一个字符
+数字N加上kjhl相当于连续N次操作，比如5j表示光标向下移动5行。
+以word为单位的移动w/b/W/B可以操作光标在vim中以word为单位移动。
+w：光标向后移动">
+<meta property="og:updated_time" content="2017-01-22T06:16:42.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Vim系列之移动(三)">
+<meta name="twitter:description" content="约定 除特殊说明以外，本篇所有操作都是在普通模式下进行的。
+上下左右移动（基本操作）k/j/h/l可以操作光标在vim中上下左右移动。
+k：光标向上移动一行
+j：光标向下移动一行
+h：光标向左移动一个字符
+l：光标向右移动一个字符
+数字N加上kjhl相当于连续N次操作，比如5j表示光标向下移动5行。
+以word为单位的移动w/b/W/B可以操作光标在vim中以word为单位移动。
+w：光标向后移动">
+  
+    <link rel="alternate" href="/atom.xml" title="夜未央" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">夜未央</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">感恩 &amp; 回馈 | 理解 &amp; 释怀 | 热爱 &amp; 敬畏</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="Flux RSS"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Rechercher"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://kennethfan.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-vim-move" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/03/29/vim-move/" class="article-date">
+  <time datetime="2016-03-29T11:48:35.000Z" itemprop="datePublished">2016-03-29</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Vim系列之移动(三)
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="约定"><a href="#约定" class="headerlink" title="约定"></a>约定</h1><p> 除特殊说明以外，本篇所有操作都是在普通模式下进行的。</p>
+<h1 id="上下左右移动（基本操作）"><a href="#上下左右移动（基本操作）" class="headerlink" title="上下左右移动（基本操作）"></a>上下左右移动（基本操作）</h1><p>k/j/h/l可以操作光标在vim中上下左右移动。</p>
+<p>k：光标向上移动一行</p>
+<p>j：光标向下移动一行</p>
+<p>h：光标向左移动一个字符</p>
+<p>l：光标向右移动一个字符</p>
+<p>数字N加上kjhl相当于连续N次操作，比如5j表示光标向下移动5行。</p>
+<h1 id="以word为单位的移动"><a href="#以word为单位的移动" class="headerlink" title="以word为单位的移动"></a>以word为单位的移动</h1><p>w/b/W/B可以操作光标在vim中以word为单位移动。</p>
+<p>w：光标向后移动一个word；特殊字符作为分隔符(通常为非数字和字母的字符，比如逗号，空格，下划线等一些符号)</p>
+<p>b：光标向前移动一个word；分隔符同w</p>
+<p>W：光标向后移动一个word；空白作为分隔符(连续的多个空白当做一个)</p>
+<p>B：光标向前移动一个word；分隔符同W</p>
+<p>wbWB同kjhl一样可以结合数字连续多次操作</p>
+<h1 id="移动到行尾或行首"><a href="#移动到行尾或行首" class="headerlink" title="移动到行尾或行首"></a>移动到行尾或行首</h1><p>^/0/$可以操作光标移动到行尾或者行首。</p>
+<p>^：光标移动到行首的第一个非空白字符处</p>
+<p>0：光标移动到行首</p>
+<p>$：光标移动到行尾</p>
+<a id="more"></a>
+<h1 id="移动到指定的字符上"><a href="#移动到指定的字符上" class="headerlink" title="移动到指定的字符上"></a>移动到指定的字符上</h1><p>f/F加上字符可以操作光标移动到指定的字符上。</p>
+<p>f+字符：向后查找，移动到指定的字符上，比如fa会把光标向后移动到第一个a字符处。</p>
+<p>F+字符：向前查找，移动到自定的字符上。</p>
+<h1 id="匹配括号的移动"><a href="#匹配括号的移动" class="headerlink" title="匹配括号的移动"></a>匹配括号的移动</h1><p>百分号（%）可以操作光标移动到当前括号所匹配的括号处（括号、中括号、花括号），比如当前光标在花括号（{）上，按下%键，光标将移动到当前花括号对应的匹配花括号（}）处。</p>
+<h1 id="移动到指定位置"><a href="#移动到指定位置" class="headerlink" title="移动到指定位置"></a>移动到指定位置</h1><h2 id="移动到指定行位置"><a href="#移动到指定行位置" class="headerlink" title="移动到指定行位置"></a>移动到指定行位置</h2><p>冒号（:）+数字可以移动到指定行数的位置，比如:5光标将会移动到第5行。</p>
+<p>数字+百分号（%）可以移动到文件指定的位置，假如一个文件有100行，90%光标将会移动到第90行</p>
+<h2 id="移动到屏幕指定位置"><a href="#移动到屏幕指定位置" class="headerlink" title="移动到屏幕指定位置"></a>移动到屏幕指定位置</h2><p>H/M/L可以操作光标移动到屏幕的指定位置。</p>
+<p>H：Home的意思，移动到屏幕的第一行。</p>
+<p>M：Middle的意思，移动到屏幕的中间位置。</p>
+<p>L：Last的意思，移动到屏幕的最后一行</p>
+<h2 id="移动到文件指定位置"><a href="#移动到文件指定位置" class="headerlink" title="移动到文件指定位置"></a>移动到文件指定位置</h2><p>gg/G可以操作光标移动到文件的头部或者尾部。</p>
+<p>gg：光标移动到文件第一行</p>
+<p>G：光标移动到文件最后一行</p>
+<h2 id="显示当前位置"><a href="#显示当前位置" class="headerlink" title="显示当前位置"></a>显示当前位置</h2><p>CTRL+G命令可以得到文件的一些基本信息（假设ruler选项关闭）</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="string">"usr_03.txt"</span> line 233 of 650 --35%-- col 45-52</div></pre></td></tr></table></figure>
+<p>上图展示了当前正在编辑的文件名，当前光标所在的行号，文件总的行数，当前行在文件总行的百分比，当前光标所在的列；有时候你会看到两个以-分隔的数字来表示列, 如”col 2-9”. 这意味着你的光标位于第二个字符上, 因为第一个字符是一个跳格键, 占了8个字符的位置, 所以屏幕上看起来该列位置是9。</p>
+<p>设置’number’选项，在每一行的前面显示行号</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">:<span class="built_in">set</span> number</div></pre></td></tr></table></figure>
+<p>关闭可以使用’nonumber’选项即set nonumber。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">:<span class="built_in">set</span> nonumber</div></pre></td></tr></table></figure>
+<p>number和nonumber可以分别简写为nu和nonu。</p>
+<p>设置’ruler’选项，可以在vim窗口的右下角显示当前光标位置。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">:<span class="built_in">set</span> ruler</div></pre></td></tr></table></figure>
+<p>显示结果如下</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">3,7           Top</div></pre></td></tr></table></figure>
+<p>关闭可以设置’noruler’选项。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">:<span class="built_in">set</span> noruler</div></pre></td></tr></table></figure>
+<h1 id="滚动"><a href="#滚动" class="headerlink" title="滚动"></a>滚动</h1><p>CTRL +U/D/B/F/Y/E可以文本在屏幕中滚动。</p>
+<p>CTRL+U：文本向下滚动半屏（也可以想象为在显示文本的窗口向上滚动了半屏）</p>
+<p>CTRL+D：文本向上滚动半屏</p>
+<p>CTRL+B：文本向下滚动一屏</p>
+<p>CTRL+F：文本向上滚动一屏</p>
+<p>CTRL+Y：文本向下滚动一行</p>
+<p>CTRL+E：文本向上滚动一行</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <div class="article-footer-tag">
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/vim/">vim</a></li></ul>
+
+      </div>
+      <!-- JiaThis Button BEGIN -->
+      <div class="jiathis_style">
+        <span class="jiathis_txt">分享到：</span>
+        <a class="jiathis_button_qzone">QQ空间</a>
+        <a class="jiathis_button_tsina">新浪微博</a>
+        <a class="jiathis_button_tqq">腾讯微博</a>
+        <a class="jiathis_button_weixin">微信</a>
+        <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+        <a class="jiathis_counter_style"></a>
+      </div>
+      <script type="text/javascript" src="http://v3.jiathis.com/code_mini/jia.js" charset="utf-8"></script>
+      <!-- JiaThis Button END -->
+      <!-- UJian Button BEGIN -->
+      <div class="ujian-hook"></div>
+      <script type="text/javascript" src="http://v1.ujian.cc/code/ujian.js"></script>
+      <!-- UJian Button END -->
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2016/03/30/phpunit/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Récent</strong>
+      <div class="article-nav-title">
+        
+          PHP单元测试PHPUnit
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/03/29/php-memcached/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Ancien</strong>
+      <div class="article-nav-title">PHP安装memcached扩展</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+<section id="comments">
+<!-- 多说评论框 start -->
+<div class="ds-thread" data-thread-key="post-vim-move" data-title="Vim系列之移动(三)" data-url="http://kennethfan.github.io/2016/03/29/vim-move/"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:'kennethfan'};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+  </script>
+<!-- 多说公共JS代码 end -->
+</section>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Mot-clés</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/PHP/">PHP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PHPUnit/">PHPUnit</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/memcached/">memcached</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vim/">vim</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Nuage de mot-clés</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/PHP/" style="font-size: 15px;">PHP</a> <a href="/tags/PHPUnit/" style="font-size: 10px;">PHPUnit</a> <a href="/tags/memcached/" style="font-size: 10px;">memcached</a> <a href="/tags/vim/" style="font-size: 20px;">vim</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">April 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">March 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Articles récents</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/01/22/hello-world/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/2016/04/05/vim-insert/">Vim系列之插入(四)</a>
+          </li>
+        
+          <li>
+            <a href="/2016/03/30/phpunit/">PHP单元测试PHPUnit</a>
+          </li>
+        
+          <li>
+            <a href="/2016/03/29/vim-move/">Vim系列之移动(三)</a>
+          </li>
+        
+          <li>
+            <a href="/2016/03/29/php-memcached/">PHP安装memcached扩展</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+      <div class="widget-wrap">
+    <h3 class="widget-title">友情链接</h3>
+    <div class="widget">
+      <ul>
+          
+          <li>
+            <a href="http://pedroneer.github.io">龙羽</a>
+          </li>
+          
+          <li>
+            <a href="https://github.com/buptzhanghao">好神</a>
+          </li>
+          
+          <li>
+            <a href="http://www.bencaimao.com/">笨财猫</a>
+          </li>
+          
+          <li>
+            <a href="http://www.beva.com">贝瓦网</a>
+          </li>
+          
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 Kenneth Fan<br>
+      Propulsé by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>
