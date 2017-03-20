@@ -6,7 +6,7 @@
   <title>夜未央</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
-  <meta name="keyword" content="PHP,memcached,vim,Java,Effective JAVA,PHPUnit">
+  <meta name="keyword" content="PHP,memcached,PHPUnit,vim,Java,Effective Java">
   
   <meta name="description" content="一个IT从业人员的工作笔记和生活感悟">
 <meta property="og:type" content="website">
@@ -58,9 +58,9 @@
       </nav>
       <nav id="sub-nav">
         
-          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="Flux RSS"></a>
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Rechercher"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://kennethfan.github.io"></form>
@@ -71,6 +71,81 @@
 
       <div class="outer">
         <section id="main">
+  
+    <article id="post-对于所有对象都通用的方法" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/03/20/对于所有对象都通用的方法/" class="article-date">
+  <time datetime="2017-03-20T14:31:20.000Z" itemprop="datePublished">2017-03-20</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/03/20/对于所有对象都通用的方法/">对于所有对象都通用的方法</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="覆盖equals时请遵守通用约定"><a href="#覆盖equals时请遵守通用约定" class="headerlink" title="覆盖equals时请遵守通用约定"></a>覆盖equals时请遵守通用约定</h1><p>不覆盖equals方法的几种情况</p>
+<ul>
+<li>类的每个实例本质上都是唯一的；例如Thead。</li>
+<li>不关心类是否提供了”逻辑相等（logical equality）”的测试功能；例如Rondom。</li>
+<li>超类已经覆盖了equals，从超类继承过来的行为对于子类也是合适的；例如大多数Set都实现从AbtractSet继承的equals实现。</li>
+<li>类是私有的或者包级私有的，可以确定它的equals方法永远不会调用。</li>
+</ul>
+<p>什么时候应该覆盖Object.equals呢？<strong>如果类具有自己特有的”逻辑相等”概念，而且超类还没有覆盖equals以实现期望的行为，这时候我们就需要覆盖equals方法</strong>。</p>
+<p>覆盖eqauls方法需要遵守的通用约定：</p>
+<ul>
+<li>自反性（reflexive）。对于任何非null的引用值x，x.equals(x)必须返回true</li>
+<li>对称性（symmetric）。对于任何非null的引用值x和y，当且仅当y.equas(x)返回true时，x.equals(y)必须返回true。</li>
+<li>传递性（transitive）。对于任何非null的引用值x、y和z，如果x.equals(y)返回true且y.equals(z)也返回true，那么x.equals(z)也必须返回true。</li>
+<li>一致性（consistent）。对于任何非null的引用值x和y，只要equals的比较操作在对象所用的信息没有被修改，多次调用x.equals(y)就会一致地返回true或者false。</li>
+</ul>
+        
+          <p class="article-more-link">
+            <a href="/2017/03/20/对于所有对象都通用的方法/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <div class="article-footer-tag">
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Effective-Java/">Effective Java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li></ul>
+
+      </div>
+      <!-- JiaThis Button BEGIN -->
+      <div class="jiathis_style">
+        <span class="jiathis_txt">分享到：</span>
+        <a class="jiathis_button_qzone">QQ空间</a>
+        <a class="jiathis_button_tsina">新浪微博</a>
+        <a class="jiathis_button_tqq">腾讯微博</a>
+        <a class="jiathis_button_weixin">微信</a>
+        <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+        <a class="jiathis_counter_style"></a>
+      </div>
+      <script type="text/javascript" src="http://v3.jiathis.com/code_mini/jia.js" charset="utf-8"></script>
+      <!-- JiaThis Button END -->
+      <!-- UJian Button BEGIN -->
+      <div class="ujian-hook"></div>
+      <script type="text/javascript" src="http://v1.ujian.cc/code/ujian.js"></script>
+      <!-- UJian Button END -->
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
   
     <article id="post-创建和销毁对象" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
@@ -108,7 +183,7 @@
     <footer class="article-footer">
       <div class="article-footer-tag">
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Effective-JAVA/">Effective JAVA</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Effective-Java/">Effective Java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li></ul>
 
       </div>
       <!-- JiaThis Button BEGIN -->
@@ -636,9 +711,9 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Mot-clés</h3>
+    <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Effective-JAVA/">Effective JAVA</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PHP/">PHP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PHPUnit/">PHPUnit</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/memcached/">memcached</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vim/">vim</a></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Effective-Java/">Effective Java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PHP/">PHP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PHPUnit/">PHPUnit</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/memcached/">memcached</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vim/">vim</a></li></ul>
     </div>
   </div>
 
@@ -646,9 +721,9 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Nuage de mot-clés</h3>
+    <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Effective-JAVA/" style="font-size: 10px;">Effective JAVA</a> <a href="/tags/Java/" style="font-size: 10px;">Java</a> <a href="/tags/PHP/" style="font-size: 15px;">PHP</a> <a href="/tags/PHPUnit/" style="font-size: 10px;">PHPUnit</a> <a href="/tags/memcached/" style="font-size: 10px;">memcached</a> <a href="/tags/vim/" style="font-size: 20px;">vim</a>
+      <a href="/tags/Effective-Java/" style="font-size: 15px;">Effective Java</a> <a href="/tags/Java/" style="font-size: 15px;">Java</a> <a href="/tags/PHP/" style="font-size: 15px;">PHP</a> <a href="/tags/PHPUnit/" style="font-size: 10px;">PHPUnit</a> <a href="/tags/memcached/" style="font-size: 10px;">memcached</a> <a href="/tags/vim/" style="font-size: 20px;">vim</a>
     </div>
   </div>
 
@@ -665,9 +740,13 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Articles récents</h3>
+    <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2017/03/20/对于所有对象都通用的方法/">对于所有对象都通用的方法</a>
+          </li>
         
           <li>
             <a href="/2017/03/19/创建和销毁对象/">创建和销毁对象</a>
@@ -683,10 +762,6 @@
         
           <li>
             <a href="/2016/03/30/phpunit/">PHP单元测试PHPUnit</a>
-          </li>
-        
-          <li>
-            <a href="/2016/03/29/vim-move/">Vim系列之移动(三)</a>
           </li>
         
       </ul>
@@ -728,7 +803,7 @@
   <div class="outer">
     <div id="footer-info" class="inner">
       &copy; 2017 Kenneth Fan<br>
-      Propulsé by <a href="http://hexo.io/" target="_blank">Hexo</a>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>
 </footer>
