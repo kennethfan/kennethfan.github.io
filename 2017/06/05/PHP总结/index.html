@@ -28,7 +28,7 @@
 
 写一个__autoload($class)方法。
 1234567891011function __autoload($clas">
-<meta property="og:updated_time" content="2017-06-05T12:39:36.000Z">
+<meta property="og:updated_time" content="2017-06-05T12:48:23.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="PHP总结">
 <meta name="twitter:description" content="基础篇PHP如何实现类自动加载？
@@ -142,6 +142,7 @@
 <p>第四种相对灵活，而且在引用第三方差价或者工具的时候有非常明显的优势</p>
 <h2 id="include-include-once-require-require-once的区别？"><a href="#include-include-once-require-require-once的区别？" class="headerlink" title="include/include_once/require/require_once的区别？"></a>include/include_once/require/require_once的区别？</h2><p>include在文件不存在的时候会打印警告信息然后继续执行，而require会终止程序，相对来说include效率更高</p>
 <p>include_once和require_once在加载文件之前都会先判断文件是否已经被加载过，相对来说效率低一些</p>
+<a id="more"></a>
 <h2 id="双引号和单引号的区别？"><a href="#双引号和单引号的区别？" class="headerlink" title="双引号和单引号的区别？"></a>双引号和单引号的区别？</h2><p>双引号会尝试解析替换里面的变量，而单引号不会，相对来说单引号效率高</p>
 <p>双引号解释转义字符，而单引号不解释转移字符，比如\n</p>
 <h2 id="常见的超全局变量"><a href="#常见的超全局变量" class="headerlink" title="常见的超全局变量"></a>常见的超全局变量</h2><ul>
