@@ -18,7 +18,7 @@
 <meta property="og:description" content="安装GCC1sudo yum -y install gcc
 安装libevent下载libevent1wget https://github.com/libevent/libevent/releases/download/release-2.0.22-stable/libevent-2.0.22-stable.tar.gz
 解压文件1tar -zvxf libevent-2.0.22-stable">
-<meta property="og:updated_time" content="2017-01-22T06:04:40.000Z">
+<meta property="og:updated_time" content="2017-06-05T12:39:49.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="PHP安装memcached扩展">
 <meta name="twitter:description" content="安装GCC1sudo yum -y install gcc
@@ -99,6 +99,15 @@
     
     <div class="article-entry" itemprop="articleBody">
       
+
+        <!-- Table of Contents -->
+        
+        <div id="toc" class="toc-article">
+        <strong class="toc-title">文章目录</strong>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#安装GCC"><span class="toc-number">1.</span> <span class="toc-text">安装GCC</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#安装libevent"><span class="toc-number">2.</span> <span class="toc-text">安装libevent</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#下载libevent"><span class="toc-number">2.1.</span> <span class="toc-text">下载libevent</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#解压文件"><span class="toc-number">2.2.</span> <span class="toc-text">解压文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#进入目录"><span class="toc-number">2.3.</span> <span class="toc-text">进入目录</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#配置"><span class="toc-number">2.4.</span> <span class="toc-text">配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#编译"><span class="toc-number">2.5.</span> <span class="toc-text">编译</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安装"><span class="toc-number">2.6.</span> <span class="toc-text">安装</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#安装memcached"><span class="toc-number">3.</span> <span class="toc-text">安装memcached</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#下载memcached"><span class="toc-number">3.1.</span> <span class="toc-text">下载memcached</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#解压文件-1"><span class="toc-number">3.2.</span> <span class="toc-text">解压文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#进入目录-1"><span class="toc-number">3.3.</span> <span class="toc-text">进入目录</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#配置-1"><span class="toc-number">3.4.</span> <span class="toc-text">配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#编译-1"><span class="toc-number">3.5.</span> <span class="toc-text">编译</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安装-1"><span class="toc-number">3.6.</span> <span class="toc-text">安装</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#安装php-memcache扩展"><span class="toc-number">4.</span> <span class="toc-text">安装php memcache扩展</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#下载源码"><span class="toc-number">4.1.</span> <span class="toc-text">下载源码</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#解压"><span class="toc-number">4.2.</span> <span class="toc-text">解压</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#进入目录-2"><span class="toc-number">4.3.</span> <span class="toc-text">进入目录</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#配置-2"><span class="toc-number">4.4.</span> <span class="toc-text">配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#编译-2"><span class="toc-number">4.5.</span> <span class="toc-text">编译</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安装-2"><span class="toc-number">4.6.</span> <span class="toc-text">安装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#修改php配置"><span class="toc-number">4.7.</span> <span class="toc-text">修改php配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#查看配置"><span class="toc-number">4.8.</span> <span class="toc-text">查看配置</span></a></li></ol></li></ol>
+        </div>
+        
+
         <h1 id="安装GCC"><a href="#安装GCC" class="headerlink" title="安装GCC"></a>安装GCC</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo yum -y install gcc</div></pre></td></tr></table></figure>
 <h1 id="安装libevent"><a href="#安装libevent" class="headerlink" title="安装libevent"></a>安装libevent</h1><h2 id="下载libevent"><a href="#下载libevent" class="headerlink" title="下载libevent"></a>下载<a href="http://libevent.org/" target="_blank" rel="external">libevent</a></h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">wget https://github.com/libevent/libevent/releases/download/release-2.0.22-stable/libevent-2.0.22-stable.tar.gz</div></pre></td></tr></table></figure>
 <h2 id="解压文件"><a href="#解压文件" class="headerlink" title="解压文件"></a>解压文件</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">tar -zvxf libevent-2.0.22-stable.tar.gz</div></pre></td></tr></table></figure>
@@ -223,7 +232,7 @@ var duoshuoQuery = {short_name:'kennethfan'};
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">April 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">March 2016</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">June 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">April 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">March 2016</a></li></ul>
     </div>
   </div>
 
@@ -236,23 +245,23 @@ var duoshuoQuery = {short_name:'kennethfan'};
       <ul>
         
           <li>
+            <a href="/2017/06/05/hello-world/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/2017/06/05/PHP总结/">PHP总结</a>
+          </li>
+        
+          <li>
+            <a href="/2017/03/21/类和接口/">类和接口</a>
+          </li>
+        
+          <li>
             <a href="/2017/03/20/对于所有对象都通用的方法/">对于所有对象都通用的方法</a>
           </li>
         
           <li>
             <a href="/2017/03/19/创建和销毁对象/">创建和销毁对象</a>
-          </li>
-        
-          <li>
-            <a href="/2017/01/22/hello-world/">Hello World</a>
-          </li>
-        
-          <li>
-            <a href="/2016/04/05/vim-insert/">Vim系列之插入(四)</a>
-          </li>
-        
-          <li>
-            <a href="/2016/03/30/phpunit/">PHP单元测试PHPUnit</a>
           </li>
         
       </ul>

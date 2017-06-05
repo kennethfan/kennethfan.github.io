@@ -18,7 +18,7 @@ PHPUnit是一个轻量级的PHP测试框架。它是在PHP5下面对JUnit3系列
 <meta property="og:description" content="简介PHPUnit is a programmer-oriented testing framework for PHP.It is an instance of the xUnit architecture for unit testing frameworks.
 PHPUnit官网phpunit.de
 PHPUnit是一个轻量级的PHP测试框架。它是在PHP5下面对JUnit3系列版本的完整移">
-<meta property="og:updated_time" content="2017-01-22T06:16:42.000Z">
+<meta property="og:updated_time" content="2017-06-05T12:39:52.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="PHP单元测试PHPUnit">
 <meta name="twitter:description" content="简介PHPUnit is a programmer-oriented testing framework for PHP.It is an instance of the xUnit architecture for unit testing frameworks.
@@ -99,6 +99,15 @@ PHPUnit是一个轻量级的PHP测试框架。它是在PHP5下面对JUnit3系列
     
     <div class="article-entry" itemprop="articleBody">
       
+
+        <!-- Table of Contents -->
+        
+        <div id="toc" class="toc-article">
+        <strong class="toc-title">文章目录</strong>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#简介"><span class="toc-number">1.</span> <span class="toc-text">简介</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#PHPUnit的依赖"><span class="toc-number">2.</span> <span class="toc-text">PHPUnit的依赖</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#PHPUnit的安装"><span class="toc-number">3.</span> <span class="toc-text">PHPUnit的安装</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#PHP档案包方式"><span class="toc-number">3.1.</span> <span class="toc-text">PHP档案包方式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Composer方式"><span class="toc-number">3.2.</span> <span class="toc-text">Composer方式</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#编写PHPUnit测试"><span class="toc-number">4.</span> <span class="toc-text">编写PHPUnit测试</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#惯例和基本步骤"><span class="toc-number">4.1.</span> <span class="toc-text">惯例和基本步骤</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#依赖"><span class="toc-number">4.2.</span> <span class="toc-text">依赖</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#数据提供器"><span class="toc-number">4.3.</span> <span class="toc-text">数据提供器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#对异常进行测试"><span class="toc-number">4.4.</span> <span class="toc-text">对异常进行测试</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#对输出进行测试"><span class="toc-number">4.5.</span> <span class="toc-text">对输出进行测试</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#PHPUnit的输出"><span class="toc-number">5.</span> <span class="toc-text">PHPUnit的输出</span></a></li></ol>
+        </div>
+        
+
         <h1 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h1><blockquote><p>PHPUnit is a programmer-oriented testing framework for PHP.<br>It is an instance of the xUnit architecture for unit testing frameworks.</p>
 <footer><strong>PHPUnit官网</strong><cite><a href="https://phpunit.de/" target="_blank" rel="external">phpunit.de</a></cite></footer></blockquote>
 <blockquote><p>PHPUnit是一个轻量级的PHP测试框架。它是在PHP5下面对JUnit3系列版本的完整移植，是xUnit测试框架家族的一员(它们都基于模式先锋Kent Beck的设计)。</p>
@@ -258,7 +267,7 @@ var duoshuoQuery = {short_name:'kennethfan'};
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">April 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">March 2016</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">June 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">April 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">March 2016</a></li></ul>
     </div>
   </div>
 
@@ -271,23 +280,23 @@ var duoshuoQuery = {short_name:'kennethfan'};
       <ul>
         
           <li>
+            <a href="/2017/06/05/hello-world/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/2017/06/05/PHP总结/">PHP总结</a>
+          </li>
+        
+          <li>
+            <a href="/2017/03/21/类和接口/">类和接口</a>
+          </li>
+        
+          <li>
             <a href="/2017/03/20/对于所有对象都通用的方法/">对于所有对象都通用的方法</a>
           </li>
         
           <li>
             <a href="/2017/03/19/创建和销毁对象/">创建和销毁对象</a>
-          </li>
-        
-          <li>
-            <a href="/2017/01/22/hello-world/">Hello World</a>
-          </li>
-        
-          <li>
-            <a href="/2016/04/05/vim-insert/">Vim系列之插入(四)</a>
-          </li>
-        
-          <li>
-            <a href="/2016/03/30/phpunit/">PHP单元测试PHPUnit</a>
           </li>
         
       </ul>

@@ -3,20 +3,42 @@
 <head>
   <meta charset="utf-8">
   
-  <title>夜未央</title>
+  <title>PHP总结 | 夜未央</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
   <meta name="keyword" content="PHP,memcached,PHPUnit,vim,Java,Effective Java">
   
-  <meta name="description" content="一个IT从业人员的工作笔记和生活感悟">
-<meta property="og:type" content="website">
-<meta property="og:title" content="夜未央">
-<meta property="og:url" content="http://kennethfan.github.io/index.html">
+  <meta name="description" content="基础篇PHP如何实现类自动加载？
+设置自动加载目录 set_include_path(String $path)。
+1set_include_path(dirname(__file__) . &apos;/classes&apos;);
+
+修改php.ini文件include_path选项
+
+写一个__autoload($class)方法。
+1234567891011function __autoload($clas">
+<meta property="og:type" content="article">
+<meta property="og:title" content="PHP总结">
+<meta property="og:url" content="http://kennethfan.github.io/2017/06/05/PHP总结/index.html">
 <meta property="og:site_name" content="夜未央">
-<meta property="og:description" content="一个IT从业人员的工作笔记和生活感悟">
+<meta property="og:description" content="基础篇PHP如何实现类自动加载？
+设置自动加载目录 set_include_path(String $path)。
+1set_include_path(dirname(__file__) . &apos;/classes&apos;);
+
+修改php.ini文件include_path选项
+
+写一个__autoload($class)方法。
+1234567891011function __autoload($clas">
+<meta property="og:updated_time" content="2017-06-05T12:39:36.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="夜未央">
-<meta name="twitter:description" content="一个IT从业人员的工作笔记和生活感悟">
+<meta name="twitter:title" content="PHP总结">
+<meta name="twitter:description" content="基础篇PHP如何实现类自动加载？
+设置自动加载目录 set_include_path(String $path)。
+1set_include_path(dirname(__file__) . &apos;/classes&apos;);
+
+修改php.ini文件include_path选项
+
+写一个__autoload($class)方法。
+1234567891011function __autoload($clas">
   
     <link rel="alternate" href="/atom.xml" title="夜未央" type="application/atom+xml">
   
@@ -70,76 +92,7 @@
 </header>
 
       <div class="outer">
-        <section id="main">
-  
-    <article id="post-hello-world" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2017/06/05/hello-world/" class="article-date">
-  <time datetime="2017-06-05T12:39:46.000Z" itemprop="datePublished">2017-06-05</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/06/05/hello-world/">Hello World</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-
-        <!-- Table of Contents -->
-        
-
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo new <span class="string">"My New Post"</span></div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo server</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo generate</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo deploy</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <div class="article-footer-tag">
-      
-      </div>
-      <!-- JiaThis Button BEGIN -->
-      <div class="jiathis_style">
-        <span class="jiathis_txt">分享到：</span>
-        <a class="jiathis_button_qzone">QQ空间</a>
-        <a class="jiathis_button_tsina">新浪微博</a>
-        <a class="jiathis_button_tqq">腾讯微博</a>
-        <a class="jiathis_button_weixin">微信</a>
-        <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
-        <a class="jiathis_counter_style"></a>
-      </div>
-      <script type="text/javascript" src="http://v3.jiathis.com/code_mini/jia.js" charset="utf-8"></script>
-      <!-- JiaThis Button END -->
-      <!-- UJian Button BEGIN -->
-      <div class="ujian-hook"></div>
-      <script type="text/javascript" src="http://v1.ujian.cc/code/ujian.js"></script>
-      <!-- UJian Button END -->
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-PHP总结" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-PHP总结" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2017/06/05/PHP总结/" class="article-date">
   <time datetime="2017-06-05T12:22:06.000Z" itemprop="datePublished">2017-06-05</time>
@@ -152,8 +105,8 @@
       <header class="article-header">
         
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/06/05/PHP总结/">PHP总结</a>
+    <h1 class="article-title" itemprop="name">
+      PHP总结
     </h1>
   
 
@@ -163,6 +116,11 @@
       
 
         <!-- Table of Contents -->
+        
+        <div id="toc" class="toc-article">
+        <strong class="toc-title">文章目录</strong>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#基础篇"><span class="toc-number">1.</span> <span class="toc-text">基础篇</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#PHP如何实现类自动加载？"><span class="toc-number">1.1.</span> <span class="toc-text">PHP如何实现类自动加载？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#include-include-once-require-require-once的区别？"><span class="toc-number">1.2.</span> <span class="toc-text">include/include_once/require/require_once的区别？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#双引号和单引号的区别？"><span class="toc-number">1.3.</span> <span class="toc-text">双引号和单引号的区别？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#常见的超全局变量"><span class="toc-number">1.4.</span> <span class="toc-text">常见的超全局变量</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#全局变量怎么获取？"><span class="toc-number">1.5.</span> <span class="toc-text">全局变量怎么获取？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#PHP的几种魔术方法？"><span class="toc-number">1.6.</span> <span class="toc-text">PHP的几种魔术方法？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#自定义错误日志级别"><span class="toc-number">1.7.</span> <span class="toc-text">自定义错误日志级别</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#自定义异常"><span class="toc-number">1.8.</span> <span class="toc-text">自定义异常</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#自定义错误处理"><span class="toc-number">1.9.</span> <span class="toc-text">自定义错误处理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#自定义异常处理"><span class="toc-number">1.10.</span> <span class="toc-text">自定义异常处理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#什么是魔术引号"><span class="toc-number">1.11.</span> <span class="toc-text">什么是魔术引号</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#方法前面加-和不加的区别"><span class="toc-number">1.12.</span> <span class="toc-text">方法前面加@和不加的区别</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#传值和传引用"><span class="toc-number">1.13.</span> <span class="toc-text">传值和传引用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#PHP内存回收机制"><span class="toc-number">1.14.</span> <span class="toc-text">PHP内存回收机制</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#协议篇"><span class="toc-number">2.</span> <span class="toc-text">协议篇</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#http常见的响应码"><span class="toc-number">2.1.</span> <span class="toc-text">http常见的响应码</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#GET方法和POST方法区别"><span class="toc-number">2.2.</span> <span class="toc-text">GET方法和POST方法区别</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#REST-RESTFUL接口是什么意思？"><span class="toc-number">2.3.</span> <span class="toc-text">REST/RESTFUL接口是什么意思？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#session和cookie的区别和联系？"><span class="toc-number">2.4.</span> <span class="toc-text">session和cookie的区别和联系？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#cookie的格式，有效期，访问权限控制"><span class="toc-number">2.5.</span> <span class="toc-text">cookie的格式，有效期，访问权限控制</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#跨域限制如何解决？"><span class="toc-number">2.6.</span> <span class="toc-text">跨域限制如何解决？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#TCP的三次握手和4次挥手协议"><span class="toc-number">2.7.</span> <span class="toc-text">TCP的三次握手和4次挥手协议</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#三次握手"><span class="toc-number">2.7.1.</span> <span class="toc-text">三次握手</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#超时重传"><span class="toc-number">2.7.2.</span> <span class="toc-text">超时重传</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#四次挥手"><span class="toc-number">2.7.3.</span> <span class="toc-text">四次挥手</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#客户端状态变化"><span class="toc-number">2.7.4.</span> <span class="toc-text">客户端状态变化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#服务端状态变化"><span class="toc-number">2.7.5.</span> <span class="toc-text">服务端状态变化</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HTTPS和HTTP的区别"><span class="toc-number">2.8.</span> <span class="toc-text">HTTPS和HTTP的区别</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#数据库篇"><span class="toc-number">3.</span> <span class="toc-text">数据库篇</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#MyISAM和InnoDB的区别"><span class="toc-number">3.1.</span> <span class="toc-text">MyISAM和InnoDB的区别</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#索引结构"><span class="toc-number">3.2.</span> <span class="toc-text">索引结构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#索引创建的一些原则"><span class="toc-number">3.3.</span> <span class="toc-text">索引创建的一些原则</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#如何查看sql语句性能"><span class="toc-number">3.4.</span> <span class="toc-text">如何查看sql语句性能</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#如何找到查询比较慢的sql"><span class="toc-number">3.5.</span> <span class="toc-text">如何找到查询比较慢的sql</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#什么情况下索引无效"><span class="toc-number">3.6.</span> <span class="toc-text">什么情况下索引无效</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#数据库隔离级别什么意思？"><span class="toc-number">3.7.</span> <span class="toc-text">数据库隔离级别什么意思？</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#缓存篇"><span class="toc-number">4.</span> <span class="toc-text">缓存篇</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#memcache"><span class="toc-number">4.1.</span> <span class="toc-text">memcache</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#redis"><span class="toc-number">4.2.</span> <span class="toc-text">redis</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#队列篇"><span class="toc-number">5.</span> <span class="toc-text">队列篇</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#beanstalkd"><span class="toc-number">5.1.</span> <span class="toc-text">beanstalkd</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#kafka"><span class="toc-number">5.2.</span> <span class="toc-text">kafka</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#分布式"><span class="toc-number">6.</span> <span class="toc-text">分布式</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#CAP"><span class="toc-number">6.1.</span> <span class="toc-text">CAP</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#分布式算法"><span class="toc-number">6.2.</span> <span class="toc-text">分布式算法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#两阶段提交和三阶段提交"><span class="toc-number">6.2.1.</span> <span class="toc-text">两阶段提交和三阶段提交</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#两阶段提交"><span class="toc-number">6.2.1.1.</span> <span class="toc-text">两阶段提交</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#三阶段提交"><span class="toc-number">6.2.1.2.</span> <span class="toc-text">三阶段提交</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#paxos-amp-raft"><span class="toc-number">6.2.1.3.</span> <span class="toc-text">paxos & raft</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#高并发"><span class="toc-number">7.</span> <span class="toc-text">高并发</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#常见的方法"><span class="toc-number">7.1.</span> <span class="toc-text">常见的方法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#说到无状态，分布式session怎么做？"><span class="toc-number">7.2.</span> <span class="toc-text">说到无状态，分布式session怎么做？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SOA和微服务的区别？"><span class="toc-number">7.3.</span> <span class="toc-text">SOA和微服务的区别？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#分表的一些做法"><span class="toc-number">7.4.</span> <span class="toc-text">分表的一些做法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#限流"><span class="toc-number">7.5.</span> <span class="toc-text">限流</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#网络安全篇"><span class="toc-number">8.</span> <span class="toc-text">网络安全篇</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#设计模式篇"><span class="toc-number">9.</span> <span class="toc-text">设计模式篇</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#其他"><span class="toc-number">10.</span> <span class="toc-text">其他</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#PHP变量的实现以及内存回收"><span class="toc-number">10.1.</span> <span class="toc-text">PHP变量的实现以及内存回收</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#PHP数组的底层实现"><span class="toc-number">10.2.</span> <span class="toc-text">PHP数组的底层实现</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#PHP扩展可以做连接池吗？"><span class="toc-number">10.3.</span> <span class="toc-text">PHP扩展可以做连接池吗？</span></a></li></ol></li></ol>
+        </div>
         
 
         <h1 id="基础篇"><a href="#基础篇" class="headerlink" title="基础篇"></a>基础篇</h1><h2 id="PHP如何实现类自动加载？"><a href="#PHP如何实现类自动加载？" class="headerlink" title="PHP如何实现类自动加载？"></a>PHP如何实现类自动加载？</h2><ul>
@@ -478,585 +436,49 @@
     </footer>
   </div>
   
-</article>
-
-
-
+    
+<nav id="article-nav">
   
-    <article id="post-类和接口" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2017/03/21/类和接口/" class="article-date">
-  <time datetime="2017-03-21T13:45:08.000Z" itemprop="datePublished">2017-03-21</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
+    <a href="/2017/06/05/hello-world/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
         
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/03/21/类和接口/">类和接口</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-
-        <!-- Table of Contents -->
+          Hello World
         
-
-        
-      
-    </div>
-    <footer class="article-footer">
-      <div class="article-footer-tag">
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Effective-Java/">Effective Java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li></ul>
-
       </div>
-      <!-- JiaThis Button BEGIN -->
-      <div class="jiathis_style">
-        <span class="jiathis_txt">分享到：</span>
-        <a class="jiathis_button_qzone">QQ空间</a>
-        <a class="jiathis_button_tsina">新浪微博</a>
-        <a class="jiathis_button_tqq">腾讯微博</a>
-        <a class="jiathis_button_weixin">微信</a>
-        <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
-        <a class="jiathis_counter_style"></a>
-      </div>
-      <script type="text/javascript" src="http://v3.jiathis.com/code_mini/jia.js" charset="utf-8"></script>
-      <!-- JiaThis Button END -->
-      <!-- UJian Button BEGIN -->
-      <div class="ujian-hook"></div>
-      <script type="text/javascript" src="http://v1.ujian.cc/code/ujian.js"></script>
-      <!-- UJian Button END -->
+    </a>
+  
+  
+    <a href="/2017/03/21/类和接口/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">类和接口</div>
+    </a>
+  
+</nav>
 
-    </footer>
-  </div>
   
 </article>
 
 
+<section id="comments">
+<!-- 多说评论框 start -->
+<div class="ds-thread" data-thread-key="post-PHP总结" data-title="PHP总结" data-url="http://kennethfan.github.io/2017/06/05/PHP总结/"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:'kennethfan'};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+  </script>
+<!-- 多说公共JS代码 end -->
+</section>
 
-  
-    <article id="post-对于所有对象都通用的方法" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2017/03/20/对于所有对象都通用的方法/" class="article-date">
-  <time datetime="2017-03-20T14:31:20.000Z" itemprop="datePublished">2017-03-20</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/03/20/对于所有对象都通用的方法/">对于所有对象都通用的方法</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="覆盖equals时请遵守通用约定"><a href="#覆盖equals时请遵守通用约定" class="headerlink" title="覆盖equals时请遵守通用约定"></a>覆盖equals时请遵守通用约定</h1><p>不覆盖equals方法的几种情况</p>
-<ul>
-<li>类的每个实例本质上都是唯一的；例如Thead。</li>
-<li>不关心类是否提供了”逻辑相等（logical equality）”的测试功能；例如Rondom。</li>
-<li>超类已经覆盖了equals，从超类继承过来的行为对于子类也是合适的；例如大多数Set都实现从AbtractSet继承的equals实现。</li>
-<li>类是私有的或者包级私有的，可以确定它的equals方法永远不会调用。</li>
-</ul>
-<p>什么时候应该覆盖Object.equals呢？<strong>如果类具有自己特有的”逻辑相等”概念，而且超类还没有覆盖equals以实现期望的行为，这时候我们就需要覆盖equals方法</strong>。</p>
-<p>覆盖eqauls方法需要遵守的通用约定：</p>
-<ul>
-<li>自反性（reflexive）。对于任何非null的引用值x，x.equals(x)必须返回true</li>
-<li>对称性（symmetric）。对于任何非null的引用值x和y，当且仅当y.equas(x)返回true时，x.equals(y)必须返回true。</li>
-<li>传递性（transitive）。对于任何非null的引用值x、y和z，如果x.equals(y)返回true且y.equals(z)也返回true，那么x.equals(z)也必须返回true。</li>
-<li>一致性（consistent）。对于任何非null的引用值x和y，只要equals的比较操作在对象所用的信息没有被修改，多次调用x.equals(y)就会一致地返回true或者false。</li>
-</ul>
-        
-          <p class="article-more-link">
-            <a href="/2017/03/20/对于所有对象都通用的方法/#more">Read More</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      <div class="article-footer-tag">
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Effective-Java/">Effective Java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li></ul>
-
-      </div>
-      <!-- JiaThis Button BEGIN -->
-      <div class="jiathis_style">
-        <span class="jiathis_txt">分享到：</span>
-        <a class="jiathis_button_qzone">QQ空间</a>
-        <a class="jiathis_button_tsina">新浪微博</a>
-        <a class="jiathis_button_tqq">腾讯微博</a>
-        <a class="jiathis_button_weixin">微信</a>
-        <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
-        <a class="jiathis_counter_style"></a>
-      </div>
-      <script type="text/javascript" src="http://v3.jiathis.com/code_mini/jia.js" charset="utf-8"></script>
-      <!-- JiaThis Button END -->
-      <!-- UJian Button BEGIN -->
-      <div class="ujian-hook"></div>
-      <script type="text/javascript" src="http://v1.ujian.cc/code/ujian.js"></script>
-      <!-- UJian Button END -->
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-创建和销毁对象" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2017/03/19/创建和销毁对象/" class="article-date">
-  <time datetime="2017-03-19T03:45:24.000Z" itemprop="datePublished">2017-03-19</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/03/19/创建和销毁对象/">创建和销毁对象</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="考虑用静态工厂方法代替构造器"><a href="#考虑用静态工厂方法代替构造器" class="headerlink" title="考虑用静态工厂方法代替构造器"></a>考虑用静态工厂方法代替构造器</h1><p>  对于类而言，为了让客户端获取它的每一个实例，最常用的方法就是提供一个公有的构造器。还有一种方法，也应该在每个程序员的工具箱中占有一席之地。类可以提供一个公有的静态工厂方法，它只是一个返回类的实例的静态方法。下面是一个来自Boolean的简单示例。这个方法将boolean基本类型值转换成了一个Boolean对象引用：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Boolean <span class="title">valueOf</span><span class="params">(<span class="keyword">boolean</span> b)</span> </span>&#123;</div><div class="line">    <span class="keyword">return</span> b ? Boolean.TRUE : Boolean.FALSE;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>  注意，静态工厂方法与设计模式中的工厂方法模式不同。</p>
-<p>  类可以通过静态工厂方法来提供它的客户端，而不是通过构造器。提供静态方法而不是公有的构造器，这样做有几大优势。</p>
-        
-          <p class="article-more-link">
-            <a href="/2017/03/19/创建和销毁对象/#more">Read More</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      <div class="article-footer-tag">
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Effective-Java/">Effective Java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li></ul>
-
-      </div>
-      <!-- JiaThis Button BEGIN -->
-      <div class="jiathis_style">
-        <span class="jiathis_txt">分享到：</span>
-        <a class="jiathis_button_qzone">QQ空间</a>
-        <a class="jiathis_button_tsina">新浪微博</a>
-        <a class="jiathis_button_tqq">腾讯微博</a>
-        <a class="jiathis_button_weixin">微信</a>
-        <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
-        <a class="jiathis_counter_style"></a>
-      </div>
-      <script type="text/javascript" src="http://v3.jiathis.com/code_mini/jia.js" charset="utf-8"></script>
-      <!-- JiaThis Button END -->
-      <!-- UJian Button BEGIN -->
-      <div class="ujian-hook"></div>
-      <script type="text/javascript" src="http://v1.ujian.cc/code/ujian.js"></script>
-      <!-- UJian Button END -->
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-vim-insert" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/04/05/vim-insert/" class="article-date">
-  <time datetime="2016-04-05T15:21:58.000Z" itemprop="datePublished">2016-04-05</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/04/05/vim-insert/">Vim系列之插入(四)</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-
-        <!-- Table of Contents -->
-        
-
-        <h1 id="普通插入"><a href="#普通插入" class="headerlink" title="普通插入"></a>普通插入</h1><p>i &amp; a</p>
-<p>在普通模式下，按下按键<b>i</b>即可进入插入模式从光标处开始插入；按下<b>a</b>即可进入插入模式从光标后一个字符处开始插入。</p>
-<h1 id="行首与行尾插入"><a href="#行首与行尾插入" class="headerlink" title="行首与行尾插入"></a>行首与行尾插入</h1><p>I &amp; A</p>
-<p>在普通模式下，按下按键<b>I</b>即可移动光标至行首第一个非空白字符处开始插入（相当于按下^再按i）；按下按键<b>A</b>即可移动光标至行尾开始插入（相当于按下$再按a）。</p>
-<h1 id="另起一行插入"><a href="#另起一行插入" class="headerlink" title="另起一行插入"></a>另起一行插入</h1><p>o &amp; O</p>
-<p>在普通模式下，按下字母<b>o</b>即可另起一空白行（<i>向下</i>），从行首处开始插入（安装了插件或者语法打开之后会自动缩进排版）；按下字母<b>O</b>即可另起一行（<i>向上</i>），从行首处开始插入。</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <div class="article-footer-tag">
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/vim/">vim</a></li></ul>
-
-      </div>
-      <!-- JiaThis Button BEGIN -->
-      <div class="jiathis_style">
-        <span class="jiathis_txt">分享到：</span>
-        <a class="jiathis_button_qzone">QQ空间</a>
-        <a class="jiathis_button_tsina">新浪微博</a>
-        <a class="jiathis_button_tqq">腾讯微博</a>
-        <a class="jiathis_button_weixin">微信</a>
-        <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
-        <a class="jiathis_counter_style"></a>
-      </div>
-      <script type="text/javascript" src="http://v3.jiathis.com/code_mini/jia.js" charset="utf-8"></script>
-      <!-- JiaThis Button END -->
-      <!-- UJian Button BEGIN -->
-      <div class="ujian-hook"></div>
-      <script type="text/javascript" src="http://v1.ujian.cc/code/ujian.js"></script>
-      <!-- UJian Button END -->
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-phpunit" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/03/30/phpunit/" class="article-date">
-  <time datetime="2016-03-30T02:29:40.000Z" itemprop="datePublished">2016-03-30</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/03/30/phpunit/">PHP单元测试PHPUnit</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h1><blockquote><p>PHPUnit is a programmer-oriented testing framework for PHP.<br>It is an instance of the xUnit architecture for unit testing frameworks.</p>
-<footer><strong>PHPUnit官网</strong><cite><a href="https://phpunit.de/">phpunit.de</a></cite></footer></blockquote>
-<blockquote><p>PHPUnit是一个轻量级的PHP测试框架。它是在PHP5下面对JUnit3系列版本的完整移植，是xUnit测试框架家族的一员(它们都基于模式先锋Kent Beck的设计)。</p>
-<footer><strong>百度百科</strong><cite><a href="http://baike.baidu.com/link?url=lQvRzx-ygpKvUJfuZryOIxK49Db5Tnan-qHhBvDiWxJRQsE3s_jFc1oIY--KAB5X2TjtijltP5OWyAXJpM1vgK">baike.baidu.com/link?url=lQvRzx-ygpKvUJfuZryOIxK49Db5Tnan-qHhBvDiWxJRQsE3s_jFc1oIY--KAB5X2TjtijltP5OWyAXJpM1vgK</a></cite></footer></blockquote>
-<h1 id="PHPUnit的依赖"><a href="#PHPUnit的依赖" class="headerlink" title="PHPUnit的依赖"></a>PHPUnit的依赖</h1><ul>
-<li><a href="http://php.net/manual/en/dom.setup.php">dom</a>，PHP默认启用</li>
-<li><a href="http://php.net/manual/en/json.installation.php">json</a>，PHP默认启用</li>
-<li><a href="http://php.net/manual/en/pcre.installation.php">pcre</a>，PHP默认启用</li>
-<li><a href="http://php.net/manual/en/reflection.installation.php">reflection</a>，PHP默认启用</li>
-<li><a href="http://php.net/manual/en/spl.installation.php">spl</a>，PHP默认启用</li>
-<li><a href="http://php.net/manual/en/tokenizer.installation.php">tokenizer</a>，PHP默认启用，生成代码覆盖率测试报告用到</li>
-<li><a href="https://xdebug.org/">xdebug</a>，需要自己安装，生成代码覆盖率测试报告用到</li>
-<li><a href="http://php.net/manual/en/xmlwriter.installation.php">xmlwriter</a>，PHP默认启用，生成XML格式的报告用到</li>
-</ul>
-<p>检查PHP是否启用了这些模块可以使用如下命令</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">php -m | grep <span class="string">'模块名称'</span></div></pre></td></tr></table></figure>
-<h1 id="PHPUnit的安装"><a href="#PHPUnit的安装" class="headerlink" title="PHPUnit的安装"></a>PHPUnit的安装</h1><h2 id="PHP档案包方式"><a href="#PHP档案包方式" class="headerlink" title="PHP档案包方式"></a>PHP档案包方式</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">wget https://phar.phpunit.de/phpunit.phar <span class="comment">#  下载档案包</span></div><div class="line">chmod +x phpunit.phar <span class="comment">#  赋可执行权限</span></div><div class="line">sudo mv phpunit.phar /usr/<span class="built_in">local</span>/bin/phpunit</div><div class="line">phpunit --version <span class="comment">#  查看PHPUnit版本</span></div></pre></td></tr></table></figure>
-<h2 id="Composer方式"><a href="#Composer方式" class="headerlink" title="Composer方式"></a>Composer方式</h2><p>Composer使用参考<a href="https://getcomposer.org/">https://getcomposer.org/</a></p>
-<p>composer文件如下</p>
-<figure class="highlight json"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">    <span class="attr">"require-dev"</span>: &#123;</div><div class="line">        <span class="attr">"phpunit/phpunit"</span>: <span class="string">"5.0.*"</span></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h1 id="编写PHPUnit测试"><a href="#编写PHPUnit测试" class="headerlink" title="编写PHPUnit测试"></a>编写PHPUnit测试</h1><h2 id="惯例和基本步骤"><a href="#惯例和基本步骤" class="headerlink" title="惯例和基本步骤"></a>惯例和基本步骤</h2><ol>
-<li>针对类Class的测试写在类ClassTest中。</li>
-<li>ClassTest通常继承自PHPUnit_Framework_TestCase。</li>
-<li>测试都是命名为test*的公用方法（也可以在放的文档注释块中使用@test标注将其标记未测试方法）。</li>
-<li>在测试方法内，类似于assertEquals()这样的断言方法用来对实际值与预期值的匹配做出断言</li>
-</ol>
-<p>举个例子：</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;?php</span></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">HelloWolrdTest</span> <span class="keyword">extends</span> <span class="title">PHPUnit_Framework_TestCase</span></div><div class="line"></span>&#123;</div><div class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">testString</span><span class="params">()</span></div><div class="line">    </span>&#123;</div><div class="line">        $string = <span class="string">'Hello, World'</span>;</div><div class="line">        <span class="keyword">$this</span>-&gt;assertEquals(<span class="string">'Hello, World'</span>, $string);</div><div class="line">        <span class="keyword">$this</span>-&gt;assertNotEquals(<span class="string">'Hello,World'</span>, $string);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">testAarry</span><span class="params">()</span></div><div class="line">    </span>&#123;</div><div class="line">        $arr = <span class="keyword">array</span>();</div><div class="line">        <span class="keyword">$this</span>-&gt;assertEmpty($arr);</div><div class="line">        <span class="comment">//$this-&gt;assertArrayHasKey('hello', $arr);</span></div><div class="line"></div><div class="line">        $arr[<span class="string">'hello'</span>] = <span class="string">'world'</span>;</div><div class="line">        <span class="comment">//$this-&gt;assertEmpty($arr);</span></div><div class="line">        <span class="keyword">$this</span>-&gt;assertArrayHasKey(<span class="string">'hello'</span>, $arr);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>执行测试命令</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">phpunit HelloWorldTest</div></pre></td></tr></table></figure>
-<p>结果</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">PHPUnit 4.8.24 by Sebastian Bergmann and contributors.</div><div class="line"></div><div class="line">..</div><div class="line"></div><div class="line">Time: 103 ms, Memory: 12.50Mb</div><div class="line"></div><div class="line">OK (2 tests, 4 assertions)</div></pre></td></tr></table></figure>
-        
-          <p class="article-more-link">
-            <a href="/2016/03/30/phpunit/#more">Read More</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      <div class="article-footer-tag">
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/PHP/">PHP</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/PHPUnit/">PHPUnit</a></li></ul>
-
-      </div>
-      <!-- JiaThis Button BEGIN -->
-      <div class="jiathis_style">
-        <span class="jiathis_txt">分享到：</span>
-        <a class="jiathis_button_qzone">QQ空间</a>
-        <a class="jiathis_button_tsina">新浪微博</a>
-        <a class="jiathis_button_tqq">腾讯微博</a>
-        <a class="jiathis_button_weixin">微信</a>
-        <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
-        <a class="jiathis_counter_style"></a>
-      </div>
-      <script type="text/javascript" src="http://v3.jiathis.com/code_mini/jia.js" charset="utf-8"></script>
-      <!-- JiaThis Button END -->
-      <!-- UJian Button BEGIN -->
-      <div class="ujian-hook"></div>
-      <script type="text/javascript" src="http://v1.ujian.cc/code/ujian.js"></script>
-      <!-- UJian Button END -->
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-vim-move" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/03/29/vim-move/" class="article-date">
-  <time datetime="2016-03-29T11:48:35.000Z" itemprop="datePublished">2016-03-29</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/03/29/vim-move/">Vim系列之移动(三)</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="约定"><a href="#约定" class="headerlink" title="约定"></a>约定</h1><p> 除特殊说明以外，本篇所有操作都是在普通模式下进行的。</p>
-<h1 id="上下左右移动（基本操作）"><a href="#上下左右移动（基本操作）" class="headerlink" title="上下左右移动（基本操作）"></a>上下左右移动（基本操作）</h1><p>k/j/h/l可以操作光标在vim中上下左右移动。</p>
-<p>k：光标向上移动一行</p>
-<p>j：光标向下移动一行</p>
-<p>h：光标向左移动一个字符</p>
-<p>l：光标向右移动一个字符</p>
-<p>数字N加上kjhl相当于连续N次操作，比如5j表示光标向下移动5行。</p>
-<h1 id="以word为单位的移动"><a href="#以word为单位的移动" class="headerlink" title="以word为单位的移动"></a>以word为单位的移动</h1><p>w/b/W/B可以操作光标在vim中以word为单位移动。</p>
-<p>w：光标向后移动一个word；特殊字符作为分隔符(通常为非数字和字母的字符，比如逗号，空格，下划线等一些符号)</p>
-<p>b：光标向前移动一个word；分隔符同w</p>
-<p>W：光标向后移动一个word；空白作为分隔符(连续的多个空白当做一个)</p>
-<p>B：光标向前移动一个word；分隔符同W</p>
-<p>wbWB同kjhl一样可以结合数字连续多次操作</p>
-<h1 id="移动到行尾或行首"><a href="#移动到行尾或行首" class="headerlink" title="移动到行尾或行首"></a>移动到行尾或行首</h1><p>^/0/$可以操作光标移动到行尾或者行首。</p>
-<p>^：光标移动到行首的第一个非空白字符处</p>
-<p>0：光标移动到行首</p>
-<p>$：光标移动到行尾</p>
-        
-          <p class="article-more-link">
-            <a href="/2016/03/29/vim-move/#more">Read More</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      <div class="article-footer-tag">
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/vim/">vim</a></li></ul>
-
-      </div>
-      <!-- JiaThis Button BEGIN -->
-      <div class="jiathis_style">
-        <span class="jiathis_txt">分享到：</span>
-        <a class="jiathis_button_qzone">QQ空间</a>
-        <a class="jiathis_button_tsina">新浪微博</a>
-        <a class="jiathis_button_tqq">腾讯微博</a>
-        <a class="jiathis_button_weixin">微信</a>
-        <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
-        <a class="jiathis_counter_style"></a>
-      </div>
-      <script type="text/javascript" src="http://v3.jiathis.com/code_mini/jia.js" charset="utf-8"></script>
-      <!-- JiaThis Button END -->
-      <!-- UJian Button BEGIN -->
-      <div class="ujian-hook"></div>
-      <script type="text/javascript" src="http://v1.ujian.cc/code/ujian.js"></script>
-      <!-- UJian Button END -->
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-php-memcached" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/03/29/php-memcached/" class="article-date">
-  <time datetime="2016-03-29T10:45:32.000Z" itemprop="datePublished">2016-03-29</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/03/29/php-memcached/">PHP安装memcached扩展</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="安装GCC"><a href="#安装GCC" class="headerlink" title="安装GCC"></a>安装GCC</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo yum -y install gcc</div></pre></td></tr></table></figure>
-<h1 id="安装libevent"><a href="#安装libevent" class="headerlink" title="安装libevent"></a>安装libevent</h1><h2 id="下载libevent"><a href="#下载libevent" class="headerlink" title="下载libevent"></a>下载<a href="http://libevent.org/">libevent</a></h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">wget https://github.com/libevent/libevent/releases/download/release-2.0.22-stable/libevent-2.0.22-stable.tar.gz</div></pre></td></tr></table></figure>
-<h2 id="解压文件"><a href="#解压文件" class="headerlink" title="解压文件"></a>解压文件</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">tar -zvxf libevent-2.0.22-stable.tar.gz</div></pre></td></tr></table></figure>
-<h2 id="进入目录"><a href="#进入目录" class="headerlink" title="进入目录"></a>进入目录</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">cd</span> libevent-2.0.22-stable</div></pre></td></tr></table></figure>
-<h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">./configure --prefix=/usr/local</div></pre></td></tr></table></figure>
-<h2 id="编译"><a href="#编译" class="headerlink" title="编译"></a>编译</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">make</div></pre></td></tr></table></figure>
-<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">make <span class="built_in">test</span> &amp;&amp; make install</div></pre></td></tr></table></figure>
-        
-          <p class="article-more-link">
-            <a href="/2016/03/29/php-memcached/#more">Read More</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      <div class="article-footer-tag">
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/PHP/">PHP</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/memcached/">memcached</a></li></ul>
-
-      </div>
-      <!-- JiaThis Button BEGIN -->
-      <div class="jiathis_style">
-        <span class="jiathis_txt">分享到：</span>
-        <a class="jiathis_button_qzone">QQ空间</a>
-        <a class="jiathis_button_tsina">新浪微博</a>
-        <a class="jiathis_button_tqq">腾讯微博</a>
-        <a class="jiathis_button_weixin">微信</a>
-        <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
-        <a class="jiathis_counter_style"></a>
-      </div>
-      <script type="text/javascript" src="http://v3.jiathis.com/code_mini/jia.js" charset="utf-8"></script>
-      <!-- JiaThis Button END -->
-      <!-- UJian Button BEGIN -->
-      <div class="ujian-hook"></div>
-      <script type="text/javascript" src="http://v1.ujian.cc/code/ujian.js"></script>
-      <!-- UJian Button END -->
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-vim-quickstart" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/03/08/vim-quickstart/" class="article-date">
-  <time datetime="2016-03-08T11:46:02.000Z" itemprop="datePublished">2016-03-08</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/03/08/vim-quickstart/">Vim系列之初体验(二)</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="Vim安装"><a href="#Vim安装" class="headerlink" title="Vim安装"></a>Vim安装</h2><p>Mac OS和Unix系统默认都有安装，所有Vim的安装不多介绍。</p>
-<h2 id="快速开始"><a href="#快速开始" class="headerlink" title="快速开始"></a>快速开始</h2><p><strong>命令：vim [文件名] 文件名可选</strong></p>
-<p>直接输入vim</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">vim</div></pre></td></tr></table></figure>
-<p>效果如图：</p>
-<img src="/2016/03/08/vim-quickstart/vim-quickstart-start.png" alt="快速打开vim" title="快速打开vim">
-<p><strong>vim 文件名</strong> 文件不存在将会自动创建。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">vim quickstart</div></pre></td></tr></table></figure>
-        
-          <p class="article-more-link">
-            <a href="/2016/03/08/vim-quickstart/#more">Read More</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      <div class="article-footer-tag">
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/vim/">vim</a></li></ul>
-
-      </div>
-      <!-- JiaThis Button BEGIN -->
-      <div class="jiathis_style">
-        <span class="jiathis_txt">分享到：</span>
-        <a class="jiathis_button_qzone">QQ空间</a>
-        <a class="jiathis_button_tsina">新浪微博</a>
-        <a class="jiathis_button_tqq">腾讯微博</a>
-        <a class="jiathis_button_weixin">微信</a>
-        <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
-        <a class="jiathis_counter_style"></a>
-      </div>
-      <script type="text/javascript" src="http://v3.jiathis.com/code_mini/jia.js" charset="utf-8"></script>
-      <!-- JiaThis Button END -->
-      <!-- UJian Button BEGIN -->
-      <div class="ujian-hook"></div>
-      <script type="text/javascript" src="http://v1.ujian.cc/code/ujian.js"></script>
-      <!-- UJian Button END -->
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-
-
-  <nav id="page-nav">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">__('next') &raquo;</a>
-  </nav>
 </section>
         
           <aside id="sidebar">

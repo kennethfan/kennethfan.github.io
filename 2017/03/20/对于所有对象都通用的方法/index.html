@@ -24,7 +24,7 @@
 不关心类是否提供了”逻辑相等（logical equality）”的测试功能；例如Rondom。
 超类已经覆盖了equals，从超类继承过来的行为对于子类也是合适的；例如大多数Set都实现从AbtractSet继承的equals实现。
 类是私有的或者包级私有的，可以确定它的equal">
-<meta property="og:updated_time" content="2017-03-20T15:18:20.000Z">
+<meta property="og:updated_time" content="2017-06-05T12:40:17.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="对于所有对象都通用的方法">
 <meta name="twitter:description" content="覆盖equals时请遵守通用约定不覆盖equals方法的几种情况
@@ -108,6 +108,15 @@
     
     <div class="article-entry" itemprop="articleBody">
       
+
+        <!-- Table of Contents -->
+        
+        <div id="toc" class="toc-article">
+        <strong class="toc-title">文章目录</strong>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#覆盖equals时请遵守通用约定"><span class="toc-number">1.</span> <span class="toc-text">覆盖equals时请遵守通用约定</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#覆盖equals时总要覆盖hashCode"><span class="toc-number">2.</span> <span class="toc-text">覆盖equals时总要覆盖hashCode</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#始终要覆盖toString"><span class="toc-number">3.</span> <span class="toc-text">始终要覆盖toString</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#谨慎的覆盖clone"><span class="toc-number">4.</span> <span class="toc-text">谨慎的覆盖clone</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#考虑实现Comparable接口"><span class="toc-number">5.</span> <span class="toc-text">考虑实现Comparable接口</span></a></li></ol>
+        </div>
+        
+
         <h1 id="覆盖equals时请遵守通用约定"><a href="#覆盖equals时请遵守通用约定" class="headerlink" title="覆盖equals时请遵守通用约定"></a>覆盖equals时请遵守通用约定</h1><p>不覆盖equals方法的几种情况</p>
 <ul>
 <li>类的每个实例本质上都是唯一的；例如Thead。</li>
@@ -181,6 +190,15 @@
     
 <nav id="article-nav">
   
+    <a href="/2017/03/21/类和接口/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          类和接口
+        
+      </div>
+    </a>
+  
   
     <a href="/2017/03/19/创建和销毁对象/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Older</strong>
@@ -242,7 +260,7 @@ var duoshuoQuery = {short_name:'kennethfan'};
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">April 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">March 2016</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">June 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">April 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">March 2016</a></li></ul>
     </div>
   </div>
 
@@ -255,23 +273,23 @@ var duoshuoQuery = {short_name:'kennethfan'};
       <ul>
         
           <li>
+            <a href="/2017/06/05/hello-world/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/2017/06/05/PHP总结/">PHP总结</a>
+          </li>
+        
+          <li>
+            <a href="/2017/03/21/类和接口/">类和接口</a>
+          </li>
+        
+          <li>
             <a href="/2017/03/20/对于所有对象都通用的方法/">对于所有对象都通用的方法</a>
           </li>
         
           <li>
             <a href="/2017/03/19/创建和销毁对象/">创建和销毁对象</a>
-          </li>
-        
-          <li>
-            <a href="/2017/01/22/hello-world/">Hello World</a>
-          </li>
-        
-          <li>
-            <a href="/2016/04/05/vim-insert/">Vim系列之插入(四)</a>
-          </li>
-        
-          <li>
-            <a href="/2016/03/30/phpunit/">PHP单元测试PHPUnit</a>
           </li>
         
       </ul>

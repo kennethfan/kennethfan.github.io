@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="夜未央">
 <meta property="og:description" content="考虑用静态工厂方法代替构造器  对于类而言，为了让客户端获取它的每一个实例，最常用的方法就是提供一个公有的构造器。还有一种方法，也应该在每个程序员的工具箱中占有一席之地。类可以提供一个公有的静态工厂方法，它只是一个返回类的实例的静态方法。下面是一个来自Boolean的简单示例。这个方法将boolean基本类型值转换成了一个Boolean对象引用：
 123public static Boolean">
-<meta property="og:updated_time" content="2017-03-20T15:18:44.000Z">
+<meta property="og:updated_time" content="2017-06-05T12:40:12.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="创建和销毁对象">
 <meta name="twitter:description" content="考虑用静态工厂方法代替构造器  对于类而言，为了让客户端获取它的每一个实例，最常用的方法就是提供一个公有的构造器。还有一种方法，也应该在每个程序员的工具箱中占有一席之地。类可以提供一个公有的静态工厂方法，它只是一个返回类的实例的静态方法。下面是一个来自Boolean的简单示例。这个方法将boolean基本类型值转换成了一个Boolean对象引用：
@@ -96,6 +96,15 @@
     
     <div class="article-entry" itemprop="articleBody">
       
+
+        <!-- Table of Contents -->
+        
+        <div id="toc" class="toc-article">
+        <strong class="toc-title">文章目录</strong>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#考虑用静态工厂方法代替构造器"><span class="toc-number">1.</span> <span class="toc-text">考虑用静态工厂方法代替构造器</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#静态工厂方法与构造器不同的第一大优势在于，它们有名称"><span class="toc-number">1.1.</span> <span class="toc-text">静态工厂方法与构造器不同的第一大优势在于，它们有名称</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#静态工厂方法与构造器不同的第二大优势在于，不必每次调用它们的时候都创建一个对象"><span class="toc-number">1.2.</span> <span class="toc-text">静态工厂方法与构造器不同的第二大优势在于，不必每次调用它们的时候都创建一个对象</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#静态工厂方法与构造器不同的第三大优势在于，他们可以返回原返回类型的任何子类型对象"><span class="toc-number">1.3.</span> <span class="toc-text">静态工厂方法与构造器不同的第三大优势在于，他们可以返回原返回类型的任何子类型对象</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#静态工厂方法的第四大优势在于，在创建参数化类型实例的时候，它们使代码变得更加简历。"><span class="toc-number">1.4.</span> <span class="toc-text">静态工厂方法的第四大优势在于，在创建参数化类型实例的时候，它们使代码变得更加简历。</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#静态工厂的主要缺点在于，类如果不含公有的或者受保护的构造器，就不能被实例化"><span class="toc-number">1.5.</span> <span class="toc-text">静态工厂的主要缺点在于，类如果不含公有的或者受保护的构造器，就不能被实例化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#静态工厂方法的第二个缺点在于，它们与其他的静态方法实际上没有任何区别"><span class="toc-number">1.6.</span> <span class="toc-text">静态工厂方法的第二个缺点在于，它们与其他的静态方法实际上没有任何区别</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#遇到多个构造器参数时要考虑用构造器"><span class="toc-number">2.</span> <span class="toc-text">遇到多个构造器参数时要考虑用构造器</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#重叠构（telescoping-constructor）造器模式"><span class="toc-number">2.1.</span> <span class="toc-text">重叠构（telescoping constructor）造器模式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#JavaBeans模式"><span class="toc-number">2.2.</span> <span class="toc-text">JavaBeans模式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Builder模式"><span class="toc-number">2.3.</span> <span class="toc-text">Builder模式</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#用私有构造器或者枚举类型强化Singleton属性"><span class="toc-number">3.</span> <span class="toc-text">用私有构造器或者枚举类型强化Singleton属性</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#第一种：公有静态域有个final域"><span class="toc-number">3.1.</span> <span class="toc-text">第一种：公有静态域有个final域</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#第二种：公有的成员是个静态工厂方法"><span class="toc-number">3.2.</span> <span class="toc-text">第二种：公有的成员是个静态工厂方法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#第三种：写一个包含单个元素的枚举类型"><span class="toc-number">3.3.</span> <span class="toc-text">第三种：写一个包含单个元素的枚举类型</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#通过私有构造器强化不和实例化的能力"><span class="toc-number">4.</span> <span class="toc-text">通过私有构造器强化不和实例化的能力</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#避免创建不必要的对象"><span class="toc-number">5.</span> <span class="toc-text">避免创建不必要的对象</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#消除过期的对象引用"><span class="toc-number">6.</span> <span class="toc-text">消除过期的对象引用</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#避免使用终结方法"><span class="toc-number">7.</span> <span class="toc-text">避免使用终结方法</span></a></li></ol>
+        </div>
+        
+
         <h1 id="考虑用静态工厂方法代替构造器"><a href="#考虑用静态工厂方法代替构造器" class="headerlink" title="考虑用静态工厂方法代替构造器"></a>考虑用静态工厂方法代替构造器</h1><p>  对于类而言，为了让客户端获取它的每一个实例，最常用的方法就是提供一个公有的构造器。还有一种方法，也应该在每个程序员的工具箱中占有一席之地。类可以提供一个公有的静态工厂方法，它只是一个返回类的实例的静态方法。下面是一个来自Boolean的简单示例。这个方法将boolean基本类型值转换成了一个Boolean对象引用：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Boolean <span class="title">valueOf</span><span class="params">(<span class="keyword">boolean</span> b)</span> </span>&#123;</div><div class="line">    <span class="keyword">return</span> b ? Boolean.TRUE : Boolean.FALSE;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>  注意，静态工厂方法与设计模式中的工厂方法模式不同。</p>
@@ -177,9 +186,9 @@
     </a>
   
   
-    <a href="/2017/01/22/hello-world/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2016/04/05/vim-insert/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">Hello World</div>
+      <div class="article-nav-title">Vim系列之插入(四)</div>
     </a>
   
 </nav>
@@ -237,7 +246,7 @@ var duoshuoQuery = {short_name:'kennethfan'};
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">April 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">March 2016</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">June 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">April 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">March 2016</a></li></ul>
     </div>
   </div>
 
@@ -250,23 +259,23 @@ var duoshuoQuery = {short_name:'kennethfan'};
       <ul>
         
           <li>
+            <a href="/2017/06/05/hello-world/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/2017/06/05/PHP总结/">PHP总结</a>
+          </li>
+        
+          <li>
+            <a href="/2017/03/21/类和接口/">类和接口</a>
+          </li>
+        
+          <li>
             <a href="/2017/03/20/对于所有对象都通用的方法/">对于所有对象都通用的方法</a>
           </li>
         
           <li>
             <a href="/2017/03/19/创建和销毁对象/">创建和销毁对象</a>
-          </li>
-        
-          <li>
-            <a href="/2017/01/22/hello-world/">Hello World</a>
-          </li>
-        
-          <li>
-            <a href="/2016/04/05/vim-insert/">Vim系列之插入(四)</a>
-          </li>
-        
-          <li>
-            <a href="/2016/03/30/phpunit/">PHP单元测试PHPUnit</a>
           </li>
         
       </ul>

@@ -30,7 +30,7 @@ l：光标向右移动一个字符
 数字N加上kjhl相当于连续N次操作，比如5j表示光标向下移动5行。
 以word为单位的移动w/b/W/B可以操作光标在vim中以word为单位移动。
 w：光标向后移动">
-<meta property="og:updated_time" content="2017-01-22T06:16:42.000Z">
+<meta property="og:updated_time" content="2017-06-05T12:40:03.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Vim系列之移动(三)">
 <meta name="twitter:description" content="约定 除特殊说明以外，本篇所有操作都是在普通模式下进行的。
@@ -117,6 +117,15 @@ w：光标向后移动">
     
     <div class="article-entry" itemprop="articleBody">
       
+
+        <!-- Table of Contents -->
+        
+        <div id="toc" class="toc-article">
+        <strong class="toc-title">文章目录</strong>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#约定"><span class="toc-number">1.</span> <span class="toc-text">约定</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#上下左右移动（基本操作）"><span class="toc-number">2.</span> <span class="toc-text">上下左右移动（基本操作）</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#以word为单位的移动"><span class="toc-number">3.</span> <span class="toc-text">以word为单位的移动</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#移动到行尾或行首"><span class="toc-number">4.</span> <span class="toc-text">移动到行尾或行首</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#移动到指定的字符上"><span class="toc-number">5.</span> <span class="toc-text">移动到指定的字符上</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#匹配括号的移动"><span class="toc-number">6.</span> <span class="toc-text">匹配括号的移动</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#移动到指定位置"><span class="toc-number">7.</span> <span class="toc-text">移动到指定位置</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#移动到指定行位置"><span class="toc-number">7.1.</span> <span class="toc-text">移动到指定行位置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#移动到屏幕指定位置"><span class="toc-number">7.2.</span> <span class="toc-text">移动到屏幕指定位置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#移动到文件指定位置"><span class="toc-number">7.3.</span> <span class="toc-text">移动到文件指定位置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#显示当前位置"><span class="toc-number">7.4.</span> <span class="toc-text">显示当前位置</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#滚动"><span class="toc-number">8.</span> <span class="toc-text">滚动</span></a></li></ol>
+        </div>
+        
+
         <h1 id="约定"><a href="#约定" class="headerlink" title="约定"></a>约定</h1><p> 除特殊说明以外，本篇所有操作都是在普通模式下进行的。</p>
 <h1 id="上下左右移动（基本操作）"><a href="#上下左右移动（基本操作）" class="headerlink" title="上下左右移动（基本操作）"></a>上下左右移动（基本操作）</h1><p>k/j/h/l可以操作光标在vim中上下左右移动。</p>
 <p>k：光标向上移动一行</p>
@@ -271,7 +280,7 @@ var duoshuoQuery = {short_name:'kennethfan'};
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">April 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">March 2016</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">June 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">April 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">March 2016</a></li></ul>
     </div>
   </div>
 
@@ -284,23 +293,23 @@ var duoshuoQuery = {short_name:'kennethfan'};
       <ul>
         
           <li>
+            <a href="/2017/06/05/hello-world/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/2017/06/05/PHP总结/">PHP总结</a>
+          </li>
+        
+          <li>
+            <a href="/2017/03/21/类和接口/">类和接口</a>
+          </li>
+        
+          <li>
             <a href="/2017/03/20/对于所有对象都通用的方法/">对于所有对象都通用的方法</a>
           </li>
         
           <li>
             <a href="/2017/03/19/创建和销毁对象/">创建和销毁对象</a>
-          </li>
-        
-          <li>
-            <a href="/2017/01/22/hello-world/">Hello World</a>
-          </li>
-        
-          <li>
-            <a href="/2016/04/05/vim-insert/">Vim系列之插入(四)</a>
-          </li>
-        
-          <li>
-            <a href="/2016/03/30/phpunit/">PHP单元测试PHPUnit</a>
           </li>
         
       </ul>
