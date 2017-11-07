@@ -6,7 +6,7 @@
   <title>夜未央</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
-  <meta name="keyword" content="PHP,memcached,PHPUnit,vim,Java,Effective Java">
+  <meta name="keyword" content="PHP,memcached,redis,cache,vim,redids,PHPUnit,zsh,shell,Java,Effective Java">
   
   <meta name="description" content="一个IT从业人员的工作笔记和生活感悟">
 <meta property="og:type" content="website">
@@ -58,9 +58,9 @@
       </nav>
       <nav id="sub-nav">
         
-          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="Flux RSS"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Rechercher"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://kennethfan.github.io"></form>
@@ -71,6 +71,488 @@
 
       <div class="outer">
         <section id="main">
+  
+    <article id="post-redis-linkedlist" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/11/06/redis-linkedlist/" class="article-date">
+  <time datetime="2017-11-06T15:41:15.000Z" itemprop="datePublished">2017-11-06</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/11/06/redis-linkedlist/">redis链表</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+
+        <!-- Table of Contents -->
+        
+
+        <h1 id="每个链表和链表节点的实现"><a href="#每个链表和链表节点的实现" class="headerlink" title="每个链表和链表节点的实现"></a>每个链表和链表节点的实现</h1><h2 id="链表节点结构"><a href="#链表节点结构" class="headerlink" title="链表节点结构"></a>链表节点结构</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">typedef</span> <span class="keyword">struct</span> listNode &#123;</div><div class="line">    <span class="comment">// 前置节点</span></div><div class="line">    <span class="keyword">struct</span> listNode *prev;</div><div class="line">    <span class="comment">// 后置节点</span></div><div class="line">  	<span class="keyword">struct</span> listNode *next;</div><div class="line">    <span class="comment">// 节点内容</span></div><div class="line">    <span class="keyword">void</span> *value;</div><div class="line">&#125; listNode;</div></pre></td></tr></table></figure>
+<h2 id="链表结构"><a href="#链表结构" class="headerlink" title="链表结构"></a>链表结构</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">typedef</span> <span class="keyword">struct</span> <span class="built_in">list</span> &#123;</div><div class="line">    <span class="comment">// 头节点</span></div><div class="line">    listNode *head;</div><div class="line">    <span class="comment">// 尾节点</span></div><div class="line">    listNode *tail;</div><div class="line">    <span class="comment">// 节点数量</span></div><div class="line">    <span class="keyword">unsigned</span> <span class="keyword">long</span> len;</div><div class="line">    <span class="comment">// 节点复制函数</span></div><div class="line">    <span class="keyword">void</span> *(*dup) (<span class="keyword">void</span> *ptr);</div><div class="line">    <span class="comment">// 节点释放函数</span></div><div class="line">    <span class="keyword">void</span> (*<span class="built_in">free</span>) (<span class="keyword">void</span> *ptr);</div><div class="line">    <span class="comment">// 节点对比函数</span></div><div class="line">    <span class="keyword">int</span> (*match) (<span class="keyword">void</span> *prt, <span class="keyword">void</span> *key);</div><div class="line">&#125; <span class="built_in">list</span>;</div></pre></td></tr></table></figure>
+<p>dup、free、match成员用于实现多态链表所需的类型特定函数：</p>
+<ul>
+<li>dup函数用于复制链表节点所保存的值。</li>
+<li>free函数用于释放节点所保存的值。</li>
+<li>match函数用户对比链表节点所保存的值和另一个输入值是否相等。</li>
+</ul>
+<p>Redis的链表实现特性</p>
+<ul>
+<li>双端：链表节点带有prev和next指针，获取前置节点和后置节点的复杂度都是O(1)</li>
+<li>无环：头结点的prev和尾节点的next都指向NULL</li>
+<li>头节点和尾节点：获取表头和表尾复杂度都是O(1)</li>
+<li>多态：链表节点都用void*保存节点值，并且可以通过list结构的dup、free、match三个属性为节点设置类型特定函数，所以链表可以保存不同类型的值。</li>
+</ul>
+<h1 id="API"><a href="#API" class="headerlink" title="API"></a>API</h1><ul>
+<li>listSetDupMethod：将给定的函数设置为链表的节点复制函数，O(1)</li>
+<li>listGetDupMethod：返回链表正在使用的节点复制函数，O(1)</li>
+<li>listSetFreeMethod：将给定的函数设置成链表节点的释放函数，O(1)</li>
+<li>listGetFreeMethod：反馈链表正在使用的节点释放函数，O(1)</li>
+<li>listSetMatchMethod：将给定的函数设置成链表节点的对比函数，O(1)</li>
+<li>listGetMatchMethod：反馈链表正在使用的节点对比函数，O(1)</li>
+<li>listLength：返回链表长度，O(1)</li>
+<li>listFirst：返回链表头结点，O(1)</li>
+<li>listLast：返回链表尾节点，O(1)</li>
+<li>listPrevNode：返回前置节点，O(1)</li>
+<li>listNextNode：返回后置节点，O(1)</li>
+<li>listNodeValue：返回节点保存的值，O(1)</li>
+<li>listCreate：创建一个空链表，O(1)</li>
+<li>listAddNodeHead：添加节点到链表头，O(1)</li>
+<li>listAddNodeTail：添加节点到链表尾，O(1)</li>
+<li>listInsertNode：将新节点添加到给定节点之前或者之后，O(1)</li>
+<li>listSearchKey：反会链表中包含给定值的节点，O(N)</li>
+<li>listIndex：返回链表中给定索引的节点，O(N)</li>
+<li>listDelNode：删除给定节点，O(N)</li>
+<li>listRotate：弹出尾节点，并弹出，插入到表头，O(1)</li>
+<li>listDup：复制一个给链表，O(N)</li>
+<li>listRelease：释放给定链表以及链表中所有节点，O(N)</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <div class="article-footer-tag">
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/cache/">cache</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/redis/">redis</a></li></ul>
+
+      </div>
+      <!-- JiaThis Button BEGIN -->
+      <div class="jiathis_style">
+        <span class="jiathis_txt">分享到：</span>
+        <a class="jiathis_button_qzone">QQ空间</a>
+        <a class="jiathis_button_tsina">新浪微博</a>
+        <a class="jiathis_button_tqq">腾讯微博</a>
+        <a class="jiathis_button_weixin">微信</a>
+        <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+        <a class="jiathis_counter_style"></a>
+      </div>
+      <script type="text/javascript" src="http://v3.jiathis.com/code_mini/jia.js" charset="utf-8"></script>
+      <!-- JiaThis Button END -->
+      <!-- UJian Button BEGIN -->
+      <div class="ujian-hook"></div>
+      <script type="text/javascript" src="http://v1.ujian.cc/code/ujian.js"></script>
+      <!-- UJian Button END -->
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-redis-string" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/11/06/redis-string/" class="article-date">
+  <time datetime="2017-11-06T15:00:11.000Z" itemprop="datePublished">2017-11-06</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/11/06/redis-string/">redis数据结构之字符串</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Redis没有直接使用C语言传统的字符串表示（以空字符串结尾的字符数组），而是自己构建了一种名为动态字符串（simple dynamic string，SDS）的抽象类型，并将SDS用作Redis的默认字符串表示。Redis的数据库里面，包含字符串值的键值对在底层都是用SDS实现的；除此之外，SDS还被用作缓冲区（buffer）：AOF模块中的AOF缓冲区，以及客户端状态中的输入缓冲区，都是有SDS实现的。</p>
+        
+          <p class="article-more-link">
+            <a href="/2017/11/06/redis-string/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <div class="article-footer-tag">
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/cache/">cache</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/redids/">redids</a></li></ul>
+
+      </div>
+      <!-- JiaThis Button BEGIN -->
+      <div class="jiathis_style">
+        <span class="jiathis_txt">分享到：</span>
+        <a class="jiathis_button_qzone">QQ空间</a>
+        <a class="jiathis_button_tsina">新浪微博</a>
+        <a class="jiathis_button_tqq">腾讯微博</a>
+        <a class="jiathis_button_weixin">微信</a>
+        <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+        <a class="jiathis_counter_style"></a>
+      </div>
+      <script type="text/javascript" src="http://v3.jiathis.com/code_mini/jia.js" charset="utf-8"></script>
+      <!-- JiaThis Button END -->
+      <!-- UJian Button BEGIN -->
+      <div class="ujian-hook"></div>
+      <script type="text/javascript" src="http://v1.ujian.cc/code/ujian.js"></script>
+      <!-- UJian Button END -->
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-zsh-字符串通配符" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/09/21/zsh-字符串通配符/" class="article-date">
+  <time datetime="2017-09-20T16:03:35.000Z" itemprop="datePublished">2017-09-21</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/09/21/zsh-字符串通配符/">zsh-字符串通配符</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>通配符（glob）是 shell 中的一个比较重要的概念，可以认为是正则表达式的简化版本。通配符在字符串匹配和文件名搜索等方面非常有用。本篇只讲它在字符串匹配上的用法</p>
+<h1 id="通配符的基本用法"><a href="#通配符的基本用法" class="headerlink" title="通配符的基本用法"></a>通配符的基本用法</h1><p>之前在讲字符串匹配判断时，通配符出现过，就是 <code>*&quot;$str&quot;*</code> 两边的星号。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">% str1=abcd</div><div class="line">% str2=bc</div><div class="line"></div><div class="line"><span class="comment"># 星号要在引号外边</span></div><div class="line">% [[ <span class="variable">$str1</span> == *<span class="string">"<span class="variable">$str2</span>"</span>* ]] &amp;&amp; <span class="built_in">echo</span> good</div><div class="line">good</div><div class="line"></div><div class="line"><span class="comment"># 注意带通配符的字符串必须放在右边</span></div><div class="line">% [[ *<span class="string">"<span class="variable">$str2</span>"</span>* == <span class="variable">$str1</span> ]] &amp;&amp; <span class="built_in">echo</span> good</div></pre></td></tr></table></figure>
+        
+          <p class="article-more-link">
+            <a href="/2017/09/21/zsh-字符串通配符/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <div class="article-footer-tag">
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/shell/">shell</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/zsh/">zsh</a></li></ul>
+
+      </div>
+      <!-- JiaThis Button BEGIN -->
+      <div class="jiathis_style">
+        <span class="jiathis_txt">分享到：</span>
+        <a class="jiathis_button_qzone">QQ空间</a>
+        <a class="jiathis_button_tsina">新浪微博</a>
+        <a class="jiathis_button_tqq">腾讯微博</a>
+        <a class="jiathis_button_weixin">微信</a>
+        <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+        <a class="jiathis_counter_style"></a>
+      </div>
+      <script type="text/javascript" src="http://v3.jiathis.com/code_mini/jia.js" charset="utf-8"></script>
+      <!-- JiaThis Button END -->
+      <!-- UJian Button BEGIN -->
+      <div class="ujian-hook"></div>
+      <script type="text/javascript" src="http://v1.ujian.cc/code/ujian.js"></script>
+      <!-- UJian Button END -->
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-zsh-字符串转义和格式化" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/09/20/zsh-字符串转义和格式化/" class="article-date">
+  <time datetime="2017-09-20T13:57:16.000Z" itemprop="datePublished">2017-09-20</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/09/20/zsh-字符串转义和格式化/">zsh-字符串转义和格式化</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="导读"><a href="#导读" class="headerlink" title="导读"></a>导读</h1><p>上一篇讲了 zsh 的常用字符串操作，这篇开始讲更为琐碎的转义字符和格式化输出相关内容。包括转义字符、引号、<code>print</code>、<code>printf</code> 的使用等等。其中很多内容没有必要记忆，作为手册参考即可。</p>
+<h1 id="转义字符"><a href="#转义字符" class="headerlink" title="转义字符"></a>转义字符</h1><p>转义字符是很多编程语言中都有的概念，它主要解决某些字符因为没有对应键盘按键无法直接输出、字符本身有特殊含义（比如 <code>\</code>、<code>&quot;</code>）或者显示不直观（比如难以区别多个空格和一个 tab）等问题。</p>
+<p>最常用的转义字符是 <code>\n</code>（换行）、<code>\r</code>（回车）、<code>\t</code>（tab）。</p>
+<p>直接用 <code>echo</code>、<code>print</code> 或者 <code>printf</code> 内置命令都可以正常输出转义字符，但包括转义字符的字符串需要用引号（单双引号都可以）扩起来。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">% <span class="built_in">echo</span> <span class="string">'Hello\n\tWorld'</span></div><div class="line">Hello</div><div class="line">        World</div></pre></td></tr></table></figure>
+<p>常用转义字符对照表，不常用的可以去查 ASCII 码表，然后使用 <code>\xnn</code>（如 <code>\x14</code>）。</p>
+<table>
+<thead>
+<tr>
+<th>转义字符</th>
+<th>含义</th>
+<th>ASCII 码值（十六进制）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>\n</td>
+<td>换行</td>
+<td>0a</td>
+</tr>
+<tr>
+<td>\r</td>
+<td>回车</td>
+<td>0d</td>
+</tr>
+<tr>
+<td>\t</td>
+<td>tab</td>
+<td>09</td>
+</tr>
+<tr>
+<td>\</td>
+<td>\</td>
+<td>5c</td>
+</tr>
+<tr>
+<td>`</td>
+<td>`</td>
+<td>60</td>
+</tr>
+<tr>
+<td>\xnn</td>
+<td>取决于 nn</td>
+<td>nn</td>
+</tr>
+</tbody>
+</table>
+<p>可以用 <code>hexdump</code> 命令查看字符的 ASCII 码值。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">% <span class="built_in">echo</span> ab= | hexdump -C</div><div class="line">00000000  61 62 3d 0a                                       |ab=.|</div><div class="line">00000004</div></pre></td></tr></table></figure>
+<p>还有一些字符是可选转义（通常有特殊含义的字符都是如此）的，比如空格、<code>&quot;</code>、<code>&#39;</code>、<code>*</code>、<code>~</code>、<code>$</code>、<code>&amp;</code>、<code>(</code>、<code>)</code>、<code>[</code>、<code>]</code>、<code>{</code>、<code>}</code>、<code>;</code>、<code>?</code> 等等，即如果在引号里边则无需转义（即使转义也不出错，转义方法都说前边加一个 <code>\</code>），但如果在引号外边则需要转义。谨慎起见，包含半角符号的字符串全部用引号包含即可，可以避免不必要的麻烦。</p>
+<p>可以这样检查一个字符在空格外是否需要转义，输出的字符中前边带 <code>\</code> 的都是需要的。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">% str=<span class="string">'~!@#$%^&amp;*()_+-=&#123;&#125;|[]:;&lt;&gt;?,./"'</span></div><div class="line"><span class="comment"># -r 选项代表忽略字符串中的转义符合</span></div><div class="line"><span class="comment"># $&#123;(q)str&#125; 功能是为字符串中的特殊符号添加转义符号</span></div><div class="line">% <span class="built_in">print</span> -r <span class="variable">$&#123;(q)str&#125;</span></div><div class="line">\~\!@\<span class="comment">#\$%\^\&amp;\*\(\)_+-=\&#123;\&#125;\|\[\]:\;\&lt;\&gt;\?,./\"</span></div></pre></td></tr></table></figure>
+<h1 id="单引号"><a href="#单引号" class="headerlink" title="单引号"></a>单引号</h1><p>单引号的左右主要是为了避免字符串里的特殊字符起作用。在单引号中，只有一个字符需要转义，转义符号 <code>\</code> 。所以如果字符串里包含特殊符号时，最好使用单引号包含起来，避免不必要的麻烦。如果字符串需要包含单引号，可以使用这几种方法。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 用双引号包含</span></div><div class="line">% <span class="built_in">echo</span> <span class="string">"a'b"</span></div><div class="line">a<span class="string">'b</div><div class="line"></div><div class="line"># 用转义符号</div><div class="line">% echo a\'</span>b</div><div class="line">a<span class="string">'b</div><div class="line"></div><div class="line"># 同时使用单引号和转义符号，用于包含单引号和其他特殊符号的场景</div><div class="line">% echo '</span>a<span class="string">"\'\''b*?'</div><div class="line">a"</span>\<span class="string">'b*?</span></div></pre></td></tr></table></figure>
+<h1 id="双引号"><a href="#双引号" class="headerlink" title="双引号"></a>双引号</h1><p>双引号的作用类似单引号，但没有单引号那么严格，有些特殊字符在双引号里可以继续起作用。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 以使用变量</span></div><div class="line">% str=abc</div><div class="line">% <span class="built_in">echo</span> <span class="string">"<span class="variable">$str</span>"</span></div><div class="line">abc</div><div class="line"></div><div class="line"><span class="comment"># 可以使用 $( ) 运行命令</span></div><div class="line">% <span class="built_in">echo</span> <span class="string">"<span class="variable">$(ls)</span>"</span></div><div class="line">git</div><div class="line">tmp</div><div class="line"></div><div class="line"><span class="comment"># 可以使用 ` ` 运行命令，不建议在脚本里使用 ` `</span></div><div class="line">% <span class="built_in">echo</span> <span class="string">"`date`"</span></div><div class="line">Mon Aug 28 09:49:11 CST 2017</div><div class="line"></div><div class="line"><span class="comment"># 可以使用 $(( )) 计算数值</span></div><div class="line">% <span class="built_in">echo</span> <span class="string">"<span class="variable">$((1 + 2)</span>)"</span></div><div class="line">3</div><div class="line"></div><div class="line"><span class="comment"># 可以使用 $[ ] 计算数值</span></div><div class="line">% <span class="built_in">echo</span> <span class="string">"$[1 + 2]"</span></div><div class="line">3</div></pre></td></tr></table></figure>
+<p>简单说，<code>$</code> 加各种东西的用法在双引号里都是可以正常使用的，而其他特殊符号（比如 <code>*</code>、<code>?</code>、<code>&gt;</code>）的功能通常不可用。</p>
+<h1 id="反引号"><a href="#反引号" class="headerlink" title="反引号"></a>反引号</h1><p>反引号是用来运行命令的，它会返回命令结果，以便保存到变量等等。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">% str=`ls`</div><div class="line">% <span class="built_in">echo</span> <span class="variable">$str</span></div><div class="line">git</div><div class="line">tmp</div><div class="line"></div><div class="line"><span class="comment"># 完全可以用 $( ) 取代</span></div><div class="line">% str=$(ls)</div><div class="line">% <span class="built_in">echo</span> <span class="variable">$str</span></div><div class="line">git</div><div class="line">tmp</div></pre></td></tr></table></figure>
+<p>反引号的功能和 <code>$( )</code> 功能基本一样，但 <code>$( )</code> 可以嵌套，而反引号不可以，而且反引号看起来更费事，某些字体中的反引号和单引号差别不大。所以在脚本里不建议使用反引号。</p>
+        
+          <p class="article-more-link">
+            <a href="/2017/09/20/zsh-字符串转义和格式化/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <div class="article-footer-tag">
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/shell/">shell</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/zsh/">zsh</a></li></ul>
+
+      </div>
+      <!-- JiaThis Button BEGIN -->
+      <div class="jiathis_style">
+        <span class="jiathis_txt">分享到：</span>
+        <a class="jiathis_button_qzone">QQ空间</a>
+        <a class="jiathis_button_tsina">新浪微博</a>
+        <a class="jiathis_button_tqq">腾讯微博</a>
+        <a class="jiathis_button_weixin">微信</a>
+        <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+        <a class="jiathis_counter_style"></a>
+      </div>
+      <script type="text/javascript" src="http://v3.jiathis.com/code_mini/jia.js" charset="utf-8"></script>
+      <!-- JiaThis Button END -->
+      <!-- UJian Button BEGIN -->
+      <div class="ujian-hook"></div>
+      <script type="text/javascript" src="http://v1.ujian.cc/code/ujian.js"></script>
+      <!-- UJian Button END -->
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-zsh-字符串常用操作" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/09/20/zsh-字符串常用操作/" class="article-date">
+  <time datetime="2017-09-20T13:10:45.000Z" itemprop="datePublished">2017-09-20</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/09/20/zsh-字符串常用操作/">zsh-字符串常用操作</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>   zsh 的字符串处理功能，要比绝大多数编程语言自带的字符串函数库或者类库要强大（在不依赖外部命令的情况）。同时各种用法也比较怪异，很多时候简洁性和可读性是有矛盾的，很难兼顾。而 shell 的使用场景决定简洁性是不能被牺牲掉的，即使用 Python 这样比较简洁的语言来处理字符串，很多时候也只能写出冗长的代码，而 zsh 经常可以一行搞定（可能有人想到了 Perl，Perl 在处理文本方面确实有比较明显的优势，但使用 Perl 的话也要承担更多的成本），如果再加上适当地使用外部命令，基本可以应付大多数字符串处理场景。因为字符串处理的内容比较丰富，我会分多篇文章写。本篇只涉及最基础和常用的字符串操作，包括字符串的拼接、切片、截断、查找、遍历、替换、匹配、大小写转换、分隔等等。</p>
+<h1 id="字符串长度"><a href="#字符串长度" class="headerlink" title="字符串长度"></a>字符串长度</h1><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">% str=abcde</div><div class="line">% <span class="built_in">echo</span> <span class="variable">$#str</span></div><div class="line">5</div><div class="line"></div><div class="line"><span class="comment"># 读取函数或者脚本的第一个参数的长度</span></div><div class="line">% <span class="built_in">echo</span> <span class="variable">$#1</span></div></pre></td></tr></table></figure>
+<h1 id="字符串拼接"><a href="#字符串拼接" class="headerlink" title="字符串拼接"></a>字符串拼接</h1><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">% str1=abc</div><div class="line">% str2=def</div><div class="line"></div><div class="line">% str2+=<span class="variable">$str1</span></div><div class="line">% <span class="built_in">echo</span> <span class="variable">$str2</span></div><div class="line">defabc</div><div class="line"></div><div class="line">% str3=<span class="variable">$str1</span><span class="variable">$str2</span></div><div class="line">abcdefabc</div></pre></td></tr></table></figure>
+<h1 id="字符串切片"><a href="#字符串切片" class="headerlink" title="字符串切片"></a>字符串切片</h1><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">% str=abcdef</div><div class="line">% <span class="built_in">echo</span> <span class="variable">$str</span>[2,4]</div><div class="line">bcd</div><div class="line">% <span class="built_in">echo</span> <span class="variable">$str</span>[2,-1]</div><div class="line">bcdef</div><div class="line"></div><div class="line"><span class="comment"># $1 是文件或者函数的第一个参数</span></div><div class="line"><span class="built_in">echo</span> <span class="variable">$&#123;1[2,4]&#125;</span></div></pre></td></tr></table></figure>
+<p>字符串切片还有另一种风格的方法，即 bash 风格，功能大同小异。通常没有必要用这个，而且因为字符位置是从 0 开始算，容易混淆。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">% str=abcdef</div><div class="line">% <span class="built_in">echo</span> <span class="variable">$&#123;str:1:3&#125;</span></div><div class="line">bcd</div><div class="line">% <span class="built_in">echo</span> <span class="variable">$&#123;str:1:-1&#125;</span></div><div class="line">bcde</div></pre></td></tr></table></figure>
+<h2 id="字符串截断"><a href="#字符串截断" class="headerlink" title="字符串截断"></a>字符串截断</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">% str=abcdeabcde</div><div class="line"></div><div class="line"><span class="comment"># 删除左端匹配到的内容，最小匹配</span></div><div class="line">% <span class="built_in">echo</span> <span class="variable">$&#123;str#*b&#125;</span></div><div class="line">cdeabcde</div><div class="line"></div><div class="line"><span class="comment"># 删除右端匹配到的内容，最小匹配</span></div><div class="line">% <span class="built_in">echo</span> <span class="variable">$&#123;str%d*&#125;</span></div><div class="line">abcdeabc</div><div class="line"></div><div class="line"><span class="comment"># 删除左端匹配到的内容，最大匹配</span></div><div class="line">% <span class="built_in">echo</span> <span class="variable">$&#123;str##*b&#125;</span></div><div class="line">cde</div><div class="line"></div><div class="line"><span class="comment"># 删除右端匹配到的内容</span></div><div class="line">% <span class="built_in">echo</span> <span class="variable">$&#123;str%%d*&#125;</span></div><div class="line">abc</div></pre></td></tr></table></figure>
+<h1 id="字符串查找"><a href="#字符串查找" class="headerlink" title="字符串查找"></a>字符串查找</h1><p>子字符串定位。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">% str=abcdef</div><div class="line"></div><div class="line"><span class="comment"># 这里用的是 i 的大写，不是 L 的小写</span></div><div class="line">% <span class="built_in">echo</span> <span class="variable">$str</span>[(I)<span class="built_in">cd</span>]</div><div class="line">3</div><div class="line"></div><div class="line"><span class="comment"># I 是从右往左找，如果找不到则为 0, 方便用来判断</span></div><div class="line">% ((<span class="variable">$str</span>[(I)<span class="built_in">cd</span>])) &amp;&amp; <span class="built_in">echo</span> good</div><div class="line">good</div><div class="line"></div><div class="line"><span class="comment"># 找不到则为 0</span></div><div class="line">% <span class="built_in">echo</span> <span class="variable">$str</span>[(I)cdd]</div><div class="line">0</div><div class="line"></div><div class="line"><span class="comment"># 也可以使用小 i，小 i 是从左往右找，找不到则返回数组大小 + 1</span></div><div class="line">% <span class="built_in">echo</span> <span class="variable">$str</span>[(i)<span class="built_in">cd</span>]</div><div class="line">3</div><div class="line"></div><div class="line">% <span class="built_in">echo</span> <span class="variable">$str</span>[(i)cdd]</div><div class="line">7</div></pre></td></tr></table></figure>
+<h1 id="遍历字符"><a href="#遍历字符" class="headerlink" title="遍历字符"></a>遍历字符</h1><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">% str=abcd</div><div class="line"></div><div class="line">% <span class="keyword">for</span> i (&#123;1..<span class="variable">$#str</span>&#125;) &#123;</div><div class="line">&gt;    <span class="built_in">echo</span> <span class="variable">$str</span>[i]</div><div class="line">&gt;&#125;</div><div class="line">a</div><div class="line">b</div><div class="line">c</div><div class="line">d</div></pre></td></tr></table></figure>
+<h1 id="字符串替换"><a href="#字符串替换" class="headerlink" title="字符串替换"></a>字符串替换</h1><p>按内容替换和删除字符。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">% str=abcdefg</div><div class="line"></div><div class="line"><span class="comment"># 一对一地替换</span></div><div class="line">% str[2]=1</div><div class="line">% <span class="built_in">echo</span> <span class="variable">$str</span></div><div class="line">a1cdefg</div><div class="line"></div><div class="line"><span class="comment"># 可以多对多（也包括一对多和多对一）地替换字符，两边的字符数量不需要一致。</span></div><div class="line"><span class="comment"># 把第二、三个字符替换成 2345</span></div><div class="line">% str[2,3]=2345</div><div class="line">% <span class="built_in">echo</span> <span class="variable">$str</span></div><div class="line">a2345defg</div></pre></td></tr></table></figure>
+        
+          <p class="article-more-link">
+            <a href="/2017/09/20/zsh-字符串常用操作/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <div class="article-footer-tag">
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/shell/">shell</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/zsh/">zsh</a></li></ul>
+
+      </div>
+      <!-- JiaThis Button BEGIN -->
+      <div class="jiathis_style">
+        <span class="jiathis_txt">分享到：</span>
+        <a class="jiathis_button_qzone">QQ空间</a>
+        <a class="jiathis_button_tsina">新浪微博</a>
+        <a class="jiathis_button_tqq">腾讯微博</a>
+        <a class="jiathis_button_weixin">微信</a>
+        <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+        <a class="jiathis_counter_style"></a>
+      </div>
+      <script type="text/javascript" src="http://v3.jiathis.com/code_mini/jia.js" charset="utf-8"></script>
+      <!-- JiaThis Button END -->
+      <!-- UJian Button BEGIN -->
+      <div class="ujian-hook"></div>
+      <script type="text/javascript" src="http://v1.ujian.cc/code/ujian.js"></script>
+      <!-- UJian Button END -->
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-zsh-变量和语句" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/09/20/zsh-变量和语句/" class="article-date">
+  <time datetime="2017-09-20T12:32:35.000Z" itemprop="datePublished">2017-09-20</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/09/20/zsh-变量和语句/">zsh-变量和语句</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="格式约定"><a href="#格式约定" class="headerlink" title="格式约定"></a>格式约定</h1><p>文中行首的 <code>%</code> 代表 zsh 的命令提示符（类似 bash 的 <code>$</code>，这个是可以自由定义的，具体是什么不重要），行首的 <code>&gt;</code> 代表此行是换行后的输入内容，以 <code>#</code> 开头的为注释（非 root 用户的命令提示符，本系列文章不需要 root 用户），其余的是命令的输出内容。另外某些地方会贴成段的 zsh 代码，那样就省略开头的 <code>%</code>，比较容易分辨。</p>
+<h1 id="变量"><a href="#变量" class="headerlink" title="变量"></a>变量</h1><p>接触一门新的编程语言，运行完 Hello World 后，首先要了解的基本就是如何定义和使用变量了。有了变量后可以比较变量内容，进而可以接触条件、循环、分支等语句，继而了解函数的用法，更高级的数据结构的使用，更多库函数，等等。这样就大概了解了一门面向过程的语言的基本用法，剩下的可以等到用的时候再查手册。</p>
+<p>所以这一篇讲最基本的变量和语句。</p>
+<p>zsh 有 5 种变量：整数、浮点数（bash 不支持）、字符串、数组、哈希表（或者叫关联数组或者字典，本系列文章统一使用“哈希表”这一名词），另外还有一些其他语言少有的东西，比如 alias（但主要是交互时使用，编程时基本用不到）。此篇只涉及整数、浮点数、字符串，并且不涉及数值计算和字符串处理等内容。</p>
+<h2 id="变量定义"><a href="#变量定义" class="headerlink" title="变量定义"></a>变量定义</h2><p>Zsh 的变量多数情况不需要提前声明或者指定类型，可以直接赋值和使用（但哈希表是一个例外）。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 等号两端不能有空格</span></div><div class="line">% num1=123</div><div class="line">% num2=123.456</div><div class="line">% str1=abcde</div><div class="line"><span class="comment"># 如果字符串中包含空格等特殊字符，需要加引号</span></div><div class="line">% str2=<span class="string">'abc def'</span></div><div class="line"><span class="comment"># 也可以用双引号，但和单引号有区别，比如双引号里可以使用变量，而单引号不可以</span></div><div class="line">% str3=<span class="string">"abc def <span class="variable">$num1</span>"</span></div><div class="line"><span class="comment"># 在字符串中可以使用转义字符，单双引号均可</span></div><div class="line">% str4=<span class="string">"abc\tdef\ng"</span></div><div class="line"></div><div class="line"><span class="comment"># 输出变量，也可以使用 print</span></div><div class="line">% <span class="built_in">echo</span> <span class="variable">$str1</span></div><div class="line">abcde</div><div class="line"></div><div class="line"><span class="comment"># 简单的数值计算</span></div><div class="line">% num3=$((<span class="variable">$num1</span> + <span class="variable">$num2</span>))</div><div class="line"><span class="comment"># (( 中的变量名可以不用 $</span></div><div class="line">% num3=$((num1 + num2))</div><div class="line"></div><div class="line"><span class="comment"># 简单的字符串操作</span></div><div class="line">% str=abcdef</div><div class="line"><span class="comment"># 2 和 4 都是字符在数组的位置，从 1 开始数，逗号两边不能有空格</span></div><div class="line">% <span class="built_in">echo</span> <span class="variable">$str</span>[2,4]</div><div class="line">bcd</div><div class="line"><span class="comment"># -1 是最后一个字符</span></div><div class="line">% <span class="built_in">echo</span> <span class="variable">$str</span>[4,-1]</div><div class="line">def</div></pre></td></tr></table></figure>
+<h2 id="变量比较"><a href="#变量比较" class="headerlink" title="变量比较"></a>变量比较</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 比较数值</span></div><div class="line">% num=123</div><div class="line"><span class="comment"># (( )) 用于数值比较等操作，如果为真返回 0，否则返回 1</span></div><div class="line"><span class="comment"># &amp;&amp; 后边的语句在前边的语句为真时才执行</span></div><div class="line"><span class="comment"># 注意这里只能使用双等号来比较</span></div><div class="line">% ((num == 123)) &amp;&amp; <span class="built_in">echo</span> good</div><div class="line">good</div><div class="line"><span class="comment"># (( 里边可以使用与（&amp;&amp;）或（||）非（!）操作符，同 c 系列语言</span></div><div class="line">% ((num == 1 || num == 2)) &amp;&amp; <span class="built_in">echo</span> good</div><div class="line"></div><div class="line"><span class="comment"># 比较字符串</span></div><div class="line">% str=abc</div><div class="line"><span class="comment"># 比较字符串要用 [[，内侧要有空格，[[ 的具体用法之后会讲到</span></div><div class="line"><span class="comment"># 这里双等号可以替换成单等号，可以根据自己的习惯选用</span></div><div class="line"><span class="comment"># 本系列文章统一使用双等号，因为和 (( )) 一致，并且使用双等号的常用编程语言更多些</span></div><div class="line"><span class="comment"># $str 两侧不需要加双引号，即使 str 未定义或者 $str 中含空格和特殊符号</span></div><div class="line">% [[ <span class="variable">$str</span> == abc ]] &amp;&amp; <span class="built_in">echo</span> good</div><div class="line">good</div><div class="line"><span class="comment"># 可以和空字符串 "" 比较，未定义的字符串和空字符串比较结果为真</span></div><div class="line"><span class="comment"># [[ 里也可以用 &amp;&amp; || !</span></div><div class="line">% [[ <span class="variable">$str</span> == <span class="string">""</span> || <span class="variable">$str</span> == 123 ]] &amp;&amp; <span class="built_in">echo</span> good</div></pre></td></tr></table></figure>
+        
+          <p class="article-more-link">
+            <a href="/2017/09/20/zsh-变量和语句/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <div class="article-footer-tag">
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/shell/">shell</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/zsh/">zsh</a></li></ul>
+
+      </div>
+      <!-- JiaThis Button BEGIN -->
+      <div class="jiathis_style">
+        <span class="jiathis_txt">分享到：</span>
+        <a class="jiathis_button_qzone">QQ空间</a>
+        <a class="jiathis_button_tsina">新浪微博</a>
+        <a class="jiathis_button_tqq">腾讯微博</a>
+        <a class="jiathis_button_weixin">微信</a>
+        <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+        <a class="jiathis_counter_style"></a>
+      </div>
+      <script type="text/javascript" src="http://v3.jiathis.com/code_mini/jia.js" charset="utf-8"></script>
+      <!-- JiaThis Button END -->
+      <!-- UJian Button BEGIN -->
+      <div class="ujian-hook"></div>
+      <script type="text/javascript" src="http://v1.ujian.cc/code/ujian.js"></script>
+      <!-- UJian Button END -->
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
   
     <article id="post-hello-world" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
@@ -353,440 +835,6 @@
 
 
   
-    <article id="post-创建和销毁对象" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2017/03/19/创建和销毁对象/" class="article-date">
-  <time datetime="2017-03-19T03:45:24.000Z" itemprop="datePublished">2017-03-19</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/03/19/创建和销毁对象/">创建和销毁对象</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="考虑用静态工厂方法代替构造器"><a href="#考虑用静态工厂方法代替构造器" class="headerlink" title="考虑用静态工厂方法代替构造器"></a>考虑用静态工厂方法代替构造器</h1><p>  对于类而言，为了让客户端获取它的每一个实例，最常用的方法就是提供一个公有的构造器。还有一种方法，也应该在每个程序员的工具箱中占有一席之地。类可以提供一个公有的静态工厂方法，它只是一个返回类的实例的静态方法。下面是一个来自Boolean的简单示例。这个方法将boolean基本类型值转换成了一个Boolean对象引用：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Boolean <span class="title">valueOf</span><span class="params">(<span class="keyword">boolean</span> b)</span> </span>&#123;</div><div class="line">    <span class="keyword">return</span> b ? Boolean.TRUE : Boolean.FALSE;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>  注意，静态工厂方法与设计模式中的工厂方法模式不同。</p>
-<p>  类可以通过静态工厂方法来提供它的客户端，而不是通过构造器。提供静态方法而不是公有的构造器，这样做有几大优势。</p>
-        
-          <p class="article-more-link">
-            <a href="/2017/03/19/创建和销毁对象/#more">Read More</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      <div class="article-footer-tag">
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Effective-Java/">Effective Java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li></ul>
-
-      </div>
-      <!-- JiaThis Button BEGIN -->
-      <div class="jiathis_style">
-        <span class="jiathis_txt">分享到：</span>
-        <a class="jiathis_button_qzone">QQ空间</a>
-        <a class="jiathis_button_tsina">新浪微博</a>
-        <a class="jiathis_button_tqq">腾讯微博</a>
-        <a class="jiathis_button_weixin">微信</a>
-        <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
-        <a class="jiathis_counter_style"></a>
-      </div>
-      <script type="text/javascript" src="http://v3.jiathis.com/code_mini/jia.js" charset="utf-8"></script>
-      <!-- JiaThis Button END -->
-      <!-- UJian Button BEGIN -->
-      <div class="ujian-hook"></div>
-      <script type="text/javascript" src="http://v1.ujian.cc/code/ujian.js"></script>
-      <!-- UJian Button END -->
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-vim-insert" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/04/05/vim-insert/" class="article-date">
-  <time datetime="2016-04-05T15:21:58.000Z" itemprop="datePublished">2016-04-05</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/04/05/vim-insert/">Vim系列之插入(四)</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-
-        <!-- Table of Contents -->
-        
-
-        <h1 id="普通插入"><a href="#普通插入" class="headerlink" title="普通插入"></a>普通插入</h1><p>i &amp; a</p>
-<p>在普通模式下，按下按键<b>i</b>即可进入插入模式从光标处开始插入；按下<b>a</b>即可进入插入模式从光标后一个字符处开始插入。</p>
-<h1 id="行首与行尾插入"><a href="#行首与行尾插入" class="headerlink" title="行首与行尾插入"></a>行首与行尾插入</h1><p>I &amp; A</p>
-<p>在普通模式下，按下按键<b>I</b>即可移动光标至行首第一个非空白字符处开始插入（相当于按下^再按i）；按下按键<b>A</b>即可移动光标至行尾开始插入（相当于按下$再按a）。</p>
-<h1 id="另起一行插入"><a href="#另起一行插入" class="headerlink" title="另起一行插入"></a>另起一行插入</h1><p>o &amp; O</p>
-<p>在普通模式下，按下字母<b>o</b>即可另起一空白行（<i>向下</i>），从行首处开始插入（安装了插件或者语法打开之后会自动缩进排版）；按下字母<b>O</b>即可另起一行（<i>向上</i>），从行首处开始插入。</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <div class="article-footer-tag">
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/vim/">vim</a></li></ul>
-
-      </div>
-      <!-- JiaThis Button BEGIN -->
-      <div class="jiathis_style">
-        <span class="jiathis_txt">分享到：</span>
-        <a class="jiathis_button_qzone">QQ空间</a>
-        <a class="jiathis_button_tsina">新浪微博</a>
-        <a class="jiathis_button_tqq">腾讯微博</a>
-        <a class="jiathis_button_weixin">微信</a>
-        <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
-        <a class="jiathis_counter_style"></a>
-      </div>
-      <script type="text/javascript" src="http://v3.jiathis.com/code_mini/jia.js" charset="utf-8"></script>
-      <!-- JiaThis Button END -->
-      <!-- UJian Button BEGIN -->
-      <div class="ujian-hook"></div>
-      <script type="text/javascript" src="http://v1.ujian.cc/code/ujian.js"></script>
-      <!-- UJian Button END -->
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-phpunit" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/03/30/phpunit/" class="article-date">
-  <time datetime="2016-03-30T02:29:40.000Z" itemprop="datePublished">2016-03-30</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/03/30/phpunit/">PHP单元测试PHPUnit</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h1><blockquote><p>PHPUnit is a programmer-oriented testing framework for PHP.<br>It is an instance of the xUnit architecture for unit testing frameworks.</p>
-<footer><strong>PHPUnit官网</strong><cite><a href="https://phpunit.de/">phpunit.de</a></cite></footer></blockquote>
-<blockquote><p>PHPUnit是一个轻量级的PHP测试框架。它是在PHP5下面对JUnit3系列版本的完整移植，是xUnit测试框架家族的一员(它们都基于模式先锋Kent Beck的设计)。</p>
-<footer><strong>百度百科</strong><cite><a href="http://baike.baidu.com/link?url=lQvRzx-ygpKvUJfuZryOIxK49Db5Tnan-qHhBvDiWxJRQsE3s_jFc1oIY--KAB5X2TjtijltP5OWyAXJpM1vgK">baike.baidu.com/link?url=lQvRzx-ygpKvUJfuZryOIxK49Db5Tnan-qHhBvDiWxJRQsE3s_jFc1oIY--KAB5X2TjtijltP5OWyAXJpM1vgK</a></cite></footer></blockquote>
-<h1 id="PHPUnit的依赖"><a href="#PHPUnit的依赖" class="headerlink" title="PHPUnit的依赖"></a>PHPUnit的依赖</h1><ul>
-<li><a href="http://php.net/manual/en/dom.setup.php">dom</a>，PHP默认启用</li>
-<li><a href="http://php.net/manual/en/json.installation.php">json</a>，PHP默认启用</li>
-<li><a href="http://php.net/manual/en/pcre.installation.php">pcre</a>，PHP默认启用</li>
-<li><a href="http://php.net/manual/en/reflection.installation.php">reflection</a>，PHP默认启用</li>
-<li><a href="http://php.net/manual/en/spl.installation.php">spl</a>，PHP默认启用</li>
-<li><a href="http://php.net/manual/en/tokenizer.installation.php">tokenizer</a>，PHP默认启用，生成代码覆盖率测试报告用到</li>
-<li><a href="https://xdebug.org/">xdebug</a>，需要自己安装，生成代码覆盖率测试报告用到</li>
-<li><a href="http://php.net/manual/en/xmlwriter.installation.php">xmlwriter</a>，PHP默认启用，生成XML格式的报告用到</li>
-</ul>
-<p>检查PHP是否启用了这些模块可以使用如下命令</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">php -m | grep <span class="string">'模块名称'</span></div></pre></td></tr></table></figure>
-<h1 id="PHPUnit的安装"><a href="#PHPUnit的安装" class="headerlink" title="PHPUnit的安装"></a>PHPUnit的安装</h1><h2 id="PHP档案包方式"><a href="#PHP档案包方式" class="headerlink" title="PHP档案包方式"></a>PHP档案包方式</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">wget https://phar.phpunit.de/phpunit.phar <span class="comment">#  下载档案包</span></div><div class="line">chmod +x phpunit.phar <span class="comment">#  赋可执行权限</span></div><div class="line">sudo mv phpunit.phar /usr/<span class="built_in">local</span>/bin/phpunit</div><div class="line">phpunit --version <span class="comment">#  查看PHPUnit版本</span></div></pre></td></tr></table></figure>
-<h2 id="Composer方式"><a href="#Composer方式" class="headerlink" title="Composer方式"></a>Composer方式</h2><p>Composer使用参考<a href="https://getcomposer.org/">https://getcomposer.org/</a></p>
-<p>composer文件如下</p>
-<figure class="highlight json"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">    <span class="attr">"require-dev"</span>: &#123;</div><div class="line">        <span class="attr">"phpunit/phpunit"</span>: <span class="string">"5.0.*"</span></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h1 id="编写PHPUnit测试"><a href="#编写PHPUnit测试" class="headerlink" title="编写PHPUnit测试"></a>编写PHPUnit测试</h1><h2 id="惯例和基本步骤"><a href="#惯例和基本步骤" class="headerlink" title="惯例和基本步骤"></a>惯例和基本步骤</h2><ol>
-<li>针对类Class的测试写在类ClassTest中。</li>
-<li>ClassTest通常继承自PHPUnit_Framework_TestCase。</li>
-<li>测试都是命名为test*的公用方法（也可以在放的文档注释块中使用@test标注将其标记未测试方法）。</li>
-<li>在测试方法内，类似于assertEquals()这样的断言方法用来对实际值与预期值的匹配做出断言</li>
-</ol>
-<p>举个例子：</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;?php</span></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">HelloWolrdTest</span> <span class="keyword">extends</span> <span class="title">PHPUnit_Framework_TestCase</span></div><div class="line"></span>&#123;</div><div class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">testString</span><span class="params">()</span></div><div class="line">    </span>&#123;</div><div class="line">        $string = <span class="string">'Hello, World'</span>;</div><div class="line">        <span class="keyword">$this</span>-&gt;assertEquals(<span class="string">'Hello, World'</span>, $string);</div><div class="line">        <span class="keyword">$this</span>-&gt;assertNotEquals(<span class="string">'Hello,World'</span>, $string);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">testAarry</span><span class="params">()</span></div><div class="line">    </span>&#123;</div><div class="line">        $arr = <span class="keyword">array</span>();</div><div class="line">        <span class="keyword">$this</span>-&gt;assertEmpty($arr);</div><div class="line">        <span class="comment">//$this-&gt;assertArrayHasKey('hello', $arr);</span></div><div class="line"></div><div class="line">        $arr[<span class="string">'hello'</span>] = <span class="string">'world'</span>;</div><div class="line">        <span class="comment">//$this-&gt;assertEmpty($arr);</span></div><div class="line">        <span class="keyword">$this</span>-&gt;assertArrayHasKey(<span class="string">'hello'</span>, $arr);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>执行测试命令</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">phpunit HelloWorldTest</div></pre></td></tr></table></figure>
-<p>结果</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">PHPUnit 4.8.24 by Sebastian Bergmann and contributors.</div><div class="line"></div><div class="line">..</div><div class="line"></div><div class="line">Time: 103 ms, Memory: 12.50Mb</div><div class="line"></div><div class="line">OK (2 tests, 4 assertions)</div></pre></td></tr></table></figure>
-        
-          <p class="article-more-link">
-            <a href="/2016/03/30/phpunit/#more">Read More</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      <div class="article-footer-tag">
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/PHP/">PHP</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/PHPUnit/">PHPUnit</a></li></ul>
-
-      </div>
-      <!-- JiaThis Button BEGIN -->
-      <div class="jiathis_style">
-        <span class="jiathis_txt">分享到：</span>
-        <a class="jiathis_button_qzone">QQ空间</a>
-        <a class="jiathis_button_tsina">新浪微博</a>
-        <a class="jiathis_button_tqq">腾讯微博</a>
-        <a class="jiathis_button_weixin">微信</a>
-        <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
-        <a class="jiathis_counter_style"></a>
-      </div>
-      <script type="text/javascript" src="http://v3.jiathis.com/code_mini/jia.js" charset="utf-8"></script>
-      <!-- JiaThis Button END -->
-      <!-- UJian Button BEGIN -->
-      <div class="ujian-hook"></div>
-      <script type="text/javascript" src="http://v1.ujian.cc/code/ujian.js"></script>
-      <!-- UJian Button END -->
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-vim-move" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/03/29/vim-move/" class="article-date">
-  <time datetime="2016-03-29T11:48:35.000Z" itemprop="datePublished">2016-03-29</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/03/29/vim-move/">Vim系列之移动(三)</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="约定"><a href="#约定" class="headerlink" title="约定"></a>约定</h1><p> 除特殊说明以外，本篇所有操作都是在普通模式下进行的。</p>
-<h1 id="上下左右移动（基本操作）"><a href="#上下左右移动（基本操作）" class="headerlink" title="上下左右移动（基本操作）"></a>上下左右移动（基本操作）</h1><p>k/j/h/l可以操作光标在vim中上下左右移动。</p>
-<p>k：光标向上移动一行</p>
-<p>j：光标向下移动一行</p>
-<p>h：光标向左移动一个字符</p>
-<p>l：光标向右移动一个字符</p>
-<p>数字N加上kjhl相当于连续N次操作，比如5j表示光标向下移动5行。</p>
-<h1 id="以word为单位的移动"><a href="#以word为单位的移动" class="headerlink" title="以word为单位的移动"></a>以word为单位的移动</h1><p>w/b/W/B可以操作光标在vim中以word为单位移动。</p>
-<p>w：光标向后移动一个word；特殊字符作为分隔符(通常为非数字和字母的字符，比如逗号，空格，下划线等一些符号)</p>
-<p>b：光标向前移动一个word；分隔符同w</p>
-<p>W：光标向后移动一个word；空白作为分隔符(连续的多个空白当做一个)</p>
-<p>B：光标向前移动一个word；分隔符同W</p>
-<p>wbWB同kjhl一样可以结合数字连续多次操作</p>
-<h1 id="移动到行尾或行首"><a href="#移动到行尾或行首" class="headerlink" title="移动到行尾或行首"></a>移动到行尾或行首</h1><p>^/0/$可以操作光标移动到行尾或者行首。</p>
-<p>^：光标移动到行首的第一个非空白字符处</p>
-<p>0：光标移动到行首</p>
-<p>$：光标移动到行尾</p>
-        
-          <p class="article-more-link">
-            <a href="/2016/03/29/vim-move/#more">Read More</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      <div class="article-footer-tag">
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/vim/">vim</a></li></ul>
-
-      </div>
-      <!-- JiaThis Button BEGIN -->
-      <div class="jiathis_style">
-        <span class="jiathis_txt">分享到：</span>
-        <a class="jiathis_button_qzone">QQ空间</a>
-        <a class="jiathis_button_tsina">新浪微博</a>
-        <a class="jiathis_button_tqq">腾讯微博</a>
-        <a class="jiathis_button_weixin">微信</a>
-        <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
-        <a class="jiathis_counter_style"></a>
-      </div>
-      <script type="text/javascript" src="http://v3.jiathis.com/code_mini/jia.js" charset="utf-8"></script>
-      <!-- JiaThis Button END -->
-      <!-- UJian Button BEGIN -->
-      <div class="ujian-hook"></div>
-      <script type="text/javascript" src="http://v1.ujian.cc/code/ujian.js"></script>
-      <!-- UJian Button END -->
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-php-memcached" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/03/29/php-memcached/" class="article-date">
-  <time datetime="2016-03-29T10:45:32.000Z" itemprop="datePublished">2016-03-29</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/03/29/php-memcached/">PHP安装memcached扩展</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="安装GCC"><a href="#安装GCC" class="headerlink" title="安装GCC"></a>安装GCC</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo yum -y install gcc</div></pre></td></tr></table></figure>
-<h1 id="安装libevent"><a href="#安装libevent" class="headerlink" title="安装libevent"></a>安装libevent</h1><h2 id="下载libevent"><a href="#下载libevent" class="headerlink" title="下载libevent"></a>下载<a href="http://libevent.org/">libevent</a></h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">wget https://github.com/libevent/libevent/releases/download/release-2.0.22-stable/libevent-2.0.22-stable.tar.gz</div></pre></td></tr></table></figure>
-<h2 id="解压文件"><a href="#解压文件" class="headerlink" title="解压文件"></a>解压文件</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">tar -zvxf libevent-2.0.22-stable.tar.gz</div></pre></td></tr></table></figure>
-<h2 id="进入目录"><a href="#进入目录" class="headerlink" title="进入目录"></a>进入目录</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">cd</span> libevent-2.0.22-stable</div></pre></td></tr></table></figure>
-<h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">./configure --prefix=/usr/local</div></pre></td></tr></table></figure>
-<h2 id="编译"><a href="#编译" class="headerlink" title="编译"></a>编译</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">make</div></pre></td></tr></table></figure>
-<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">make <span class="built_in">test</span> &amp;&amp; make install</div></pre></td></tr></table></figure>
-        
-          <p class="article-more-link">
-            <a href="/2016/03/29/php-memcached/#more">Read More</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      <div class="article-footer-tag">
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/PHP/">PHP</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/memcached/">memcached</a></li></ul>
-
-      </div>
-      <!-- JiaThis Button BEGIN -->
-      <div class="jiathis_style">
-        <span class="jiathis_txt">分享到：</span>
-        <a class="jiathis_button_qzone">QQ空间</a>
-        <a class="jiathis_button_tsina">新浪微博</a>
-        <a class="jiathis_button_tqq">腾讯微博</a>
-        <a class="jiathis_button_weixin">微信</a>
-        <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
-        <a class="jiathis_counter_style"></a>
-      </div>
-      <script type="text/javascript" src="http://v3.jiathis.com/code_mini/jia.js" charset="utf-8"></script>
-      <!-- JiaThis Button END -->
-      <!-- UJian Button BEGIN -->
-      <div class="ujian-hook"></div>
-      <script type="text/javascript" src="http://v1.ujian.cc/code/ujian.js"></script>
-      <!-- UJian Button END -->
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-vim-quickstart" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/03/08/vim-quickstart/" class="article-date">
-  <time datetime="2016-03-08T11:46:02.000Z" itemprop="datePublished">2016-03-08</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/03/08/vim-quickstart/">Vim系列之初体验(二)</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="Vim安装"><a href="#Vim安装" class="headerlink" title="Vim安装"></a>Vim安装</h2><p>Mac OS和Unix系统默认都有安装，所有Vim的安装不多介绍。</p>
-<h2 id="快速开始"><a href="#快速开始" class="headerlink" title="快速开始"></a>快速开始</h2><p><strong>命令：vim [文件名] 文件名可选</strong></p>
-<p>直接输入vim</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">vim</div></pre></td></tr></table></figure>
-<p>效果如图：</p>
-<img src="/2016/03/08/vim-quickstart/vim-quickstart-start.png" alt="快速打开vim" title="快速打开vim">
-<p><strong>vim 文件名</strong> 文件不存在将会自动创建。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">vim quickstart</div></pre></td></tr></table></figure>
-        
-          <p class="article-more-link">
-            <a href="/2016/03/08/vim-quickstart/#more">Read More</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      <div class="article-footer-tag">
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/vim/">vim</a></li></ul>
-
-      </div>
-      <!-- JiaThis Button BEGIN -->
-      <div class="jiathis_style">
-        <span class="jiathis_txt">分享到：</span>
-        <a class="jiathis_button_qzone">QQ空间</a>
-        <a class="jiathis_button_tsina">新浪微博</a>
-        <a class="jiathis_button_tqq">腾讯微博</a>
-        <a class="jiathis_button_weixin">微信</a>
-        <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
-        <a class="jiathis_counter_style"></a>
-      </div>
-      <script type="text/javascript" src="http://v3.jiathis.com/code_mini/jia.js" charset="utf-8"></script>
-      <!-- JiaThis Button END -->
-      <!-- UJian Button BEGIN -->
-      <div class="ujian-hook"></div>
-      <script type="text/javascript" src="http://v1.ujian.cc/code/ujian.js"></script>
-      <!-- UJian Button END -->
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
 
 
   <nav id="page-nav">
@@ -801,9 +849,9 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Tags</h3>
+    <h3 class="widget-title">Mot-clés</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Effective-Java/">Effective Java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PHP/">PHP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PHPUnit/">PHPUnit</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/memcached/">memcached</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vim/">vim</a></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Effective-Java/">Effective Java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PHP/">PHP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PHPUnit/">PHPUnit</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cache/">cache</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/memcached/">memcached</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/redids/">redids</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/redis/">redis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/shell/">shell</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vim/">vim</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/zsh/">zsh</a></li></ul>
     </div>
   </div>
 
@@ -811,9 +859,9 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Tag Cloud</h3>
+    <h3 class="widget-title">Nuage de mot-clés</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Effective-Java/" style="font-size: 15px;">Effective Java</a> <a href="/tags/Java/" style="font-size: 15px;">Java</a> <a href="/tags/PHP/" style="font-size: 15px;">PHP</a> <a href="/tags/PHPUnit/" style="font-size: 10px;">PHPUnit</a> <a href="/tags/memcached/" style="font-size: 10px;">memcached</a> <a href="/tags/vim/" style="font-size: 20px;">vim</a>
+      <a href="/tags/Effective-Java/" style="font-size: 16.67px;">Effective Java</a> <a href="/tags/Java/" style="font-size: 16.67px;">Java</a> <a href="/tags/PHP/" style="font-size: 16.67px;">PHP</a> <a href="/tags/PHPUnit/" style="font-size: 10px;">PHPUnit</a> <a href="/tags/cache/" style="font-size: 13.33px;">cache</a> <a href="/tags/memcached/" style="font-size: 10px;">memcached</a> <a href="/tags/redids/" style="font-size: 10px;">redids</a> <a href="/tags/redis/" style="font-size: 10px;">redis</a> <a href="/tags/shell/" style="font-size: 20px;">shell</a> <a href="/tags/vim/" style="font-size: 20px;">vim</a> <a href="/tags/zsh/" style="font-size: 20px;">zsh</a>
     </div>
   </div>
 
@@ -822,7 +870,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">June 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">April 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">March 2016</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">June 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">April 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">March 2016</a></li></ul>
     </div>
   </div>
 
@@ -830,28 +878,28 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Recent Posts</h3>
+    <h3 class="widget-title">Articles récents</h3>
     <div class="widget">
       <ul>
         
           <li>
-            <a href="/2017/06/05/hello-world/">Hello World</a>
+            <a href="/2017/11/06/redis-linkedlist/">redis链表</a>
           </li>
         
           <li>
-            <a href="/2017/06/05/PHP总结/">PHP总结</a>
+            <a href="/2017/11/06/redis-string/">redis数据结构之字符串</a>
           </li>
         
           <li>
-            <a href="/2017/03/21/类和接口/">类和接口</a>
+            <a href="/2017/09/21/zsh-字符串通配符/">zsh-字符串通配符</a>
           </li>
         
           <li>
-            <a href="/2017/03/20/对于所有对象都通用的方法/">对于所有对象都通用的方法</a>
+            <a href="/2017/09/20/zsh-字符串转义和格式化/">zsh-字符串转义和格式化</a>
           </li>
         
           <li>
-            <a href="/2017/03/19/创建和销毁对象/">创建和销毁对象</a>
+            <a href="/2017/09/20/zsh-字符串常用操作/">zsh-字符串常用操作</a>
           </li>
         
       </ul>
@@ -893,7 +941,7 @@
   <div class="outer">
     <div id="footer-info" class="inner">
       &copy; 2017 Kenneth Fan<br>
-      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+      Propulsé by <a href="http://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>
 </footer>

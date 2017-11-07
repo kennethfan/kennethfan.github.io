@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>zsh-字符串转义和格式化 | 夜未央</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <meta name="keyword" content="PHP,memcached,redis,cache,vim,redids,PHPUnit,zsh,shell,Java,Effective Java">
+  
+  <meta name="description" content="导读上一篇讲了 zsh 的常用字符串操作，这篇开始讲更为琐碎的转义字符和格式化输出相关内容。包括转义字符、引号、print、printf 的使用等等。其中很多内容没有必要记忆，作为手册参考即可。
+转义字符转义字符是很多编程语言中都有的概念，它主要解决某些字符因为没有对应键盘按键无法直接输出、字符本身有特殊含义（比如 \、&amp;quot;）或者显示不直观（比如难以区别多个空格和一个 tab）等问题。
+最">
+<meta property="og:type" content="article">
+<meta property="og:title" content="zsh-字符串转义和格式化">
+<meta property="og:url" content="http://kennethfan.github.io/2017/09/20/zsh-字符串转义和格式化/index.html">
+<meta property="og:site_name" content="夜未央">
+<meta property="og:description" content="导读上一篇讲了 zsh 的常用字符串操作，这篇开始讲更为琐碎的转义字符和格式化输出相关内容。包括转义字符、引号、print、printf 的使用等等。其中很多内容没有必要记忆，作为手册参考即可。
+转义字符转义字符是很多编程语言中都有的概念，它主要解决某些字符因为没有对应键盘按键无法直接输出、字符本身有特殊含义（比如 \、&amp;quot;）或者显示不直观（比如难以区别多个空格和一个 tab）等问题。
+最">
+<meta property="og:updated_time" content="2017-09-20T16:01:43.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="zsh-字符串转义和格式化">
+<meta name="twitter:description" content="导读上一篇讲了 zsh 的常用字符串操作，这篇开始讲更为琐碎的转义字符和格式化输出相关内容。包括转义字符、引号、print、printf 的使用等等。其中很多内容没有必要记忆，作为手册参考即可。
+转义字符转义字符是很多编程语言中都有的概念，它主要解决某些字符因为没有对应键盘按键无法直接输出、字符本身有特殊含义（比如 \、&amp;quot;）或者显示不直观（比如难以区别多个空格和一个 tab）等问题。
+最">
+  
+    <link rel="alternate" href="/atom.xml" title="夜未央" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">夜未央</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">感恩 &amp; 回馈 | 理解 &amp; 释怀 | 热爱 &amp; 敬畏</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="Flux RSS"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Rechercher"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://kennethfan.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-zsh-字符串转义和格式化" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/09/20/zsh-字符串转义和格式化/" class="article-date">
+  <time datetime="2017-09-20T13:57:16.000Z" itemprop="datePublished">2017-09-20</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      zsh-字符串转义和格式化
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+
+        <!-- Table of Contents -->
+        
+        <div id="toc" class="toc-article">
+        <strong class="toc-title">文章目录</strong>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#导读"><span class="toc-number">1.</span> <span class="toc-text">导读</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#转义字符"><span class="toc-number">2.</span> <span class="toc-text">转义字符</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#单引号"><span class="toc-number">3.</span> <span class="toc-text">单引号</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#双引号"><span class="toc-number">4.</span> <span class="toc-text">双引号</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#反引号"><span class="toc-number">5.</span> <span class="toc-text">反引号</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#print-命令用法"><span class="toc-number">6.</span> <span class="toc-text">print 命令用法</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#print-命令选项功能介绍"><span class="toc-number">6.1.</span> <span class="toc-text">print 命令选项功能介绍</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#printf-命令用法"><span class="toc-number">7.</span> <span class="toc-text">printf 命令用法</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#输出带颜色和特殊样式的字符串"><span class="toc-number">7.1.</span> <span class="toc-text">输出带颜色和特殊样式的字符串</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#print-选项列表"><span class="toc-number">7.2.</span> <span class="toc-text">print 选项列表</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#参考"><span class="toc-number">8.</span> <span class="toc-text">参考</span></a></li></ol>
+        </div>
+        
+
+        <h1 id="导读"><a href="#导读" class="headerlink" title="导读"></a>导读</h1><p>上一篇讲了 zsh 的常用字符串操作，这篇开始讲更为琐碎的转义字符和格式化输出相关内容。包括转义字符、引号、<code>print</code>、<code>printf</code> 的使用等等。其中很多内容没有必要记忆，作为手册参考即可。</p>
+<h1 id="转义字符"><a href="#转义字符" class="headerlink" title="转义字符"></a>转义字符</h1><p>转义字符是很多编程语言中都有的概念，它主要解决某些字符因为没有对应键盘按键无法直接输出、字符本身有特殊含义（比如 <code>\</code>、<code>&quot;</code>）或者显示不直观（比如难以区别多个空格和一个 tab）等问题。</p>
+<p>最常用的转义字符是 <code>\n</code>（换行）、<code>\r</code>（回车）、<code>\t</code>（tab）。</p>
+<p>直接用 <code>echo</code>、<code>print</code> 或者 <code>printf</code> 内置命令都可以正常输出转义字符，但包括转义字符的字符串需要用引号（单双引号都可以）扩起来。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">% <span class="built_in">echo</span> <span class="string">'Hello\n\tWorld'</span></div><div class="line">Hello</div><div class="line">        World</div></pre></td></tr></table></figure>
+<p>常用转义字符对照表，不常用的可以去查 ASCII 码表，然后使用 <code>\xnn</code>（如 <code>\x14</code>）。</p>
+<table>
+<thead>
+<tr>
+<th>转义字符</th>
+<th>含义</th>
+<th>ASCII 码值（十六进制）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>\n</td>
+<td>换行</td>
+<td>0a</td>
+</tr>
+<tr>
+<td>\r</td>
+<td>回车</td>
+<td>0d</td>
+</tr>
+<tr>
+<td>\t</td>
+<td>tab</td>
+<td>09</td>
+</tr>
+<tr>
+<td>\</td>
+<td>\</td>
+<td>5c</td>
+</tr>
+<tr>
+<td>`</td>
+<td>`</td>
+<td>60</td>
+</tr>
+<tr>
+<td>\xnn</td>
+<td>取决于 nn</td>
+<td>nn</td>
+</tr>
+</tbody>
+</table>
+<p>可以用 <code>hexdump</code> 命令查看字符的 ASCII 码值。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">% <span class="built_in">echo</span> ab= | hexdump -C</div><div class="line">00000000  61 62 3d 0a                                       |ab=.|</div><div class="line">00000004</div></pre></td></tr></table></figure>
+<p>还有一些字符是可选转义（通常有特殊含义的字符都是如此）的，比如空格、<code>&quot;</code>、<code>&#39;</code>、<code>*</code>、<code>~</code>、<code>$</code>、<code>&amp;</code>、<code>(</code>、<code>)</code>、<code>[</code>、<code>]</code>、<code>{</code>、<code>}</code>、<code>;</code>、<code>?</code> 等等，即如果在引号里边则无需转义（即使转义也不出错，转义方法都说前边加一个 <code>\</code>），但如果在引号外边则需要转义。谨慎起见，包含半角符号的字符串全部用引号包含即可，可以避免不必要的麻烦。</p>
+<p>可以这样检查一个字符在空格外是否需要转义，输出的字符中前边带 <code>\</code> 的都是需要的。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">% str=<span class="string">'~!@#$%^&amp;*()_+-=&#123;&#125;|[]:;&lt;&gt;?,./"'</span></div><div class="line"><span class="comment"># -r 选项代表忽略字符串中的转义符合</span></div><div class="line"><span class="comment"># $&#123;(q)str&#125; 功能是为字符串中的特殊符号添加转义符号</span></div><div class="line">% <span class="built_in">print</span> -r <span class="variable">$&#123;(q)str&#125;</span></div><div class="line">\~\!@\<span class="comment">#\$%\^\&amp;\*\(\)_+-=\&#123;\&#125;\|\[\]:\;\&lt;\&gt;\?,./\"</span></div></pre></td></tr></table></figure>
+<h1 id="单引号"><a href="#单引号" class="headerlink" title="单引号"></a>单引号</h1><p>单引号的左右主要是为了避免字符串里的特殊字符起作用。在单引号中，只有一个字符需要转义，转义符号 <code>\</code> 。所以如果字符串里包含特殊符号时，最好使用单引号包含起来，避免不必要的麻烦。如果字符串需要包含单引号，可以使用这几种方法。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 用双引号包含</span></div><div class="line">% <span class="built_in">echo</span> <span class="string">"a'b"</span></div><div class="line">a<span class="string">'b</span></div><div class="line"></div><div class="line"># 用转义符号</div><div class="line">% echo a\'b</div><div class="line">a<span class="string">'b</span></div><div class="line"></div><div class="line"># 同时使用单引号和转义符号，用于包含单引号和其他特殊符号的场景</div><div class="line">% echo 'a<span class="string">"\'\''b*?'</span></div><div class="line">a"\<span class="string">'b*?</span></div></pre></td></tr></table></figure>
+<h1 id="双引号"><a href="#双引号" class="headerlink" title="双引号"></a>双引号</h1><p>双引号的作用类似单引号，但没有单引号那么严格，有些特殊字符在双引号里可以继续起作用。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 以使用变量</span></div><div class="line">% str=abc</div><div class="line">% <span class="built_in">echo</span> <span class="string">"<span class="variable">$str</span>"</span></div><div class="line">abc</div><div class="line"></div><div class="line"><span class="comment"># 可以使用 $( ) 运行命令</span></div><div class="line">% <span class="built_in">echo</span> <span class="string">"<span class="variable">$(ls)</span>"</span></div><div class="line">git</div><div class="line">tmp</div><div class="line"></div><div class="line"><span class="comment"># 可以使用 ` ` 运行命令，不建议在脚本里使用 ` `</span></div><div class="line">% <span class="built_in">echo</span> <span class="string">"`date`"</span></div><div class="line">Mon Aug 28 09:49:11 CST 2017</div><div class="line"></div><div class="line"><span class="comment"># 可以使用 $(( )) 计算数值</span></div><div class="line">% <span class="built_in">echo</span> <span class="string">"<span class="variable">$((1 + 2)</span>)"</span></div><div class="line">3</div><div class="line"></div><div class="line"><span class="comment"># 可以使用 $[ ] 计算数值</span></div><div class="line">% <span class="built_in">echo</span> <span class="string">"$[1 + 2]"</span></div><div class="line">3</div></pre></td></tr></table></figure>
+<p>简单说，<code>$</code> 加各种东西的用法在双引号里都是可以正常使用的，而其他特殊符号（比如 <code>*</code>、<code>?</code>、<code>&gt;</code>）的功能通常不可用。</p>
+<h1 id="反引号"><a href="#反引号" class="headerlink" title="反引号"></a>反引号</h1><p>反引号是用来运行命令的，它会返回命令结果，以便保存到变量等等。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">% str=`ls`</div><div class="line">% <span class="built_in">echo</span> <span class="variable">$str</span></div><div class="line">git</div><div class="line">tmp</div><div class="line"></div><div class="line"><span class="comment"># 完全可以用 $( ) 取代</span></div><div class="line">% str=$(ls)</div><div class="line">% <span class="built_in">echo</span> <span class="variable">$str</span></div><div class="line">git</div><div class="line">tmp</div></pre></td></tr></table></figure>
+<p>反引号的功能和 <code>$( )</code> 功能基本一样，但 <code>$( )</code> 可以嵌套，而反引号不可以，而且反引号看起来更费事，某些字体中的反引号和单引号差别不大。所以在脚本里不建议使用反引号。</p>
+<a id="more"></a>
+<h1 id="print-命令用法"><a href="#print-命令用法" class="headerlink" title="print 命令用法"></a>print 命令用法</h1><p><code>print</code> 是类似 <code>echo</code> 的内部命令（<code>echo</code> 命令很简单，不作介绍），但功能比 <code>echo</code> 强大很多。完全可以使用 <code>print</code> 代替 <code>echo</code>。</p>
+<p>不加参数的 <code>print</code> 和 <code>echo</code> 的功能基本一样，但如果字符串里包含转义字符，某些情况可能不一致。如果需要输出转义字符，尽量统一使用 <code>print</code>，避免不一致导致的麻烦。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">% <span class="built_in">print</span> <span class="string">'Line\tone\n\Line\ttwo'</span></div><div class="line">Line    one</div><div class="line">Line    two</div><div class="line"></div><div class="line"><span class="comment"># echo 的输出和 print 不一致</span></div><div class="line">% <span class="built_in">echo</span> <span class="string">'Line\tone\n\Line\ttwo'</span></div><div class="line">Line    one</div><div class="line">\Line   two</div></pre></td></tr></table></figure>
+<p><code>print</code> 有很多参数，在 zsh 里输入 <code>print -</code> 然后按 tab 即可查看选项帮助（如果没有效果，需要配置 <code>~/.zshrc</code> 里的补全选项，网上有很多现成的配置）。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"># - 后直接按 tab，C 是补全上去的</div><div class="line">% print -C</div><div class="line"> -- option --</div><div class="line">-C  -- print arguments in specified number of columns</div><div class="line">-D  -- substitute any arguments which are named directories using ~ notation</div><div class="line">-N  -- print arguments separated and terminated by nulls</div><div class="line">...</div></pre></td></tr></table></figure>
+<h2 id="print-命令选项功能介绍"><a href="#print-命令选项功能介绍" class="headerlink" title="print 命令选项功能介绍"></a>print 命令选项功能介绍</h2><p>这里以常用程度的顺序依次介绍所有的选项，另外文末有“<code>print</code> 选项列表”方便查询。</p>
+<p><code>-l</code> 用于分行输出字符串：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 每个字符串一行，字符串列表是用空格隔开的</span></div><div class="line">% <span class="built_in">print</span> <span class="_">-l</span> aa bb</div><div class="line">aa</div><div class="line">bb</div><div class="line"></div><div class="line"><span class="comment"># 也可以接数组，数组相关的内容之后会讲到</span></div><div class="line"><span class="comment"># 命令后的多个字符串都可以用数组取代，效果是相同的</span></div><div class="line">% array=(aa bb)</div><div class="line">% <span class="built_in">print</span> <span class="_">-l</span> <span class="variable">$array</span></div><div class="line">aa</div><div class="line">bb</div></pre></td></tr></table></figure>
+<p><code>-n</code> 用于不在输出内容的末尾自动添加换行符（<code>echo</code> 命令也有这个用法）：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">% <span class="built_in">print</span> abc</div><div class="line">abc</div><div class="line"><span class="comment"># 下面输出 abc 后的 % 高亮显示，代表这一行末尾没有换行符</span></div><div class="line">% <span class="built_in">print</span> -n abc</div><div class="line">abc%</div></pre></td></tr></table></figure>
+<p><code>-m</code> 用于只输出匹配到的字符串：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">% <span class="built_in">print</span> -m <span class="string">"aa*"</span> aabb abc aac</div><div class="line">aabb aac</div></pre></td></tr></table></figure>
+<p><code>-o/-O/-i</code> 用于对字符串排序：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># print -o 对字符串升序排列</span></div><div class="line">% <span class="built_in">print</span> -o a d c 1 b g 3 s</div><div class="line">1 3 a b c d g s</div><div class="line"></div><div class="line"><span class="comment"># print -O 对字符串降序排列</span></div><div class="line">% <span class="built_in">print</span> -O a d c 1 b g 3 s</div><div class="line">s g d c b a 3 1</div><div class="line"></div><div class="line"><span class="comment"># 加 -i 参数后，对大小写不敏感</span></div><div class="line">% <span class="built_in">print</span> -oi A B C a c A B C</div><div class="line">A a A B B C c C</div><div class="line"></div><div class="line"><span class="comment"># 不加 -i 的话小写排在大写的前面</span></div><div class="line">% <span class="built_in">print</span> -o A B C a c A B C</div><div class="line">a A A B B c C C</div></pre></td></tr></table></figure>
+<p><code>-r</code> 用于不对字符串进行转义。<code>print</code> 默认是会对转义字符进行转义的，加 <code>-r</code> 后会原样输出：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">% <span class="built_in">print</span> -r <span class="string">'\n'</span></div><div class="line">\n</div></pre></td></tr></table></figure>
+<p><code>-c</code> 用于将字符串按列输出。如果对自动决定的列数不满意，可以用 <code>-C</code> 指定列数：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">% <span class="built_in">print</span> -c a bbbbb ccc ddddd ee ffffff gg hhhhhh ii jj kk</div><div class="line">a       ccc     ee      gg      ii      kk</div><div class="line">bbbbb   ddddd   ffffff  hhhhhh  jj</div></pre></td></tr></table></figure>
+<p><code>-C</code> 用于按指定列数输出字符串：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 从上到下</span></div><div class="line">% <span class="built_in">print</span> -C 3 a bb ccc dddd ee f</div><div class="line">a     ccc   ee</div><div class="line">bb    dddd  f</div><div class="line"></div><div class="line">% <span class="built_in">print</span> -C 3 a bb ccc dddd ee f g</div><div class="line">a     dddd  g</div><div class="line">bb    ee</div><div class="line">ccc   f</div><div class="line"></div><div class="line"><span class="comment"># 加 -a 后，改成从左向右</span></div><div class="line">% <span class="built_in">print</span> <span class="_">-a</span> -C 3 a bb ccc dddd ee f g</div><div class="line">a     bb    ccc</div><div class="line">dddd  ee    f</div><div class="line">g</div></pre></td></tr></table></figure>
+<p><code>-D</code> 用于将符合条件的路径名转化成带 ~ 的格式（~ 是家目录）：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">% <span class="built_in">print</span> -D /home/goreliu/git</div><div class="line">~/git</div><div class="line"></div><div class="line"><span class="comment"># mine 是这样定义的 hash -d mine='/mnt/c/mine'</span></div><div class="line">% <span class="built_in">print</span> -D /mnt/c/mine</div><div class="line">~mine</div></pre></td></tr></table></figure>
+<p><code>-N</code> 用于将输出的字符串以 <code>\x00</code>（null）分隔，而不是空格。这样可能方便处理包含空格的字符串，<code>xargs</code> 等命令也可以接受以 <code>\x00</code> 分隔的字符串：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">% <span class="built_in">print</span> -N aa bb cc</div><div class="line">aabbcc%</div><div class="line"></div><div class="line">% <span class="built_in">print</span> -N aa bb cc | hexdump -C</div><div class="line">00000000  61 61 00 62 62 00 63 63  00                       |aa.bb.cc.|</div><div class="line">00000009</div></pre></td></tr></table></figure>
+<p><code>-x</code> 用于将行首的 tab 替换成空格。<code>-x</code> 是将行首的 tab 展开成空格，<code>-x</code> 后的参数是一个 tab 对应的空格数：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">% <span class="built_in">print</span> -x 2 <span class="string">'\t\tabc'</span> | hexdump -C</div><div class="line">00000000  20 20 20 20 61 62 63 0a                           |    abc.|</div><div class="line">00000008</div><div class="line"></div><div class="line">% <span class="built_in">print</span> -x 4 <span class="string">'\t\tabc'</span> | hexdump -C</div><div class="line">00000000  20 20 20 20 20 20 20 20  61 62 63 0a              |        abc.|</div><div class="line">0000000c</div></pre></td></tr></table></figure>
+<p><code>-X</code> 用于将所有的 tab 补全成空格。注意不是简单地替换成空格。比如每行有一个 tab，<code>-X 8</code>，那么如果 tab 前（到行首或者上一个 tab）有 5 个字符，就补全 3 个空格，凑够 8，这么做是为了对齐每一列的。但如果前边有 8 个或者 8 个以上字符，那么依然是一个 tab 替换成 8 个字符，因为 tab 不能凭空消失，一定要转成至少一个空格才行。如果没理解就自己多试试找规律吧。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">% <span class="built_in">print</span> -X 2 <span class="string">'ab\t\tabc'</span> | hexdump -C</div><div class="line">00000000  61 62 20 20 20 20 61 62  63 0a                    |ab    abc.|</div><div class="line">0000000a</div><div class="line"></div><div class="line">% <span class="built_in">print</span> -X 4 <span class="string">'ab\t\tabc'</span> | hexdump -C</div><div class="line">00000000  61 62 20 20 20 20 20 20  61 62 63 0a              |ab      abc.|</div><div class="line">0000000c</div></pre></td></tr></table></figure>
+<p><code>-u</code> 用于指定文件描述符（fd）输出。<code>print</code> 默认输出到 fd 1，即 stdout，可以指定成其他 fd（2 是 stderr，其他的可以运行 <code>ls -l /proc/$$/fd</code> 查看。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">% <span class="built_in">print</span> -u 2 good</div><div class="line">good</div><div class="line"></div><div class="line"><span class="comment"># 和重定向输出效果一样</span></div><div class="line">% <span class="built_in">print</span> good &gt;&amp;2</div></pre></td></tr></table></figure>
+<p><code>-v</code> 用于把输出内容保存到变量：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 和 str="$(print aa bb cc)" 效果一样</span></div><div class="line">% <span class="built_in">print</span> -v str aa bb cc</div><div class="line">% <span class="built_in">echo</span> <span class="variable">$str</span></div><div class="line">aa bb cc</div></pre></td></tr></table></figure>
+<p><code>-s/-S</code> 用于把字符串保存到历史记录：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">% <span class="built_in">print</span> <span class="_">-s</span> ls <span class="_">-a</span></div><div class="line">% <span class="built_in">history</span> | tail -n 1</div><div class="line"> 2222  ls <span class="_">-a</span></div><div class="line"></div><div class="line"><span class="comment"># -S 也类似，但需要用引号把命令引起来</span></div><div class="line">% <span class="built_in">print</span> -S <span class="string">"ls -a"</span></div><div class="line">% <span class="built_in">history</span> | tail -n 1</div><div class="line"> 2339  ls <span class="_">-a</span></div></pre></td></tr></table></figure>
+<p><code>-z</code> 用于把字符串输出到命令行编辑区：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># _是光标位置</span></div><div class="line">% <span class="built_in">print</span> -z aa bb cc</div><div class="line">% aa bb cc_</div></pre></td></tr></table></figure>
+<p><code>-f</code> 用于按指定格式化字符串输出，同 <code>printf</code>，用法见“<code>printf</code> 命令用法”。</p>
+<p><code>-P</code> 用于输出带颜色和特殊样式的字符串，见“输出带颜色和特殊样式的字符串”。</p>
+<p><code>-b</code> 用于辨认出 bindkey 中的转义字符串，bindkey 是 Zle 的快捷键配置内容，写脚本用不到，不作介绍。</p>
+<p><code>-R</code> 用于模拟 <code>echo</code> 命令，只支持 <code>-n</code> 和 <code>-e</code> 选项，通常用不到。</p>
+<h1 id="printf-命令用法"><a href="#printf-命令用法" class="headerlink" title="printf 命令用法"></a>printf 命令用法</h1><p><code>printf</code> 命令很像 c 语言的 <code>printf</code> 函数，用于输出格式化后的字符串：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 末尾输出高亮的 % 代表该行末尾没有换行符</span></div><div class="line"><span class="comment"># printf 不会在输出末尾自动添加换行符</span></div><div class="line"><span class="comment"># 为了避免误解，之后的例子省略该 % 符号</span></div><div class="line">% <span class="built_in">printf</span> <span class="string">":%d %f:"</span> 12 34.56</div><div class="line">:12 34.560000:%</div></pre></td></tr></table></figure>
+<p><code>printf</code> 的第一个参数是格式化字符串，在 zsh 里输入 <code>printf %</code> 后按 tab，可以看到所有支持的用法。下面只举几个比较常用的例子：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 整数 浮点数 字符串</span></div><div class="line">% <span class="built_in">printf</span> <span class="string">"%d %f %s"</span> 12 12.34 abcd</div><div class="line">12 12.340000 abcd%</div><div class="line"></div><div class="line"><span class="comment"># 取小数点后 1 位</span></div><div class="line">% <span class="built_in">printf</span> <span class="string">"%.1f"</span> 12.34</div><div class="line">12.3</div><div class="line"></div><div class="line"><span class="comment"># 科学计数法输出浮点数</span></div><div class="line">% <span class="built_in">printf</span> <span class="string">"%e"</span> 12.34</div><div class="line">1.234000e+01</div><div class="line"></div><div class="line"><span class="comment"># 将十进制数字转成十六进制输出</span></div><div class="line">% <span class="built_in">printf</span> <span class="string">"%x"</span> 12</div><div class="line">c</div><div class="line"></div><div class="line"><span class="comment"># 补齐空格或者补齐 0</span></div><div class="line">% <span class="built_in">printf</span> <span class="string">"%5d\n%05d"</span> 12 12</div><div class="line">   12</div><div class="line">00012</div></pre></td></tr></table></figure>
+<p>我把完整的格式贴在这里，方便搜索：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"> -- <span class="built_in">print</span> format specifier --</div><div class="line">      -- leave one space <span class="keyword">in</span> front of positive number from signed conversion</div><div class="line">-     -- left adjust result</div><div class="line">.     -- precision</div><div class="line"><span class="string">'     -- thousand separators</span></div><div class="line">*     -- field width in next argument</div><div class="line">#     -- alternate form</div><div class="line">%     -- a percent sign</div><div class="line">+     -- always place sign before a number from signed conversion</div><div class="line">0     -- zero pad to length</div><div class="line">b     -- as %s but interpret escape sequences in argument</div><div class="line">c     -- print the first character of the argument</div><div class="line">E  e  -- double number in scientific notation</div><div class="line">f     -- double number</div><div class="line">G  g  -- double number as %f or %e depending on size</div><div class="line">i  d  -- signed decimal number or with leading " numeric value of following character</div><div class="line">n     -- store number of printed bytes in parameter specified by argument</div><div class="line">o     -- unsigned octal number</div><div class="line">q     -- as %s but shell quote result</div><div class="line">s     -- print the argument as a string</div><div class="line">u     -- unsigned decimal number</div><div class="line">X  x  -- unsigned hexadecimal number, letters capitalized as x</div></pre></td></tr></table></figure>
+<h2 id="输出带颜色和特殊样式的字符串"><a href="#输出带颜色和特殊样式的字符串" class="headerlink" title="输出带颜色和特殊样式的字符串"></a>输出带颜色和特殊样式的字符串</h2><p>用 zsh 的 <code>print -P</code> 可以方便地输出带颜色和特殊样式的字符串，不用再和 <code>\033[41;36;1m</code> 之类莫名其妙的字符串打交道了。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># %B 加粗 %b 取消加粗</span></div><div class="line"><span class="comment"># %F&#123;red&#125; 前景色 %f 取消前景色</span></div><div class="line"><span class="comment"># %K&#123;red&#125; 背景色 %k 取消背景色</span></div><div class="line"><span class="comment"># %U 下滑线 %u 取消下滑线</span></div><div class="line"><span class="comment"># %S 反色 %s 取消反色</span></div><div class="line"><span class="comment">#</span></div><div class="line"><span class="comment"># black or 0  red     or 1</span></div><div class="line"><span class="comment"># green or 2  yellow  or 3</span></div><div class="line"><span class="comment"># blue  or 4  magenta or 5</span></div><div class="line"><span class="comment"># cyan  or 6  white   or 7</span></div><div class="line"></div><div class="line"><span class="comment"># 显示加粗的红色 abc</span></div><div class="line">% <span class="built_in">print</span> -P <span class="string">'%B%F&#123;red&#125;abc'</span></div><div class="line">abc</div><div class="line"></div><div class="line"><span class="comment"># 没覆盖到的功能可以用原始的转义符号，可读性比较差</span></div><div class="line"><span class="comment"># 4[0-7] 背景色</span></div><div class="line"><span class="comment"># 3[0-7] 前景色</span></div><div class="line"><span class="comment"># 0m 正常 1m 加粗 2m 变灰 3m 斜体 4m 下滑钱 5m 闪烁 6m 快速闪烁 7m 反色</span></div><div class="line"></div><div class="line"><span class="comment"># 显示闪烁的红底绿字 abc</span></div><div class="line">% <span class="built_in">print</span> <span class="string">"\033[41;32;5mabc\033[0m"</span></div><div class="line">abc</div></pre></td></tr></table></figure>
+<h2 id="print-选项列表"><a href="#print-选项列表" class="headerlink" title="print 选项列表"></a>print 选项列表</h2><p>为了方便查询，我把 <code>print</code> 的选项列表放在这里：</p>
+<table>
+<thead>
+<tr>
+<th>选项</th>
+<th>功能</th>
+<th>参数</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>-C</td>
+<td>按列输出</td>
+<td>列数</td>
+</tr>
+<tr>
+<td>-D</td>
+<td>替换路径成带 <code>~</code> 的版本</td>
+<td>无</td>
+</tr>
+<tr>
+<td>-N</td>
+<td>使用 <code>\x00</code> 作为字符串的间隔</td>
+<td>无</td>
+</tr>
+<tr>
+<td>-O</td>
+<td>降序排列</td>
+<td>无</td>
+</tr>
+<tr>
+<td>-P</td>
+<td>输出颜色和特殊样式</td>
+<td>无</td>
+</tr>
+<tr>
+<td>-R</td>
+<td>模拟 <code>echo</code> 命令</td>
+<td>无</td>
+</tr>
+<tr>
+<td>-S</td>
+<td>放命令放入历史命令文件（要加引号）</td>
+<td>无</td>
+</tr>
+<tr>
+<td>-X</td>
+<td>替换所有 tab 为空格</td>
+<td>tab 对应空格数</td>
+</tr>
+<tr>
+<td>-a</td>
+<td>和 <code>-c</code>/<code>-C</code> 一起使用时，改为从左到右</td>
+<td>无</td>
+</tr>
+<tr>
+<td>-b</td>
+<td>识别出 bindkey 转义字符串</td>
+<td>无</td>
+</tr>
+<tr>
+<td>-c</td>
+<td>按列输出（自动决定列数）</td>
+<td>无</td>
+</tr>
+<tr>
+<td>-f</td>
+<td>同 <code>printf</code></td>
+<td>无</td>
+</tr>
+<tr>
+<td>-i</td>
+<td>和 <code>-o</code>/<code>-O</code> 一起用时，大小写不敏感排序</td>
+<td>无</td>
+</tr>
+<tr>
+<td>-l</td>
+<td>使用换行符作为字符串分隔符</td>
+<td>无</td>
+</tr>
+<tr>
+<td>-m</td>
+<td>只输出匹配的字符串</td>
+<td>匹配模式字符串</td>
+</tr>
+<tr>
+<td>-n</td>
+<td>不自动添加最后的换行符</td>
+<td>无</td>
+</tr>
+<tr>
+<td>-o</td>
+<td>升序排列</td>
+<td>无</td>
+</tr>
+<tr>
+<td>-r</td>
+<td>不处理转义字符</td>
+<td>无</td>
+</tr>
+<tr>
+<td>-s</td>
+<td>放命令放入历史命令文件（不加引号）</td>
+<td>无</td>
+</tr>
+<tr>
+<td>-u</td>
+<td>指定 fd 输出</td>
+<td>fd 号</td>
+</tr>
+<tr>
+<td>-v</td>
+<td>把内容保存到变量</td>
+<td>变量名</td>
+</tr>
+<tr>
+<td>-x</td>
+<td>替换行首的 tab 为空格</td>
+<td>tab 对应空格数</td>
+</tr>
+<tr>
+<td>-z</td>
+<td>把内容放置到命令行编辑区</td>
+<td>无</td>
+</tr>
+</tbody>
+</table>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a href="https://github.com/goreliu/zshguide" target="_blank" rel="external">zsh开发指南</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <div class="article-footer-tag">
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/shell/">shell</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/zsh/">zsh</a></li></ul>
+
+      </div>
+      <!-- JiaThis Button BEGIN -->
+      <div class="jiathis_style">
+        <span class="jiathis_txt">分享到：</span>
+        <a class="jiathis_button_qzone">QQ空间</a>
+        <a class="jiathis_button_tsina">新浪微博</a>
+        <a class="jiathis_button_tqq">腾讯微博</a>
+        <a class="jiathis_button_weixin">微信</a>
+        <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+        <a class="jiathis_counter_style"></a>
+      </div>
+      <script type="text/javascript" src="http://v3.jiathis.com/code_mini/jia.js" charset="utf-8"></script>
+      <!-- JiaThis Button END -->
+      <!-- UJian Button BEGIN -->
+      <div class="ujian-hook"></div>
+      <script type="text/javascript" src="http://v1.ujian.cc/code/ujian.js"></script>
+      <!-- UJian Button END -->
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/09/21/zsh-字符串通配符/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Récent</strong>
+      <div class="article-nav-title">
+        
+          zsh-字符串通配符
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/09/20/zsh-字符串常用操作/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Ancien</strong>
+      <div class="article-nav-title">zsh-字符串常用操作</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+<section id="comments">
+<!-- 多说评论框 start -->
+<div class="ds-thread" data-thread-key="post-zsh-字符串转义和格式化" data-title="zsh-字符串转义和格式化" data-url="http://kennethfan.github.io/2017/09/20/zsh-字符串转义和格式化/"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:'kennethfan'};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+  </script>
+<!-- 多说公共JS代码 end -->
+</section>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Mot-clés</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Effective-Java/">Effective Java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PHP/">PHP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PHPUnit/">PHPUnit</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cache/">cache</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/memcached/">memcached</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/redids/">redids</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/redis/">redis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/shell/">shell</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vim/">vim</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/zsh/">zsh</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Nuage de mot-clés</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Effective-Java/" style="font-size: 16.67px;">Effective Java</a> <a href="/tags/Java/" style="font-size: 16.67px;">Java</a> <a href="/tags/PHP/" style="font-size: 16.67px;">PHP</a> <a href="/tags/PHPUnit/" style="font-size: 10px;">PHPUnit</a> <a href="/tags/cache/" style="font-size: 13.33px;">cache</a> <a href="/tags/memcached/" style="font-size: 10px;">memcached</a> <a href="/tags/redids/" style="font-size: 10px;">redids</a> <a href="/tags/redis/" style="font-size: 10px;">redis</a> <a href="/tags/shell/" style="font-size: 20px;">shell</a> <a href="/tags/vim/" style="font-size: 20px;">vim</a> <a href="/tags/zsh/" style="font-size: 20px;">zsh</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">June 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">April 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">March 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Articles récents</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/11/06/redis-linkedlist/">redis链表</a>
+          </li>
+        
+          <li>
+            <a href="/2017/11/06/redis-string/">redis数据结构之字符串</a>
+          </li>
+        
+          <li>
+            <a href="/2017/09/21/zsh-字符串通配符/">zsh-字符串通配符</a>
+          </li>
+        
+          <li>
+            <a href="/2017/09/20/zsh-字符串转义和格式化/">zsh-字符串转义和格式化</a>
+          </li>
+        
+          <li>
+            <a href="/2017/09/20/zsh-字符串常用操作/">zsh-字符串常用操作</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+      <div class="widget-wrap">
+    <h3 class="widget-title">友情链接</h3>
+    <div class="widget">
+      <ul>
+          
+          <li>
+            <a href="http://pedroneer.github.io">龙羽</a>
+          </li>
+          
+          <li>
+            <a href="https://github.com/buptzhanghao">好神</a>
+          </li>
+          
+          <li>
+            <a href="http://www.bencaimao.com/">笨财猫</a>
+          </li>
+          
+          <li>
+            <a href="http://www.beva.com">贝瓦网</a>
+          </li>
+          
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 Kenneth Fan<br>
+      Propulsé by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>

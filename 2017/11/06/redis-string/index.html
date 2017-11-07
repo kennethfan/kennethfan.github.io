@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>redis数据结构之字符串 | 夜未央</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <meta name="keyword" content="PHP,memcached,redis,cache,vim,redids,PHPUnit,zsh,shell,Java,Effective Java">
+  
+  <meta name="description" content="Redis没有直接使用C语言传统的字符串表示（以空字符串结尾的字符数组），而是自己构建了一种名为动态字符串（simple dynamic string，SDS）的抽象类型，并将SDS用作Redis的默认字符串表示。Redis的数据库里面，包含字符串值的键值对在底层都是用SDS实现的；除此之外，SDS还被用作缓冲区（buffer）：AOF模块中的AOF缓冲区，以及客户端状态中的输入缓冲区，都是有SD">
+<meta property="og:type" content="article">
+<meta property="og:title" content="redis数据结构之字符串">
+<meta property="og:url" content="http://kennethfan.github.io/2017/11/06/redis-string/index.html">
+<meta property="og:site_name" content="夜未央">
+<meta property="og:description" content="Redis没有直接使用C语言传统的字符串表示（以空字符串结尾的字符数组），而是自己构建了一种名为动态字符串（simple dynamic string，SDS）的抽象类型，并将SDS用作Redis的默认字符串表示。Redis的数据库里面，包含字符串值的键值对在底层都是用SDS实现的；除此之外，SDS还被用作缓冲区（buffer）：AOF模块中的AOF缓冲区，以及客户端状态中的输入缓冲区，都是有SD">
+<meta property="og:updated_time" content="2017-11-06T15:40:22.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="redis数据结构之字符串">
+<meta name="twitter:description" content="Redis没有直接使用C语言传统的字符串表示（以空字符串结尾的字符数组），而是自己构建了一种名为动态字符串（simple dynamic string，SDS）的抽象类型，并将SDS用作Redis的默认字符串表示。Redis的数据库里面，包含字符串值的键值对在底层都是用SDS实现的；除此之外，SDS还被用作缓冲区（buffer）：AOF模块中的AOF缓冲区，以及客户端状态中的输入缓冲区，都是有SD">
+  
+    <link rel="alternate" href="/atom.xml" title="夜未央" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">夜未央</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">感恩 &amp; 回馈 | 理解 &amp; 释怀 | 热爱 &amp; 敬畏</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="Flux RSS"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Rechercher"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://kennethfan.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-redis-string" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/11/06/redis-string/" class="article-date">
+  <time datetime="2017-11-06T15:00:11.000Z" itemprop="datePublished">2017-11-06</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      redis数据结构之字符串
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+
+        <!-- Table of Contents -->
+        
+        <div id="toc" class="toc-article">
+        <strong class="toc-title">文章目录</strong>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#SDS的定义"><span class="toc-number">1.</span> <span class="toc-text">SDS的定义</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#SDS与C字符串的区别"><span class="toc-number">2.</span> <span class="toc-text">SDS与C字符串的区别</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#常数复杂度获取字符串长度"><span class="toc-number">2.1.</span> <span class="toc-text">常数复杂度获取字符串长度</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#杜绝缓冲区溢出"><span class="toc-number">2.2.</span> <span class="toc-text">杜绝缓冲区溢出</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#减少修改字符串时带来的内存重分配次数"><span class="toc-number">2.3.</span> <span class="toc-text">减少修改字符串时带来的内存重分配次数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#空间预分配"><span class="toc-number">2.3.1.</span> <span class="toc-text">空间预分配</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#惰性空间释放"><span class="toc-number">2.3.2.</span> <span class="toc-text">惰性空间释放</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#二进制安全"><span class="toc-number">2.4.</span> <span class="toc-text">二进制安全</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#兼容部分C字符串函数"><span class="toc-number">2.5.</span> <span class="toc-text">兼容部分C字符串函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SDS-API"><span class="toc-number">2.6.</span> <span class="toc-text">SDS API</span></a></li></ol></li></ol>
+        </div>
+        
+
+        <p>Redis没有直接使用C语言传统的字符串表示（以空字符串结尾的字符数组），而是自己构建了一种名为动态字符串（simple dynamic string，SDS）的抽象类型，并将SDS用作Redis的默认字符串表示。Redis的数据库里面，包含字符串值的键值对在底层都是用SDS实现的；除此之外，SDS还被用作缓冲区（buffer）：AOF模块中的AOF缓冲区，以及客户端状态中的输入缓冲区，都是有SDS实现的。</p>
+<a id="more"></a>
+<h1 id="SDS的定义"><a href="#SDS的定义" class="headerlink" title="SDS的定义"></a>SDS的定义</h1><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">struct</span> sdshdr &#123;</div><div class="line">    <span class="comment">// 记录buf数组中已使用字节的数量</span></div><div class="line">    <span class="comment">// 等于SDS保存的字符串长度</span></div><div class="line">    <span class="keyword">int</span> len;</div><div class="line">    <span class="comment">// 记录buf数组中未使用字节的数量</span></div><div class="line">    <span class="keyword">int</span> <span class="built_in">free</span>;</div><div class="line">    <span class="comment">// 字节数组</span></div><div class="line">    <span class="keyword">char</span> buf[];</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p>SDS遵循C字符串一空字符串结尾的惯例，保存空字符的1字节空间不计算在SDS的len属性里面，并且为空字符分配额外的1字节，以及添加空字符到字符串末尾等操作都是由SDS函数自动完成。遵循空字符结尾这一惯例的好处是，SDS可以直接使用一部分C字符串函数库里的函数。</p>
+<h1 id="SDS与C字符串的区别"><a href="#SDS与C字符串的区别" class="headerlink" title="SDS与C字符串的区别"></a>SDS与C字符串的区别</h1><h2 id="常数复杂度获取字符串长度"><a href="#常数复杂度获取字符串长度" class="headerlink" title="常数复杂度获取字符串长度"></a>常数复杂度获取字符串长度</h2><p>C字符串不记录自身的长度信息，所以为了获取一个C字符串的长度，必须遍历整个字符串，复杂度O（N).</p>
+<p>和C字符串不同，SDS在len属性中记录了SDS本身的长度，获取长度复杂度仅为O（1）。</p>
+<h2 id="杜绝缓冲区溢出"><a href="#杜绝缓冲区溢出" class="headerlink" title="杜绝缓冲区溢出"></a>杜绝缓冲区溢出</h2><p>除了获取长度的负责度高之外，C字符串不记录自身长度带来的另一个问题是容易造成缓冲区溢出。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">char</span> *<span class="title">strcat</span><span class="params">(<span class="keyword">char</span> *dest, <span class="keyword">const</span> <span class="keyword">char</span> *src)</span></span>;</div></pre></td></tr></table></figure>
+<p>因为不记录自身长度，所以strcat假定执行这个函数时，已经为desc分配了足够多的内存，可以容纳src的所有内容，而一旦这个假设不成立，就会产生缓冲区溢出。</p>
+<p>与C字符串不同，SDS的空间分配策略完全杜绝了发生缓冲区溢出的可能性：当SDS API需要对SDS进行修改时，API会先检查SDS的空间是否满足修改要求，如果不满足，API自动将SDS的空间扩展至所需大小，然后才执行实际的修改操作。所以SDS不会造成缓冲区溢出。</p>
+<h2 id="减少修改字符串时带来的内存重分配次数"><a href="#减少修改字符串时带来的内存重分配次数" class="headerlink" title="减少修改字符串时带来的内存重分配次数"></a>减少修改字符串时带来的内存重分配次数</h2><p>因为C字符串不记录自身长度，对一个包含了N个字符的C字符串来说，字符串底层总是一个N+1字节数组。因为C字符串的长度和底层的数组长度自检存在某种关联关系，所以每次增长一个或者缩短一个C字符串，总要对保存这个C字符串的数组进行一次内存重分配操作：</p>
+<ul>
+<li>如果是增长操作，需要先通过内存重分类扩展底层数组的空间大小，如果忘记了就会产生缓冲区溢出操作。</li>
+<li>如果是缩短操作，需要重新分配来释放不再使用的空间，如果忘了会产生内存泄露。</li>
+</ul>
+<p>为了必满C字符串的缺陷，SDS通过未使用空间接触了字符串长度和底层数组长度的关联；通过未使用空间，SDS实现了空间预分配和惰性空间释放两种优化策略</p>
+<h3 id="空间预分配"><a href="#空间预分配" class="headerlink" title="空间预分配"></a>空间预分配</h3><p>当SDS的API对一个SDS进行修改，并且需要对SDS进行空间扩展的时候，程序不仅会分配修改所必须要的空间，还会为SDS分配额外的未使用空间。</p>
+<ul>
+<li>如果修改之后，SDS的长度（len）小于1MB，程序分配和len同样大小的未使用空间。</li>
+<li>如果修改之后，SDS的长度大于等于1MB，程序会分配1MB未使用空间。</li>
+</ul>
+<h3 id="惰性空间释放"><a href="#惰性空间释放" class="headerlink" title="惰性空间释放"></a>惰性空间释放</h3><p>惰性空间释放用于优化SDS的字符串缩短操作：当SDS的API需要缩短SDS保存的字符串时，程序并不立即重新分配释放多出来的字节，而是使用free将这些字节数量记录起来，并等待将来使用。</p>
+<h2 id="二进制安全"><a href="#二进制安全" class="headerlink" title="二进制安全"></a>二进制安全</h2><p>字符串中包含空字符串\0时，C字符串会有问题，SDS不会，因为SDS通过len记录了字符串的长度。</p>
+<h2 id="兼容部分C字符串函数"><a href="#兼容部分C字符串函数" class="headerlink" title="兼容部分C字符串函数"></a>兼容部分C字符串函数</h2><h2 id="SDS-API"><a href="#SDS-API" class="headerlink" title="SDS API"></a>SDS API</h2><ul>
+<li>sdsnew：创建一个包含给定C字符串的SDS，O(N)</li>
+<li>sdsempy：创建一个空SDS，O(1)</li>
+<li>sdsfree：释放SDS，O(1)</li>
+<li>sdslen：返回已使用空间字节数，O(1)</li>
+<li>sdsavail：返回未使用空间字节数，O(1)</li>
+<li>sdsdup：创建SDS副本，O(N)</li>
+<li>sdsclear：清空SDS内容，O(1)</li>
+<li>sdscat：拼接给定C字符串，O(N)</li>
+<li>sdscatsds：拼接给定SDS，O(N)</li>
+<li>sdscpy：将给定C字符串复制到SDS，覆盖原有内容，O(N)</li>
+<li>sdsgrowzero：用空串扩展SDS到指定长度，O(N)</li>
+<li>sdsrange：保留给定区间内容，不在区间内被覆盖，O(N)</li>
+<li>sdstrim：移除SDS中给定C字符串中出现过的字符，O(N^2)</li>
+<li>sdscmp：比较两个SDS是否相同，O(N)</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <div class="article-footer-tag">
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/cache/">cache</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/redids/">redids</a></li></ul>
+
+      </div>
+      <!-- JiaThis Button BEGIN -->
+      <div class="jiathis_style">
+        <span class="jiathis_txt">分享到：</span>
+        <a class="jiathis_button_qzone">QQ空间</a>
+        <a class="jiathis_button_tsina">新浪微博</a>
+        <a class="jiathis_button_tqq">腾讯微博</a>
+        <a class="jiathis_button_weixin">微信</a>
+        <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+        <a class="jiathis_counter_style"></a>
+      </div>
+      <script type="text/javascript" src="http://v3.jiathis.com/code_mini/jia.js" charset="utf-8"></script>
+      <!-- JiaThis Button END -->
+      <!-- UJian Button BEGIN -->
+      <div class="ujian-hook"></div>
+      <script type="text/javascript" src="http://v1.ujian.cc/code/ujian.js"></script>
+      <!-- UJian Button END -->
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/11/06/redis-linkedlist/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Récent</strong>
+      <div class="article-nav-title">
+        
+          redis链表
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/09/21/zsh-字符串通配符/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Ancien</strong>
+      <div class="article-nav-title">zsh-字符串通配符</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+<section id="comments">
+<!-- 多说评论框 start -->
+<div class="ds-thread" data-thread-key="post-redis-string" data-title="redis数据结构之字符串" data-url="http://kennethfan.github.io/2017/11/06/redis-string/"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:'kennethfan'};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+  </script>
+<!-- 多说公共JS代码 end -->
+</section>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Mot-clés</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Effective-Java/">Effective Java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PHP/">PHP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PHPUnit/">PHPUnit</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cache/">cache</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/memcached/">memcached</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/redids/">redids</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/redis/">redis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/shell/">shell</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vim/">vim</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/zsh/">zsh</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Nuage de mot-clés</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Effective-Java/" style="font-size: 16.67px;">Effective Java</a> <a href="/tags/Java/" style="font-size: 16.67px;">Java</a> <a href="/tags/PHP/" style="font-size: 16.67px;">PHP</a> <a href="/tags/PHPUnit/" style="font-size: 10px;">PHPUnit</a> <a href="/tags/cache/" style="font-size: 13.33px;">cache</a> <a href="/tags/memcached/" style="font-size: 10px;">memcached</a> <a href="/tags/redids/" style="font-size: 10px;">redids</a> <a href="/tags/redis/" style="font-size: 10px;">redis</a> <a href="/tags/shell/" style="font-size: 20px;">shell</a> <a href="/tags/vim/" style="font-size: 20px;">vim</a> <a href="/tags/zsh/" style="font-size: 20px;">zsh</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">June 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">April 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">March 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Articles récents</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/11/06/redis-linkedlist/">redis链表</a>
+          </li>
+        
+          <li>
+            <a href="/2017/11/06/redis-string/">redis数据结构之字符串</a>
+          </li>
+        
+          <li>
+            <a href="/2017/09/21/zsh-字符串通配符/">zsh-字符串通配符</a>
+          </li>
+        
+          <li>
+            <a href="/2017/09/20/zsh-字符串转义和格式化/">zsh-字符串转义和格式化</a>
+          </li>
+        
+          <li>
+            <a href="/2017/09/20/zsh-字符串常用操作/">zsh-字符串常用操作</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+      <div class="widget-wrap">
+    <h3 class="widget-title">友情链接</h3>
+    <div class="widget">
+      <ul>
+          
+          <li>
+            <a href="http://pedroneer.github.io">龙羽</a>
+          </li>
+          
+          <li>
+            <a href="https://github.com/buptzhanghao">好神</a>
+          </li>
+          
+          <li>
+            <a href="http://www.bencaimao.com/">笨财猫</a>
+          </li>
+          
+          <li>
+            <a href="http://www.beva.com">贝瓦网</a>
+          </li>
+          
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 Kenneth Fan<br>
+      Propulsé by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>

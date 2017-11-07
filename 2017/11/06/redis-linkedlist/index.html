@@ -3,50 +3,24 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Vim系列之初体验(二) | 夜未央</title>
+  <title>redis链表 | 夜未央</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
   <meta name="keyword" content="PHP,memcached,redis,cache,vim,redids,PHPUnit,zsh,shell,Java,Effective Java">
   
-  <meta name="description" content="Vim安装Mac OS和Unix系统默认都有安装，所有Vim的安装不多介绍。
-快速开始命令：vim [文件名] 文件名可选
-直接输入vim
-1vim
-效果如图：
-
-vim 文件名 文件不存在将会自动创建。
-1vim quickstart">
+  <meta name="description" content="每个链表和链表节点的实现链表节点结构12345678typedef struct listNode &amp;#123;    // 前置节点    struct listNode *prev;    // 后置节点  	struct listNode *next;    // 节点内容    void *value;&amp;#125; listNode;
+链表结构1234567891011121314type">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Vim系列之初体验(二)">
-<meta property="og:url" content="http://kennethfan.github.io/2016/03/08/vim-quickstart/index.html">
+<meta property="og:title" content="redis链表">
+<meta property="og:url" content="http://kennethfan.github.io/2017/11/06/redis-linkedlist/index.html">
 <meta property="og:site_name" content="夜未央">
-<meta property="og:description" content="Vim安装Mac OS和Unix系统默认都有安装，所有Vim的安装不多介绍。
-快速开始命令：vim [文件名] 文件名可选
-直接输入vim
-1vim
-效果如图：
-
-vim 文件名 文件不存在将会自动创建。
-1vim quickstart">
-<meta property="og:image" content="http://kennethfan.github.io/2016/03/08/vim-quickstart/vim-quickstart-start.png">
-<meta property="og:image" content="http://kennethfan.github.io/2016/03/08/vim-quickstart/vim-quickstart-newfile.png">
-<meta property="og:image" content="http://kennethfan.github.io/2016/03/08/vim-quickstart/vim-quickstart-openfile.png">
-<meta property="og:image" content="http://kennethfan.github.io/2016/03/08/vim-quickstart/vim-quickstart-move.png">
-<meta property="og:image" content="http://kennethfan.github.io/2016/03/08/vim-quickstart/vim-quickstart-insert.png">
-<meta property="og:image" content="http://kennethfan.github.io/2016/03/08/vim-quickstart/vim-quickstart-save.png">
-<meta property="og:image" content="http://kennethfan.github.io/2016/03/08/vim-quickstart/vim-quickstart-quit-notsave.png">
-<meta property="og:updated_time" content="2017-06-05T12:40:06.000Z">
+<meta property="og:description" content="每个链表和链表节点的实现链表节点结构12345678typedef struct listNode &amp;#123;    // 前置节点    struct listNode *prev;    // 后置节点  	struct listNode *next;    // 节点内容    void *value;&amp;#125; listNode;
+链表结构1234567891011121314type">
+<meta property="og:updated_time" content="2017-11-06T16:05:27.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Vim系列之初体验(二)">
-<meta name="twitter:description" content="Vim安装Mac OS和Unix系统默认都有安装，所有Vim的安装不多介绍。
-快速开始命令：vim [文件名] 文件名可选
-直接输入vim
-1vim
-效果如图：
-
-vim 文件名 文件不存在将会自动创建。
-1vim quickstart">
-<meta name="twitter:image" content="http://kennethfan.github.io/2016/03/08/vim-quickstart/vim-quickstart-start.png">
+<meta name="twitter:title" content="redis链表">
+<meta name="twitter:description" content="每个链表和链表节点的实现链表节点结构12345678typedef struct listNode &amp;#123;    // 前置节点    struct listNode *prev;    // 后置节点  	struct listNode *next;    // 节点内容    void *value;&amp;#125; listNode;
+链表结构1234567891011121314type">
   
     <link rel="alternate" href="/atom.xml" title="夜未央" type="application/atom+xml">
   
@@ -100,10 +74,10 @@ vim 文件名 文件不存在将会自动创建。
 </header>
 
       <div class="outer">
-        <section id="main"><article id="post-vim-quickstart" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-redis-linkedlist" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2016/03/08/vim-quickstart/" class="article-date">
-  <time datetime="2016-03-08T11:46:02.000Z" itemprop="datePublished">2016-03-08</time>
+    <a href="/2017/11/06/redis-linkedlist/" class="article-date">
+  <time datetime="2017-11-06T15:41:15.000Z" itemprop="datePublished">2017-11-06</time>
 </a>
     
   </div>
@@ -114,7 +88,7 @@ vim 文件名 文件不存在将会自动创建。
         
   
     <h1 class="article-title" itemprop="name">
-      Vim系列之初体验(二)
+      redis链表
     </h1>
   
 
@@ -127,54 +101,56 @@ vim 文件名 文件不存在将会自动创建。
         
         <div id="toc" class="toc-article">
         <strong class="toc-title">文章目录</strong>
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Vim安装"><span class="toc-number">1.</span> <span class="toc-text">Vim安装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#快速开始"><span class="toc-number">2.</span> <span class="toc-text">快速开始</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#简单的移动"><span class="toc-number">3.</span> <span class="toc-text">简单的移动</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#插入文本"><span class="toc-number">4.</span> <span class="toc-text">插入文本</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#保存"><span class="toc-number">5.</span> <span class="toc-text">保存</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#退出"><span class="toc-number">6.</span> <span class="toc-text">退出</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#每个链表和链表节点的实现"><span class="toc-number">1.</span> <span class="toc-text">每个链表和链表节点的实现</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#链表节点结构"><span class="toc-number">1.1.</span> <span class="toc-text">链表节点结构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#链表结构"><span class="toc-number">1.2.</span> <span class="toc-text">链表结构</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#API"><span class="toc-number">2.</span> <span class="toc-text">API</span></a></li></ol>
         </div>
         
 
-        <h2 id="Vim安装"><a href="#Vim安装" class="headerlink" title="Vim安装"></a>Vim安装</h2><p>Mac OS和Unix系统默认都有安装，所有Vim的安装不多介绍。</p>
-<h2 id="快速开始"><a href="#快速开始" class="headerlink" title="快速开始"></a>快速开始</h2><p><strong>命令：vim [文件名] 文件名可选</strong></p>
-<p>直接输入vim</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">vim</div></pre></td></tr></table></figure>
-<p>效果如图：</p>
-<img src="/2016/03/08/vim-quickstart/vim-quickstart-start.png" alt="快速打开vim" title="快速打开vim">
-<p><strong>vim 文件名</strong> 文件不存在将会自动创建。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">vim quickstart</div></pre></td></tr></table></figure>
-<a id="more"></a>
-<p>打开一个不存在的文件；效果如图：</p>
-<img src="/2016/03/08/vim-quickstart/vim-quickstart-newfile.png" alt="打开一个不存在文件" title="打开一个不存在文件">
-<p>打开一个已经存在的文件；效果如图：</p>
-<img src="/2016/03/08/vim-quickstart/vim-quickstart-openfile.png" alt="打开一个已经存在的文件" title="打开一个已经存在的文件">
-<p><strong><em>此时，vim处于普通模式。</em></strong></p>
-<h2 id="简单的移动"><a href="#简单的移动" class="headerlink" title="简单的移动"></a>简单的移动</h2><p>上一节，如果我们用vim打开的是一个已知文件的话，我们是可以上下左右移动光标的</p>
-<ol>
-<li>向左移动：字母h</li>
-<li>向下移动：字母j</li>
-<li>向上移动：字母k</li>
-<li>向右移动：字母l</li>
-</ol>
-<img src="/2016/03/08/vim-quickstart/vim-quickstart-move.png" alt="vim简单移动" title="vim简单移动">
-<h2 id="插入文本"><a href="#插入文本" class="headerlink" title="插入文本"></a>插入文本</h2><p>插入文本需要切换到<strong>插入模式</strong>，按hjkl将光标移动到需要插入文本处按字母i即可切换到插入模式，此时我们就可以输入我们需要插入的文本了。</p>
-<img src="/2016/03/08/vim-quickstart/vim-quickstart-insert.png" alt="vim插入文本" title="vim插入文本">
-<p>输入完毕，按Esc键可以重新切换回到普通模式。</p>
-<h2 id="保存"><a href="#保存" class="headerlink" title="保存"></a>保存</h2><p>在输入了一大串文本之后，最重要的就是要记得保存，想象一下，blablabla…输入了一大串之后忘记保存了。。。</p>
-<p>保存需要在<strong>命令行模式</strong>下操作，在普通模式下按:(冒号)即可进入命令行模式。</p>
-<p>在命令行模式下输入字母w即可保存，如果最初是直接输入vim命令进入vim的，可以输入字母w空格后面跟想要保存的文件名</p>
-<img src="/2016/03/08/vim-quickstart/vim-quickstart-save.png" alt="vim保存输入" title="vim保存输入">
-<h2 id="退出"><a href="#退出" class="headerlink" title="退出"></a>退出</h2><p>退出也需要在命令行模式下进行操作。</p>
-<p>在命令行模式下输入字母q即可退出；如果文件有改动而我们又没有保存的话，vim会提示我们，如下图：</p>
-<img src="/2016/03/08/vim-quickstart/vim-quickstart-quit-notsave.png" alt="为保存的情况下退出" title="为保存的情况下退出">
-<p>此时我们有两种选择</p>
-<ol>
-<li>保存之后再退出，先:w保存一下，然后再:q退出；或者直接:wq保存并退出</li>
-<li>放弃刚才的修改并退出:q!退出，字母q后面加上!(感叹号)</li>
-</ol>
+        <h1 id="每个链表和链表节点的实现"><a href="#每个链表和链表节点的实现" class="headerlink" title="每个链表和链表节点的实现"></a>每个链表和链表节点的实现</h1><h2 id="链表节点结构"><a href="#链表节点结构" class="headerlink" title="链表节点结构"></a>链表节点结构</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">typedef</span> <span class="keyword">struct</span> listNode &#123;</div><div class="line">    <span class="comment">// 前置节点</span></div><div class="line">    <span class="keyword">struct</span> listNode *prev;</div><div class="line">    <span class="comment">// 后置节点</span></div><div class="line">  	<span class="keyword">struct</span> listNode *next;</div><div class="line">    <span class="comment">// 节点内容</span></div><div class="line">    <span class="keyword">void</span> *value;</div><div class="line">&#125; listNode;</div></pre></td></tr></table></figure>
+<h2 id="链表结构"><a href="#链表结构" class="headerlink" title="链表结构"></a>链表结构</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">typedef</span> <span class="keyword">struct</span> <span class="built_in">list</span> &#123;</div><div class="line">    <span class="comment">// 头节点</span></div><div class="line">    listNode *head;</div><div class="line">    <span class="comment">// 尾节点</span></div><div class="line">    listNode *tail;</div><div class="line">    <span class="comment">// 节点数量</span></div><div class="line">    <span class="keyword">unsigned</span> <span class="keyword">long</span> len;</div><div class="line">    <span class="comment">// 节点复制函数</span></div><div class="line">    <span class="keyword">void</span> *(*dup) (<span class="keyword">void</span> *ptr);</div><div class="line">    <span class="comment">// 节点释放函数</span></div><div class="line">    <span class="keyword">void</span> (*<span class="built_in">free</span>) (<span class="keyword">void</span> *ptr);</div><div class="line">    <span class="comment">// 节点对比函数</span></div><div class="line">    <span class="keyword">int</span> (*match) (<span class="keyword">void</span> *prt, <span class="keyword">void</span> *key);</div><div class="line">&#125; <span class="built_in">list</span>;</div></pre></td></tr></table></figure>
+<p>dup、free、match成员用于实现多态链表所需的类型特定函数：</p>
+<ul>
+<li>dup函数用于复制链表节点所保存的值。</li>
+<li>free函数用于释放节点所保存的值。</li>
+<li>match函数用户对比链表节点所保存的值和另一个输入值是否相等。</li>
+</ul>
+<p>Redis的链表实现特性</p>
+<ul>
+<li>双端：链表节点带有prev和next指针，获取前置节点和后置节点的复杂度都是O(1)</li>
+<li>无环：头结点的prev和尾节点的next都指向NULL</li>
+<li>头节点和尾节点：获取表头和表尾复杂度都是O(1)</li>
+<li>多态：链表节点都用void*保存节点值，并且可以通过list结构的dup、free、match三个属性为节点设置类型特定函数，所以链表可以保存不同类型的值。</li>
+</ul>
+<h1 id="API"><a href="#API" class="headerlink" title="API"></a>API</h1><ul>
+<li>listSetDupMethod：将给定的函数设置为链表的节点复制函数，O(1)</li>
+<li>listGetDupMethod：返回链表正在使用的节点复制函数，O(1)</li>
+<li>listSetFreeMethod：将给定的函数设置成链表节点的释放函数，O(1)</li>
+<li>listGetFreeMethod：反馈链表正在使用的节点释放函数，O(1)</li>
+<li>listSetMatchMethod：将给定的函数设置成链表节点的对比函数，O(1)</li>
+<li>listGetMatchMethod：反馈链表正在使用的节点对比函数，O(1)</li>
+<li>listLength：返回链表长度，O(1)</li>
+<li>listFirst：返回链表头结点，O(1)</li>
+<li>listLast：返回链表尾节点，O(1)</li>
+<li>listPrevNode：返回前置节点，O(1)</li>
+<li>listNextNode：返回后置节点，O(1)</li>
+<li>listNodeValue：返回节点保存的值，O(1)</li>
+<li>listCreate：创建一个空链表，O(1)</li>
+<li>listAddNodeHead：添加节点到链表头，O(1)</li>
+<li>listAddNodeTail：添加节点到链表尾，O(1)</li>
+<li>listInsertNode：将新节点添加到给定节点之前或者之后，O(1)</li>
+<li>listSearchKey：反会链表中包含给定值的节点，O(N)</li>
+<li>listIndex：返回链表中给定索引的节点，O(N)</li>
+<li>listDelNode：删除给定节点，O(N)</li>
+<li>listRotate：弹出尾节点，并弹出，插入到表头，O(1)</li>
+<li>listDup：复制一个给链表，O(N)</li>
+<li>listRelease：释放给定链表以及链表中所有节点，O(N)</li>
+</ul>
 
       
     </div>
     <footer class="article-footer">
       <div class="article-footer-tag">
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/vim/">vim</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/cache/">cache</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/redis/">redis</a></li></ul>
 
       </div>
       <!-- JiaThis Button BEGIN -->
@@ -200,19 +176,10 @@ vim 文件名 文件不存在将会自动创建。
     
 <nav id="article-nav">
   
-    <a href="/2016/03/29/php-memcached/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Récent</strong>
-      <div class="article-nav-title">
-        
-          PHP安装memcached扩展
-        
-      </div>
-    </a>
   
-  
-    <a href="/2016/03/07/vim/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2017/11/06/redis-string/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Ancien</strong>
-      <div class="article-nav-title">Vim系列之简介(一)</div>
+      <div class="article-nav-title">redis数据结构之字符串</div>
     </a>
   
 </nav>
@@ -223,7 +190,7 @@ vim 文件名 文件不存在将会自动创建。
 
 <section id="comments">
 <!-- 多说评论框 start -->
-<div class="ds-thread" data-thread-key="post-vim-quickstart" data-title="Vim系列之初体验(二)" data-url="http://kennethfan.github.io/2016/03/08/vim-quickstart/"></div>
+<div class="ds-thread" data-thread-key="post-redis-linkedlist" data-title="redis链表" data-url="http://kennethfan.github.io/2017/11/06/redis-linkedlist/"></div>
 <!-- 多说评论框 end -->
 <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 <script type="text/javascript">
