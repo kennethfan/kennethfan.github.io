@@ -6,7 +6,7 @@
   <title>夜未央</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
-  <meta name="keyword" content="PHP,memcached,redis,cache,vim,redids,PHPUnit,zsh,shell,Java,Effective Java">
+  <meta name="keyword" content="PHP,memcached,PHPUnit,redis,cache,redids,vim,zsh,shell,Java,Effective Java">
   
   <meta name="description" content="一个IT从业人员的工作笔记和生活感悟">
 <meta property="og:type" content="website">
@@ -58,9 +58,9 @@
       </nav>
       <nav id="sub-nav">
         
-          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="Flux RSS"></a>
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Rechercher"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://kennethfan.github.io"></form>
@@ -94,10 +94,6 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-
-        <!-- Table of Contents -->
-        
-
         <h1 id="每个链表和链表节点的实现"><a href="#每个链表和链表节点的实现" class="headerlink" title="每个链表和链表节点的实现"></a>每个链表和链表节点的实现</h1><h2 id="链表节点结构"><a href="#链表节点结构" class="headerlink" title="链表节点结构"></a>链表节点结构</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">typedef</span> <span class="keyword">struct</span> listNode &#123;</div><div class="line">    <span class="comment">// 前置节点</span></div><div class="line">    <span class="keyword">struct</span> listNode *prev;</div><div class="line">    <span class="comment">// 后置节点</span></div><div class="line">  	<span class="keyword">struct</span> listNode *next;</div><div class="line">    <span class="comment">// 节点内容</span></div><div class="line">    <span class="keyword">void</span> *value;</div><div class="line">&#125; listNode;</div></pre></td></tr></table></figure>
 <h2 id="链表结构"><a href="#链表结构" class="headerlink" title="链表结构"></a>链表结构</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">typedef</span> <span class="keyword">struct</span> <span class="built_in">list</span> &#123;</div><div class="line">    <span class="comment">// 头节点</span></div><div class="line">    listNode *head;</div><div class="line">    <span class="comment">// 尾节点</span></div><div class="line">    listNode *tail;</div><div class="line">    <span class="comment">// 节点数量</span></div><div class="line">    <span class="keyword">unsigned</span> <span class="keyword">long</span> len;</div><div class="line">    <span class="comment">// 节点复制函数</span></div><div class="line">    <span class="keyword">void</span> *(*dup) (<span class="keyword">void</span> *ptr);</div><div class="line">    <span class="comment">// 节点释放函数</span></div><div class="line">    <span class="keyword">void</span> (*<span class="built_in">free</span>) (<span class="keyword">void</span> *ptr);</div><div class="line">    <span class="comment">// 节点对比函数</span></div><div class="line">    <span class="keyword">int</span> (*match) (<span class="keyword">void</span> *prt, <span class="keyword">void</span> *key);</div><div class="line">&#125; <span class="built_in">list</span>;</div></pre></td></tr></table></figure>
 <p>dup、free、match成员用于实现多态链表所需的类型特定函数：</p>
@@ -106,38 +102,11 @@
 <li>free函数用于释放节点所保存的值。</li>
 <li>match函数用户对比链表节点所保存的值和另一个输入值是否相等。</li>
 </ul>
-<p>Redis的链表实现特性</p>
-<ul>
-<li>双端：链表节点带有prev和next指针，获取前置节点和后置节点的复杂度都是O(1)</li>
-<li>无环：头结点的prev和尾节点的next都指向NULL</li>
-<li>头节点和尾节点：获取表头和表尾复杂度都是O(1)</li>
-<li>多态：链表节点都用void*保存节点值，并且可以通过list结构的dup、free、match三个属性为节点设置类型特定函数，所以链表可以保存不同类型的值。</li>
-</ul>
-<h1 id="API"><a href="#API" class="headerlink" title="API"></a>API</h1><ul>
-<li>listSetDupMethod：将给定的函数设置为链表的节点复制函数，O(1)</li>
-<li>listGetDupMethod：返回链表正在使用的节点复制函数，O(1)</li>
-<li>listSetFreeMethod：将给定的函数设置成链表节点的释放函数，O(1)</li>
-<li>listGetFreeMethod：反馈链表正在使用的节点释放函数，O(1)</li>
-<li>listSetMatchMethod：将给定的函数设置成链表节点的对比函数，O(1)</li>
-<li>listGetMatchMethod：反馈链表正在使用的节点对比函数，O(1)</li>
-<li>listLength：返回链表长度，O(1)</li>
-<li>listFirst：返回链表头结点，O(1)</li>
-<li>listLast：返回链表尾节点，O(1)</li>
-<li>listPrevNode：返回前置节点，O(1)</li>
-<li>listNextNode：返回后置节点，O(1)</li>
-<li>listNodeValue：返回节点保存的值，O(1)</li>
-<li>listCreate：创建一个空链表，O(1)</li>
-<li>listAddNodeHead：添加节点到链表头，O(1)</li>
-<li>listAddNodeTail：添加节点到链表尾，O(1)</li>
-<li>listInsertNode：将新节点添加到给定节点之前或者之后，O(1)</li>
-<li>listSearchKey：反会链表中包含给定值的节点，O(N)</li>
-<li>listIndex：返回链表中给定索引的节点，O(N)</li>
-<li>listDelNode：删除给定节点，O(N)</li>
-<li>listRotate：弹出尾节点，并弹出，插入到表头，O(1)</li>
-<li>listDup：复制一个给链表，O(N)</li>
-<li>listRelease：释放给定链表以及链表中所有节点，O(N)</li>
-</ul>
-
+        
+          <p class="article-more-link">
+            <a href="/2017/11/06/redis-linkedlist/#more">Read More</a>
+          </p>
+        
       
     </div>
     <footer class="article-footer">
@@ -849,7 +818,7 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Mot-clés</h3>
+    <h3 class="widget-title">Tags</h3>
     <div class="widget">
       <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Effective-Java/">Effective Java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PHP/">PHP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PHPUnit/">PHPUnit</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cache/">cache</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/memcached/">memcached</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/redids/">redids</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/redis/">redis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/shell/">shell</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vim/">vim</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/zsh/">zsh</a></li></ul>
     </div>
@@ -859,7 +828,7 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Nuage de mot-clés</h3>
+    <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
       <a href="/tags/Effective-Java/" style="font-size: 16.67px;">Effective Java</a> <a href="/tags/Java/" style="font-size: 16.67px;">Java</a> <a href="/tags/PHP/" style="font-size: 16.67px;">PHP</a> <a href="/tags/PHPUnit/" style="font-size: 10px;">PHPUnit</a> <a href="/tags/cache/" style="font-size: 13.33px;">cache</a> <a href="/tags/memcached/" style="font-size: 10px;">memcached</a> <a href="/tags/redids/" style="font-size: 10px;">redids</a> <a href="/tags/redis/" style="font-size: 10px;">redis</a> <a href="/tags/shell/" style="font-size: 20px;">shell</a> <a href="/tags/vim/" style="font-size: 20px;">vim</a> <a href="/tags/zsh/" style="font-size: 20px;">zsh</a>
     </div>
@@ -878,7 +847,7 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Articles récents</h3>
+    <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
         
@@ -941,7 +910,7 @@
   <div class="outer">
     <div id="footer-info" class="inner">
       &copy; 2017 Kenneth Fan<br>
-      Propulsé by <a href="http://hexo.io/" target="_blank">Hexo</a>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>
 </footer>
