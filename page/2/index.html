@@ -6,7 +6,7 @@
   <title>夜未央</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
-  <meta name="keyword" content="PHP,memcached,PHPUnit,redis,cache,redids,vim,zsh,shell,Java,Effective Java">
+  <meta name="keyword" content="c,PHP,memcached,redis,cache,PHPUnit,vim,zsh,shell,Java,Effective Java">
   
   <meta name="description" content="一个IT从业人员的工作笔记和生活感悟">
 <meta property="og:type" content="website">
@@ -71,6 +71,354 @@
 
       <div class="outer">
         <section id="main">
+  
+    <article id="post-zsh-变量和语句" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/09/20/zsh-变量和语句/" class="article-date">
+  <time datetime="2017-09-20T12:32:35.000Z" itemprop="datePublished">2017-09-20</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/09/20/zsh-变量和语句/">zsh-变量和语句</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="格式约定"><a href="#格式约定" class="headerlink" title="格式约定"></a>格式约定</h1><p>文中行首的 <code>%</code> 代表 zsh 的命令提示符（类似 bash 的 <code>$</code>，这个是可以自由定义的，具体是什么不重要），行首的 <code>&gt;</code> 代表此行是换行后的输入内容，以 <code>#</code> 开头的为注释（非 root 用户的命令提示符，本系列文章不需要 root 用户），其余的是命令的输出内容。另外某些地方会贴成段的 zsh 代码，那样就省略开头的 <code>%</code>，比较容易分辨。</p>
+<h1 id="变量"><a href="#变量" class="headerlink" title="变量"></a>变量</h1><p>接触一门新的编程语言，运行完 Hello World 后，首先要了解的基本就是如何定义和使用变量了。有了变量后可以比较变量内容，进而可以接触条件、循环、分支等语句，继而了解函数的用法，更高级的数据结构的使用，更多库函数，等等。这样就大概了解了一门面向过程的语言的基本用法，剩下的可以等到用的时候再查手册。</p>
+<p>所以这一篇讲最基本的变量和语句。</p>
+<p>zsh 有 5 种变量：整数、浮点数（bash 不支持）、字符串、数组、哈希表（或者叫关联数组或者字典，本系列文章统一使用“哈希表”这一名词），另外还有一些其他语言少有的东西，比如 alias（但主要是交互时使用，编程时基本用不到）。此篇只涉及整数、浮点数、字符串，并且不涉及数值计算和字符串处理等内容。</p>
+<h2 id="变量定义"><a href="#变量定义" class="headerlink" title="变量定义"></a>变量定义</h2><p>Zsh 的变量多数情况不需要提前声明或者指定类型，可以直接赋值和使用（但哈希表是一个例外）。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 等号两端不能有空格</span></div><div class="line">% num1=123</div><div class="line">% num2=123.456</div><div class="line">% str1=abcde</div><div class="line"><span class="comment"># 如果字符串中包含空格等特殊字符，需要加引号</span></div><div class="line">% str2=<span class="string">'abc def'</span></div><div class="line"><span class="comment"># 也可以用双引号，但和单引号有区别，比如双引号里可以使用变量，而单引号不可以</span></div><div class="line">% str3=<span class="string">"abc def <span class="variable">$num1</span>"</span></div><div class="line"><span class="comment"># 在字符串中可以使用转义字符，单双引号均可</span></div><div class="line">% str4=<span class="string">"abc\tdef\ng"</span></div><div class="line"></div><div class="line"><span class="comment"># 输出变量，也可以使用 print</span></div><div class="line">% <span class="built_in">echo</span> <span class="variable">$str1</span></div><div class="line">abcde</div><div class="line"></div><div class="line"><span class="comment"># 简单的数值计算</span></div><div class="line">% num3=$((<span class="variable">$num1</span> + <span class="variable">$num2</span>))</div><div class="line"><span class="comment"># (( 中的变量名可以不用 $</span></div><div class="line">% num3=$((num1 + num2))</div><div class="line"></div><div class="line"><span class="comment"># 简单的字符串操作</span></div><div class="line">% str=abcdef</div><div class="line"><span class="comment"># 2 和 4 都是字符在数组的位置，从 1 开始数，逗号两边不能有空格</span></div><div class="line">% <span class="built_in">echo</span> <span class="variable">$str</span>[2,4]</div><div class="line">bcd</div><div class="line"><span class="comment"># -1 是最后一个字符</span></div><div class="line">% <span class="built_in">echo</span> <span class="variable">$str</span>[4,-1]</div><div class="line">def</div></pre></td></tr></table></figure>
+<h2 id="变量比较"><a href="#变量比较" class="headerlink" title="变量比较"></a>变量比较</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 比较数值</span></div><div class="line">% num=123</div><div class="line"><span class="comment"># (( )) 用于数值比较等操作，如果为真返回 0，否则返回 1</span></div><div class="line"><span class="comment"># &amp;&amp; 后边的语句在前边的语句为真时才执行</span></div><div class="line"><span class="comment"># 注意这里只能使用双等号来比较</span></div><div class="line">% ((num == 123)) &amp;&amp; <span class="built_in">echo</span> good</div><div class="line">good</div><div class="line"><span class="comment"># (( 里边可以使用与（&amp;&amp;）或（||）非（!）操作符，同 c 系列语言</span></div><div class="line">% ((num == 1 || num == 2)) &amp;&amp; <span class="built_in">echo</span> good</div><div class="line"></div><div class="line"><span class="comment"># 比较字符串</span></div><div class="line">% str=abc</div><div class="line"><span class="comment"># 比较字符串要用 [[，内侧要有空格，[[ 的具体用法之后会讲到</span></div><div class="line"><span class="comment"># 这里双等号可以替换成单等号，可以根据自己的习惯选用</span></div><div class="line"><span class="comment"># 本系列文章统一使用双等号，因为和 (( )) 一致，并且使用双等号的常用编程语言更多些</span></div><div class="line"><span class="comment"># $str 两侧不需要加双引号，即使 str 未定义或者 $str 中含空格和特殊符号</span></div><div class="line">% [[ <span class="variable">$str</span> == abc ]] &amp;&amp; <span class="built_in">echo</span> good</div><div class="line">good</div><div class="line"><span class="comment"># 可以和空字符串 "" 比较，未定义的字符串和空字符串比较结果为真</span></div><div class="line"><span class="comment"># [[ 里也可以用 &amp;&amp; || !</span></div><div class="line">% [[ <span class="variable">$str</span> == <span class="string">""</span> || <span class="variable">$str</span> == 123 ]] &amp;&amp; <span class="built_in">echo</span> good</div></pre></td></tr></table></figure>
+        
+          <p class="article-more-link">
+            <a href="/2017/09/20/zsh-变量和语句/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <div class="article-footer-tag">
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/shell/">shell</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/zsh/">zsh</a></li></ul>
+
+      </div>
+      <!-- JiaThis Button BEGIN -->
+      <div class="jiathis_style">
+        <span class="jiathis_txt">分享到：</span>
+        <a class="jiathis_button_qzone">QQ空间</a>
+        <a class="jiathis_button_tsina">新浪微博</a>
+        <a class="jiathis_button_tqq">腾讯微博</a>
+        <a class="jiathis_button_weixin">微信</a>
+        <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+        <a class="jiathis_counter_style"></a>
+      </div>
+      <script type="text/javascript" src="http://v3.jiathis.com/code_mini/jia.js" charset="utf-8"></script>
+      <!-- JiaThis Button END -->
+      <!-- UJian Button BEGIN -->
+      <div class="ujian-hook"></div>
+      <script type="text/javascript" src="http://v1.ujian.cc/code/ujian.js"></script>
+      <!-- UJian Button END -->
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-hello-world" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/06/05/hello-world/" class="article-date">
+  <time datetime="2017-06-05T12:39:46.000Z" itemprop="datePublished">2017-06-05</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/06/05/hello-world/">Hello World</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+
+        <!-- Table of Contents -->
+        
+
+        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo new <span class="string">"My New Post"</span></div></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo server</div></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo generate</div></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo deploy</div></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <div class="article-footer-tag">
+      
+      </div>
+      <!-- JiaThis Button BEGIN -->
+      <div class="jiathis_style">
+        <span class="jiathis_txt">分享到：</span>
+        <a class="jiathis_button_qzone">QQ空间</a>
+        <a class="jiathis_button_tsina">新浪微博</a>
+        <a class="jiathis_button_tqq">腾讯微博</a>
+        <a class="jiathis_button_weixin">微信</a>
+        <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+        <a class="jiathis_counter_style"></a>
+      </div>
+      <script type="text/javascript" src="http://v3.jiathis.com/code_mini/jia.js" charset="utf-8"></script>
+      <!-- JiaThis Button END -->
+      <!-- UJian Button BEGIN -->
+      <div class="ujian-hook"></div>
+      <script type="text/javascript" src="http://v1.ujian.cc/code/ujian.js"></script>
+      <!-- UJian Button END -->
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-PHP总结" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/06/05/PHP总结/" class="article-date">
+  <time datetime="2017-06-05T12:22:06.000Z" itemprop="datePublished">2017-06-05</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/06/05/PHP总结/">PHP总结</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="基础篇"><a href="#基础篇" class="headerlink" title="基础篇"></a>基础篇</h1><h2 id="PHP如何实现类自动加载？"><a href="#PHP如何实现类自动加载？" class="headerlink" title="PHP如何实现类自动加载？"></a>PHP如何实现类自动加载？</h2><ul>
+<li><p>设置自动加载目录 set_include_path(String $path)。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">set_include_path(dirname(<span class="keyword">__file__</span>) . <span class="string">'/classes'</span>);</div></pre></td></tr></table></figure>
+</li>
+<li><p>修改php.ini文件include_path选项</p>
+</li>
+<li><p>写一个__autoload($class)方法。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">__autoload</span><span class="params">($class)</span> </span>&#123;</div><div class="line">    $path = dirname(<span class="keyword">__FILE__</span>) . <span class="string">"/autoload/$class.php"</span>;</div><div class="line">    <span class="keyword">echo</span> $path;</div><div class="line">    <span class="keyword">if</span> (!file_exists($path)) &#123;</div><div class="line">        <span class="keyword">die</span> (<span class="string">"class $class can not load\n"</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">include</span> $path;</div><div class="line">&#125;</div><div class="line"></div><div class="line">$b = <span class="keyword">new</span> B();</div></pre></td></tr></table></figure>
+</li>
+<li><p>写一个加载器，然后用spl_autoload_register方法注册。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;?php</span></div><div class="line">DEFINE(<span class="string">'ROOT_PATH'</span>, dirname(<span class="keyword">__FILE__</span>));</div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Loader</span> </span>&#123;</div><div class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="function"><span class="keyword">function</span> <span class="title">load</span><span class="params">($class)</span> </span>&#123;</div><div class="line">        $path = <span class="keyword">null</span>;</div><div class="line">        <span class="keyword">if</span> (substr($class, <span class="number">0</span> - strlen(<span class="string">'Controller'</span>)) == <span class="string">'Controller'</span>) &#123;</div><div class="line">            $path = ROOT_PATH . <span class="string">'/Controllers/'</span>;</div><div class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (substr($class, <span class="number">0</span> - strlen(<span class="string">'Model'</span>)) == <span class="string">'Model'</span>) &#123;</div><div class="line">            $path = ROOT_PATH . <span class="string">'/Models/'</span>;</div><div class="line">        &#125; <span class="keyword">else</span> &#123;</div><div class="line">            $path = ROOT_PATH . <span class="string">'/Components/'</span>;</div><div class="line">        &#125;</div><div class="line">        $path .= <span class="string">"$class.php"</span>;</div><div class="line"></div><div class="line">        <span class="keyword">if</span> (file_exists($path)) &#123;</div><div class="line">            <span class="keyword">include</span> $path;</div><div class="line">            <span class="keyword">return</span>;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">spl_autoload_register(<span class="keyword">array</span>(<span class="string">'Loader'</span>, <span class="string">'load'</span>), <span class="keyword">false</span>, <span class="keyword">false</span>);</div><div class="line"></div><div class="line"></div><div class="line">$controller = <span class="keyword">new</span> AController();</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>推荐第四种，原因如下</p>
+<p>第一第二种不够灵活</p>
+<p>第三种灵活，但是__autoload只能被重写一次</p>
+<p>第四种相对灵活，而且在引用第三方差价或者工具的时候有非常明显的优势</p>
+<h2 id="include-include-once-require-require-once的区别？"><a href="#include-include-once-require-require-once的区别？" class="headerlink" title="include/include_once/require/require_once的区别？"></a>include/include_once/require/require_once的区别？</h2><p>include在文件不存在的时候会打印警告信息然后继续执行，而require会终止程序，相对来说include效率更高</p>
+<p>include_once和require_once在加载文件之前都会先判断文件是否已经被加载过，相对来说效率低一些</p>
+        
+          <p class="article-more-link">
+            <a href="/2017/06/05/PHP总结/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <div class="article-footer-tag">
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/PHP/">PHP</a></li></ul>
+
+      </div>
+      <!-- JiaThis Button BEGIN -->
+      <div class="jiathis_style">
+        <span class="jiathis_txt">分享到：</span>
+        <a class="jiathis_button_qzone">QQ空间</a>
+        <a class="jiathis_button_tsina">新浪微博</a>
+        <a class="jiathis_button_tqq">腾讯微博</a>
+        <a class="jiathis_button_weixin">微信</a>
+        <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+        <a class="jiathis_counter_style"></a>
+      </div>
+      <script type="text/javascript" src="http://v3.jiathis.com/code_mini/jia.js" charset="utf-8"></script>
+      <!-- JiaThis Button END -->
+      <!-- UJian Button BEGIN -->
+      <div class="ujian-hook"></div>
+      <script type="text/javascript" src="http://v1.ujian.cc/code/ujian.js"></script>
+      <!-- UJian Button END -->
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-类和接口" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/03/21/类和接口/" class="article-date">
+  <time datetime="2017-03-21T13:45:08.000Z" itemprop="datePublished">2017-03-21</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/03/21/类和接口/">类和接口</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+
+        <!-- Table of Contents -->
+        
+
+        
+      
+    </div>
+    <footer class="article-footer">
+      <div class="article-footer-tag">
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Effective-Java/">Effective Java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li></ul>
+
+      </div>
+      <!-- JiaThis Button BEGIN -->
+      <div class="jiathis_style">
+        <span class="jiathis_txt">分享到：</span>
+        <a class="jiathis_button_qzone">QQ空间</a>
+        <a class="jiathis_button_tsina">新浪微博</a>
+        <a class="jiathis_button_tqq">腾讯微博</a>
+        <a class="jiathis_button_weixin">微信</a>
+        <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+        <a class="jiathis_counter_style"></a>
+      </div>
+      <script type="text/javascript" src="http://v3.jiathis.com/code_mini/jia.js" charset="utf-8"></script>
+      <!-- JiaThis Button END -->
+      <!-- UJian Button BEGIN -->
+      <div class="ujian-hook"></div>
+      <script type="text/javascript" src="http://v1.ujian.cc/code/ujian.js"></script>
+      <!-- UJian Button END -->
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-对于所有对象都通用的方法" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/03/20/对于所有对象都通用的方法/" class="article-date">
+  <time datetime="2017-03-20T14:31:20.000Z" itemprop="datePublished">2017-03-20</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/03/20/对于所有对象都通用的方法/">对于所有对象都通用的方法</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="覆盖equals时请遵守通用约定"><a href="#覆盖equals时请遵守通用约定" class="headerlink" title="覆盖equals时请遵守通用约定"></a>覆盖equals时请遵守通用约定</h1><p>不覆盖equals方法的几种情况</p>
+<ul>
+<li>类的每个实例本质上都是唯一的；例如Thead。</li>
+<li>不关心类是否提供了”逻辑相等（logical equality）”的测试功能；例如Rondom。</li>
+<li>超类已经覆盖了equals，从超类继承过来的行为对于子类也是合适的；例如大多数Set都实现从AbtractSet继承的equals实现。</li>
+<li>类是私有的或者包级私有的，可以确定它的equals方法永远不会调用。</li>
+</ul>
+<p>什么时候应该覆盖Object.equals呢？<strong>如果类具有自己特有的”逻辑相等”概念，而且超类还没有覆盖equals以实现期望的行为，这时候我们就需要覆盖equals方法</strong>。</p>
+<p>覆盖eqauls方法需要遵守的通用约定：</p>
+<ul>
+<li>自反性（reflexive）。对于任何非null的引用值x，x.equals(x)必须返回true</li>
+<li>对称性（symmetric）。对于任何非null的引用值x和y，当且仅当y.equas(x)返回true时，x.equals(y)必须返回true。</li>
+<li>传递性（transitive）。对于任何非null的引用值x、y和z，如果x.equals(y)返回true且y.equals(z)也返回true，那么x.equals(z)也必须返回true。</li>
+<li>一致性（consistent）。对于任何非null的引用值x和y，只要equals的比较操作在对象所用的信息没有被修改，多次调用x.equals(y)就会一致地返回true或者false。</li>
+</ul>
+        
+          <p class="article-more-link">
+            <a href="/2017/03/20/对于所有对象都通用的方法/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <div class="article-footer-tag">
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Effective-Java/">Effective Java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li></ul>
+
+      </div>
+      <!-- JiaThis Button BEGIN -->
+      <div class="jiathis_style">
+        <span class="jiathis_txt">分享到：</span>
+        <a class="jiathis_button_qzone">QQ空间</a>
+        <a class="jiathis_button_tsina">新浪微博</a>
+        <a class="jiathis_button_tqq">腾讯微博</a>
+        <a class="jiathis_button_weixin">微信</a>
+        <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+        <a class="jiathis_counter_style"></a>
+      </div>
+      <script type="text/javascript" src="http://v3.jiathis.com/code_mini/jia.js" charset="utf-8"></script>
+      <!-- JiaThis Button END -->
+      <!-- UJian Button BEGIN -->
+      <div class="ujian-hook"></div>
+      <script type="text/javascript" src="http://v1.ujian.cc/code/ujian.js"></script>
+      <!-- UJian Button END -->
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
   
     <article id="post-创建和销毁对象" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
@@ -438,139 +786,10 @@
 
 
   
-    <article id="post-vim-quickstart" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/03/08/vim-quickstart/" class="article-date">
-  <time datetime="2016-03-08T11:46:02.000Z" itemprop="datePublished">2016-03-08</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/03/08/vim-quickstart/">Vim系列之初体验(二)</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="Vim安装"><a href="#Vim安装" class="headerlink" title="Vim安装"></a>Vim安装</h2><p>Mac OS和Unix系统默认都有安装，所有Vim的安装不多介绍。</p>
-<h2 id="快速开始"><a href="#快速开始" class="headerlink" title="快速开始"></a>快速开始</h2><p><strong>命令：vim [文件名] 文件名可选</strong></p>
-<p>直接输入vim</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">vim</div></pre></td></tr></table></figure>
-<p>效果如图：</p>
-<img src="/2016/03/08/vim-quickstart/vim-quickstart-start.png" alt="快速打开vim" title="快速打开vim">
-<p><strong>vim 文件名</strong> 文件不存在将会自动创建。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">vim quickstart</div></pre></td></tr></table></figure>
-        
-          <p class="article-more-link">
-            <a href="/2016/03/08/vim-quickstart/#more">Read More</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      <div class="article-footer-tag">
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/vim/">vim</a></li></ul>
-
-      </div>
-      <!-- JiaThis Button BEGIN -->
-      <div class="jiathis_style">
-        <span class="jiathis_txt">分享到：</span>
-        <a class="jiathis_button_qzone">QQ空间</a>
-        <a class="jiathis_button_tsina">新浪微博</a>
-        <a class="jiathis_button_tqq">腾讯微博</a>
-        <a class="jiathis_button_weixin">微信</a>
-        <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
-        <a class="jiathis_counter_style"></a>
-      </div>
-      <script type="text/javascript" src="http://v3.jiathis.com/code_mini/jia.js" charset="utf-8"></script>
-      <!-- JiaThis Button END -->
-      <!-- UJian Button BEGIN -->
-      <div class="ujian-hook"></div>
-      <script type="text/javascript" src="http://v1.ujian.cc/code/ujian.js"></script>
-      <!-- UJian Button END -->
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-vim" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/03/07/vim/" class="article-date">
-  <time datetime="2016-03-07T12:09:46.000Z" itemprop="datePublished">2016-03-07</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/03/07/vim/">Vim系列之简介(一)</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="Vim简介"><a href="#Vim简介" class="headerlink" title="Vim简介"></a>Vim简介</h1><p><strong>Vim</strong>是从<a href="https://zh.wikipedia.org/wiki/Vi">vi</a>发展出来的一个<a href="https://zh.wikipedia.org/wiki/%E6%96%87%E6%9C%AC%E7%BC%96%E8%BE%91%E5%99%A8">文本编辑器</a>。代码补完、编译及错误跳转等方便编程的功能特别丰富，在程序员中被广泛使用。和<a href="https://zh.wikipedia.org/wiki/Emacs">Emacs</a>并列成为<a href="https://zh.wikipedia.org/wiki/%E7%B1%BBUnix%E7%B3%BB%E7%BB%9F">类Unix系统</a>用户最喜欢的编辑器。——<a href="https://zh.wikipedia.org/wiki/Vim">维基百科</a></p>
-        
-          <p class="article-more-link">
-            <a href="/2016/03/07/vim/#more">Read More</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      <div class="article-footer-tag">
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/vim/">vim</a></li></ul>
-
-      </div>
-      <!-- JiaThis Button BEGIN -->
-      <div class="jiathis_style">
-        <span class="jiathis_txt">分享到：</span>
-        <a class="jiathis_button_qzone">QQ空间</a>
-        <a class="jiathis_button_tsina">新浪微博</a>
-        <a class="jiathis_button_tqq">腾讯微博</a>
-        <a class="jiathis_button_weixin">微信</a>
-        <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
-        <a class="jiathis_counter_style"></a>
-      </div>
-      <script type="text/javascript" src="http://v3.jiathis.com/code_mini/jia.js" charset="utf-8"></script>
-      <!-- JiaThis Button END -->
-      <!-- UJian Button BEGIN -->
-      <div class="ujian-hook"></div>
-      <script type="text/javascript" src="http://v1.ujian.cc/code/ujian.js"></script>
-      <!-- UJian Button END -->
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
 
 
   <nav id="page-nav">
-    <a class="extend prev" rel="prev" href="/">&laquo; __('prev')</a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
+    <a class="extend prev" rel="prev" href="/">&laquo; __('prev')</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/3/">__('next') &raquo;</a>
   </nav>
 </section>
         
@@ -583,7 +802,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Effective-Java/">Effective Java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PHP/">PHP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PHPUnit/">PHPUnit</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cache/">cache</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/memcached/">memcached</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/redids/">redids</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/redis/">redis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/shell/">shell</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vim/">vim</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/zsh/">zsh</a></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Effective-Java/">Effective Java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PHP/">PHP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PHPUnit/">PHPUnit</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/c/">c</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cache/">cache</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/memcached/">memcached</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/redis/">redis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/shell/">shell</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vim/">vim</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/zsh/">zsh</a></li></ul>
     </div>
   </div>
 
@@ -593,7 +812,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Effective-Java/" style="font-size: 16.67px;">Effective Java</a> <a href="/tags/Java/" style="font-size: 16.67px;">Java</a> <a href="/tags/PHP/" style="font-size: 16.67px;">PHP</a> <a href="/tags/PHPUnit/" style="font-size: 10px;">PHPUnit</a> <a href="/tags/cache/" style="font-size: 13.33px;">cache</a> <a href="/tags/memcached/" style="font-size: 10px;">memcached</a> <a href="/tags/redids/" style="font-size: 10px;">redids</a> <a href="/tags/redis/" style="font-size: 10px;">redis</a> <a href="/tags/shell/" style="font-size: 20px;">shell</a> <a href="/tags/vim/" style="font-size: 20px;">vim</a> <a href="/tags/zsh/" style="font-size: 20px;">zsh</a>
+      <a href="/tags/Effective-Java/" style="font-size: 13.33px;">Effective Java</a> <a href="/tags/Java/" style="font-size: 13.33px;">Java</a> <a href="/tags/PHP/" style="font-size: 13.33px;">PHP</a> <a href="/tags/PHPUnit/" style="font-size: 10px;">PHPUnit</a> <a href="/tags/c/" style="font-size: 10px;">c</a> <a href="/tags/cache/" style="font-size: 20px;">cache</a> <a href="/tags/memcached/" style="font-size: 10px;">memcached</a> <a href="/tags/redis/" style="font-size: 20px;">redis</a> <a href="/tags/shell/" style="font-size: 16.67px;">shell</a> <a href="/tags/vim/" style="font-size: 16.67px;">vim</a> <a href="/tags/zsh/" style="font-size: 16.67px;">zsh</a>
     </div>
   </div>
 
@@ -615,23 +834,23 @@
       <ul>
         
           <li>
-            <a href="/2017/11/06/redis-linkedlist/">redis链表</a>
+            <a href="/2017/11/12/redis-ziplist/">redis压缩列表</a>
           </li>
         
           <li>
-            <a href="/2017/11/06/redis-string/">redis数据结构之字符串</a>
+            <a href="/2017/11/09/redis-intset/">redis整数集合</a>
           </li>
         
           <li>
-            <a href="/2017/09/21/zsh-字符串通配符/">zsh-字符串通配符</a>
+            <a href="/2017/11/09/redis-skiplist/">redis跳跃表</a>
           </li>
         
           <li>
-            <a href="/2017/09/20/zsh-字符串转义和格式化/">zsh-字符串转义和格式化</a>
+            <a href="/2017/11/07/redis-dict/">redis字典</a>
           </li>
         
           <li>
-            <a href="/2017/09/20/zsh-字符串常用操作/">zsh-字符串常用操作</a>
+            <a href="/2017/11/07/c-point-method/">指针函数&amp;函数指针</a>
           </li>
         
       </ul>

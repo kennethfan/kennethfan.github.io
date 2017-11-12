@@ -6,7 +6,7 @@
   <title>redis链表 | 夜未央</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
-  <meta name="keyword" content="PHP,memcached,PHPUnit,redis,cache,redids,vim,zsh,shell,Java,Effective Java">
+  <meta name="keyword" content="c,PHP,memcached,redis,cache,PHPUnit,vim,zsh,shell,Java,Effective Java">
   
   <meta name="description" content="每个链表和链表节点的实现链表节点结构12345678typedef struct listNode &amp;#123;    // 前置节点    struct listNode *prev;    // 后置节点  	struct listNode *next;    // 节点内容    void *value;&amp;#125; listNode;
 链表结构1234567891011121314type">
@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="夜未央">
 <meta property="og:description" content="每个链表和链表节点的实现链表节点结构12345678typedef struct listNode &amp;#123;    // 前置节点    struct listNode *prev;    // 后置节点  	struct listNode *next;    // 节点内容    void *value;&amp;#125; listNode;
 链表结构1234567891011121314type">
-<meta property="og:updated_time" content="2017-11-07T02:24:34.000Z">
+<meta property="og:updated_time" content="2017-11-07T14:11:43.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="redis链表">
 <meta name="twitter:description" content="每个链表和链表节点的实现链表节点结构12345678typedef struct listNode &amp;#123;    // 前置节点    struct listNode *prev;    // 后置节点  	struct listNode *next;    // 节点内容    void *value;&amp;#125; listNode;
@@ -106,7 +106,7 @@
         
 
         <h1 id="每个链表和链表节点的实现"><a href="#每个链表和链表节点的实现" class="headerlink" title="每个链表和链表节点的实现"></a>每个链表和链表节点的实现</h1><h2 id="链表节点结构"><a href="#链表节点结构" class="headerlink" title="链表节点结构"></a>链表节点结构</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">typedef</span> <span class="keyword">struct</span> listNode &#123;</div><div class="line">    <span class="comment">// 前置节点</span></div><div class="line">    <span class="keyword">struct</span> listNode *prev;</div><div class="line">    <span class="comment">// 后置节点</span></div><div class="line">  	<span class="keyword">struct</span> listNode *next;</div><div class="line">    <span class="comment">// 节点内容</span></div><div class="line">    <span class="keyword">void</span> *value;</div><div class="line">&#125; listNode;</div></pre></td></tr></table></figure>
-<h2 id="链表结构"><a href="#链表结构" class="headerlink" title="链表结构"></a>链表结构</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">typedef</span> <span class="keyword">struct</span> <span class="built_in">list</span> &#123;</div><div class="line">    <span class="comment">// 头节点</span></div><div class="line">    listNode *head;</div><div class="line">    <span class="comment">// 尾节点</span></div><div class="line">    listNode *tail;</div><div class="line">    <span class="comment">// 节点数量</span></div><div class="line">    <span class="keyword">unsigned</span> <span class="keyword">long</span> len;</div><div class="line">    <span class="comment">// 节点复制函数</span></div><div class="line">    <span class="keyword">void</span> *(*dup) (<span class="keyword">void</span> *ptr);</div><div class="line">    <span class="comment">// 节点释放函数</span></div><div class="line">    <span class="keyword">void</span> (*<span class="built_in">free</span>) (<span class="keyword">void</span> *ptr);</div><div class="line">    <span class="comment">// 节点对比函数</span></div><div class="line">    <span class="keyword">int</span> (*match) (<span class="keyword">void</span> *prt, <span class="keyword">void</span> *key);</div><div class="line">&#125; <span class="built_in">list</span>;</div></pre></td></tr></table></figure>
+<h2 id="链表结构"><a href="#链表结构" class="headerlink" title="链表结构"></a>链表结构</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">typedef</span> <span class="keyword">struct</span> <span class="built_in">list</span> &#123;</div><div class="line">    <span class="comment">// 头节点</span></div><div class="line">    listNode *head;</div><div class="line">    <span class="comment">// 尾节点</span></div><div class="line">    listNode *tail;</div><div class="line">    <span class="comment">// 节点数量</span></div><div class="line">    <span class="keyword">unsigned</span> <span class="keyword">long</span> len;</div><div class="line">    <span class="comment">// 节点复制函数</span></div><div class="line">    <span class="keyword">void</span>* (*dup) (<span class="keyword">void</span> *ptr);</div><div class="line">    <span class="comment">// 节点释放函数</span></div><div class="line">    <span class="keyword">void</span> (*<span class="built_in">free</span>) (<span class="keyword">void</span> *ptr);</div><div class="line">    <span class="comment">// 节点对比函数</span></div><div class="line">    <span class="keyword">int</span> (*match) (<span class="keyword">void</span> *prt, <span class="keyword">void</span> *key);</div><div class="line">&#125; <span class="built_in">list</span>;</div></pre></td></tr></table></figure>
 <p>dup、free、match成员用于实现多态链表所需的类型特定函数：</p>
 <ul>
 <li>dup函数用于复制链表节点所保存的值。</li>
@@ -177,10 +177,19 @@
     
 <nav id="article-nav">
   
+    <a href="/2017/11/07/c-point-method/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          指针函数&amp;函数指针
+        
+      </div>
+    </a>
+  
   
     <a href="/2017/11/06/redis-string/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">redis数据结构之字符串</div>
+      <div class="article-nav-title">redis字符串</div>
     </a>
   
 </nav>
@@ -219,7 +228,7 @@ var duoshuoQuery = {short_name:'kennethfan'};
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Effective-Java/">Effective Java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PHP/">PHP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PHPUnit/">PHPUnit</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cache/">cache</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/memcached/">memcached</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/redids/">redids</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/redis/">redis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/shell/">shell</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vim/">vim</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/zsh/">zsh</a></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Effective-Java/">Effective Java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PHP/">PHP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PHPUnit/">PHPUnit</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/c/">c</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cache/">cache</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/memcached/">memcached</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/redis/">redis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/shell/">shell</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vim/">vim</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/zsh/">zsh</a></li></ul>
     </div>
   </div>
 
@@ -229,7 +238,7 @@ var duoshuoQuery = {short_name:'kennethfan'};
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Effective-Java/" style="font-size: 16.67px;">Effective Java</a> <a href="/tags/Java/" style="font-size: 16.67px;">Java</a> <a href="/tags/PHP/" style="font-size: 16.67px;">PHP</a> <a href="/tags/PHPUnit/" style="font-size: 10px;">PHPUnit</a> <a href="/tags/cache/" style="font-size: 13.33px;">cache</a> <a href="/tags/memcached/" style="font-size: 10px;">memcached</a> <a href="/tags/redids/" style="font-size: 10px;">redids</a> <a href="/tags/redis/" style="font-size: 10px;">redis</a> <a href="/tags/shell/" style="font-size: 20px;">shell</a> <a href="/tags/vim/" style="font-size: 20px;">vim</a> <a href="/tags/zsh/" style="font-size: 20px;">zsh</a>
+      <a href="/tags/Effective-Java/" style="font-size: 13.33px;">Effective Java</a> <a href="/tags/Java/" style="font-size: 13.33px;">Java</a> <a href="/tags/PHP/" style="font-size: 13.33px;">PHP</a> <a href="/tags/PHPUnit/" style="font-size: 10px;">PHPUnit</a> <a href="/tags/c/" style="font-size: 10px;">c</a> <a href="/tags/cache/" style="font-size: 20px;">cache</a> <a href="/tags/memcached/" style="font-size: 10px;">memcached</a> <a href="/tags/redis/" style="font-size: 20px;">redis</a> <a href="/tags/shell/" style="font-size: 16.67px;">shell</a> <a href="/tags/vim/" style="font-size: 16.67px;">vim</a> <a href="/tags/zsh/" style="font-size: 16.67px;">zsh</a>
     </div>
   </div>
 
@@ -251,23 +260,23 @@ var duoshuoQuery = {short_name:'kennethfan'};
       <ul>
         
           <li>
-            <a href="/2017/11/06/redis-linkedlist/">redis链表</a>
+            <a href="/2017/11/12/redis-ziplist/">redis压缩列表</a>
           </li>
         
           <li>
-            <a href="/2017/11/06/redis-string/">redis数据结构之字符串</a>
+            <a href="/2017/11/09/redis-intset/">redis整数集合</a>
           </li>
         
           <li>
-            <a href="/2017/09/21/zsh-字符串通配符/">zsh-字符串通配符</a>
+            <a href="/2017/11/09/redis-skiplist/">redis跳跃表</a>
           </li>
         
           <li>
-            <a href="/2017/09/20/zsh-字符串转义和格式化/">zsh-字符串转义和格式化</a>
+            <a href="/2017/11/07/redis-dict/">redis字典</a>
           </li>
         
           <li>
-            <a href="/2017/09/20/zsh-字符串常用操作/">zsh-字符串常用操作</a>
+            <a href="/2017/11/07/c-point-method/">指针函数&amp;函数指针</a>
           </li>
         
       </ul>
