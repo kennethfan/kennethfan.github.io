@@ -6,7 +6,7 @@
   <title>夜未央</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
-  <meta name="keyword" content="c,PHP,memcached,redis,cache,PHPUnit,vim,zsh,shell,Java,Effective Java">
+  <meta name="keyword" content="c,PHP,redis,cache,memcached,PHPUnit,vim,zsh,shell,Java,Effective Java,笔记">
   
   <meta name="description" content="一个IT从业人员的工作笔记和生活感悟">
 <meta property="og:type" content="website">
@@ -58,9 +58,9 @@
       </nav>
       <nav id="sub-nav">
         
-          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="Flux RSS"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Rechercher"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://kennethfan.github.io"></form>
@@ -71,6 +71,198 @@
 
       <div class="outer">
         <section id="main">
+  
+    <article id="post-zsh-字符串转义和格式化" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/09/20/zsh-字符串转义和格式化/" class="article-date">
+  <time datetime="2017-09-20T13:57:16.000Z" itemprop="datePublished">2017-09-20</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/09/20/zsh-字符串转义和格式化/">zsh-字符串转义和格式化</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="导读"><a href="#导读" class="headerlink" title="导读"></a>导读</h1><p>上一篇讲了 zsh 的常用字符串操作，这篇开始讲更为琐碎的转义字符和格式化输出相关内容。包括转义字符、引号、<code>print</code>、<code>printf</code> 的使用等等。其中很多内容没有必要记忆，作为手册参考即可。</p>
+<h1 id="转义字符"><a href="#转义字符" class="headerlink" title="转义字符"></a>转义字符</h1><p>转义字符是很多编程语言中都有的概念，它主要解决某些字符因为没有对应键盘按键无法直接输出、字符本身有特殊含义（比如 <code>\</code>、<code>&quot;</code>）或者显示不直观（比如难以区别多个空格和一个 tab）等问题。</p>
+<p>最常用的转义字符是 <code>\n</code>（换行）、<code>\r</code>（回车）、<code>\t</code>（tab）。</p>
+<p>直接用 <code>echo</code>、<code>print</code> 或者 <code>printf</code> 内置命令都可以正常输出转义字符，但包括转义字符的字符串需要用引号（单双引号都可以）扩起来。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">% <span class="built_in">echo</span> <span class="string">'Hello\n\tWorld'</span></div><div class="line">Hello</div><div class="line">        World</div></pre></td></tr></table></figure>
+<p>常用转义字符对照表，不常用的可以去查 ASCII 码表，然后使用 <code>\xnn</code>（如 <code>\x14</code>）。</p>
+<table>
+<thead>
+<tr>
+<th>转义字符</th>
+<th>含义</th>
+<th>ASCII 码值（十六进制）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>\n</td>
+<td>换行</td>
+<td>0a</td>
+</tr>
+<tr>
+<td>\r</td>
+<td>回车</td>
+<td>0d</td>
+</tr>
+<tr>
+<td>\t</td>
+<td>tab</td>
+<td>09</td>
+</tr>
+<tr>
+<td>\</td>
+<td>\</td>
+<td>5c</td>
+</tr>
+<tr>
+<td>`</td>
+<td>`</td>
+<td>60</td>
+</tr>
+<tr>
+<td>\xnn</td>
+<td>取决于 nn</td>
+<td>nn</td>
+</tr>
+</tbody>
+</table>
+<p>可以用 <code>hexdump</code> 命令查看字符的 ASCII 码值。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">% <span class="built_in">echo</span> ab= | hexdump -C</div><div class="line">00000000  61 62 3d 0a                                       |ab=.|</div><div class="line">00000004</div></pre></td></tr></table></figure>
+<p>还有一些字符是可选转义（通常有特殊含义的字符都是如此）的，比如空格、<code>&quot;</code>、<code>&#39;</code>、<code>*</code>、<code>~</code>、<code>$</code>、<code>&amp;</code>、<code>(</code>、<code>)</code>、<code>[</code>、<code>]</code>、<code>{</code>、<code>}</code>、<code>;</code>、<code>?</code> 等等，即如果在引号里边则无需转义（即使转义也不出错，转义方法都说前边加一个 <code>\</code>），但如果在引号外边则需要转义。谨慎起见，包含半角符号的字符串全部用引号包含即可，可以避免不必要的麻烦。</p>
+<p>可以这样检查一个字符在空格外是否需要转义，输出的字符中前边带 <code>\</code> 的都是需要的。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">% str=<span class="string">'~!@#$%^&amp;*()_+-=&#123;&#125;|[]:;&lt;&gt;?,./"'</span></div><div class="line"><span class="comment"># -r 选项代表忽略字符串中的转义符合</span></div><div class="line"><span class="comment"># $&#123;(q)str&#125; 功能是为字符串中的特殊符号添加转义符号</span></div><div class="line">% <span class="built_in">print</span> -r <span class="variable">$&#123;(q)str&#125;</span></div><div class="line">\~\!@\<span class="comment">#\$%\^\&amp;\*\(\)_+-=\&#123;\&#125;\|\[\]:\;\&lt;\&gt;\?,./\"</span></div></pre></td></tr></table></figure>
+<h1 id="单引号"><a href="#单引号" class="headerlink" title="单引号"></a>单引号</h1><p>单引号的左右主要是为了避免字符串里的特殊字符起作用。在单引号中，只有一个字符需要转义，转义符号 <code>\</code> 。所以如果字符串里包含特殊符号时，最好使用单引号包含起来，避免不必要的麻烦。如果字符串需要包含单引号，可以使用这几种方法。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 用双引号包含</span></div><div class="line">% <span class="built_in">echo</span> <span class="string">"a'b"</span></div><div class="line">a<span class="string">'b</div><div class="line"></div><div class="line"># 用转义符号</div><div class="line">% echo a\'</span>b</div><div class="line">a<span class="string">'b</div><div class="line"></div><div class="line"># 同时使用单引号和转义符号，用于包含单引号和其他特殊符号的场景</div><div class="line">% echo '</span>a<span class="string">"\'\''b*?'</div><div class="line">a"</span>\<span class="string">'b*?</span></div></pre></td></tr></table></figure>
+<h1 id="双引号"><a href="#双引号" class="headerlink" title="双引号"></a>双引号</h1><p>双引号的作用类似单引号，但没有单引号那么严格，有些特殊字符在双引号里可以继续起作用。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 以使用变量</span></div><div class="line">% str=abc</div><div class="line">% <span class="built_in">echo</span> <span class="string">"<span class="variable">$str</span>"</span></div><div class="line">abc</div><div class="line"></div><div class="line"><span class="comment"># 可以使用 $( ) 运行命令</span></div><div class="line">% <span class="built_in">echo</span> <span class="string">"<span class="variable">$(ls)</span>"</span></div><div class="line">git</div><div class="line">tmp</div><div class="line"></div><div class="line"><span class="comment"># 可以使用 ` ` 运行命令，不建议在脚本里使用 ` `</span></div><div class="line">% <span class="built_in">echo</span> <span class="string">"`date`"</span></div><div class="line">Mon Aug 28 09:49:11 CST 2017</div><div class="line"></div><div class="line"><span class="comment"># 可以使用 $(( )) 计算数值</span></div><div class="line">% <span class="built_in">echo</span> <span class="string">"<span class="variable">$((1 + 2)</span>)"</span></div><div class="line">3</div><div class="line"></div><div class="line"><span class="comment"># 可以使用 $[ ] 计算数值</span></div><div class="line">% <span class="built_in">echo</span> <span class="string">"$[1 + 2]"</span></div><div class="line">3</div></pre></td></tr></table></figure>
+<p>简单说，<code>$</code> 加各种东西的用法在双引号里都是可以正常使用的，而其他特殊符号（比如 <code>*</code>、<code>?</code>、<code>&gt;</code>）的功能通常不可用。</p>
+<h1 id="反引号"><a href="#反引号" class="headerlink" title="反引号"></a>反引号</h1><p>反引号是用来运行命令的，它会返回命令结果，以便保存到变量等等。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">% str=`ls`</div><div class="line">% <span class="built_in">echo</span> <span class="variable">$str</span></div><div class="line">git</div><div class="line">tmp</div><div class="line"></div><div class="line"><span class="comment"># 完全可以用 $( ) 取代</span></div><div class="line">% str=$(ls)</div><div class="line">% <span class="built_in">echo</span> <span class="variable">$str</span></div><div class="line">git</div><div class="line">tmp</div></pre></td></tr></table></figure>
+<p>反引号的功能和 <code>$( )</code> 功能基本一样，但 <code>$( )</code> 可以嵌套，而反引号不可以，而且反引号看起来更费事，某些字体中的反引号和单引号差别不大。所以在脚本里不建议使用反引号。</p>
+        
+          <p class="article-more-link">
+            <a href="/2017/09/20/zsh-字符串转义和格式化/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <div class="article-footer-tag">
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/shell/">shell</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/zsh/">zsh</a></li></ul>
+
+      </div>
+      <!-- JiaThis Button BEGIN -->
+      <div class="jiathis_style">
+        <span class="jiathis_txt">分享到：</span>
+        <a class="jiathis_button_qzone">QQ空间</a>
+        <a class="jiathis_button_tsina">新浪微博</a>
+        <a class="jiathis_button_tqq">腾讯微博</a>
+        <a class="jiathis_button_weixin">微信</a>
+        <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+        <a class="jiathis_counter_style"></a>
+      </div>
+      <script type="text/javascript" src="http://v3.jiathis.com/code_mini/jia.js" charset="utf-8"></script>
+      <!-- JiaThis Button END -->
+      <!-- UJian Button BEGIN -->
+      <div class="ujian-hook"></div>
+      <script type="text/javascript" src="http://v1.ujian.cc/code/ujian.js"></script>
+      <!-- UJian Button END -->
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-zsh-字符串常用操作" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/09/20/zsh-字符串常用操作/" class="article-date">
+  <time datetime="2017-09-20T13:10:45.000Z" itemprop="datePublished">2017-09-20</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/09/20/zsh-字符串常用操作/">zsh-字符串常用操作</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>   zsh 的字符串处理功能，要比绝大多数编程语言自带的字符串函数库或者类库要强大（在不依赖外部命令的情况）。同时各种用法也比较怪异，很多时候简洁性和可读性是有矛盾的，很难兼顾。而 shell 的使用场景决定简洁性是不能被牺牲掉的，即使用 Python 这样比较简洁的语言来处理字符串，很多时候也只能写出冗长的代码，而 zsh 经常可以一行搞定（可能有人想到了 Perl，Perl 在处理文本方面确实有比较明显的优势，但使用 Perl 的话也要承担更多的成本），如果再加上适当地使用外部命令，基本可以应付大多数字符串处理场景。因为字符串处理的内容比较丰富，我会分多篇文章写。本篇只涉及最基础和常用的字符串操作，包括字符串的拼接、切片、截断、查找、遍历、替换、匹配、大小写转换、分隔等等。</p>
+<h1 id="字符串长度"><a href="#字符串长度" class="headerlink" title="字符串长度"></a>字符串长度</h1><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">% str=abcde</div><div class="line">% <span class="built_in">echo</span> <span class="variable">$#str</span></div><div class="line">5</div><div class="line"></div><div class="line"><span class="comment"># 读取函数或者脚本的第一个参数的长度</span></div><div class="line">% <span class="built_in">echo</span> <span class="variable">$#1</span></div></pre></td></tr></table></figure>
+<h1 id="字符串拼接"><a href="#字符串拼接" class="headerlink" title="字符串拼接"></a>字符串拼接</h1><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">% str1=abc</div><div class="line">% str2=def</div><div class="line"></div><div class="line">% str2+=<span class="variable">$str1</span></div><div class="line">% <span class="built_in">echo</span> <span class="variable">$str2</span></div><div class="line">defabc</div><div class="line"></div><div class="line">% str3=<span class="variable">$str1</span><span class="variable">$str2</span></div><div class="line">abcdefabc</div></pre></td></tr></table></figure>
+<h1 id="字符串切片"><a href="#字符串切片" class="headerlink" title="字符串切片"></a>字符串切片</h1><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">% str=abcdef</div><div class="line">% <span class="built_in">echo</span> <span class="variable">$str</span>[2,4]</div><div class="line">bcd</div><div class="line">% <span class="built_in">echo</span> <span class="variable">$str</span>[2,-1]</div><div class="line">bcdef</div><div class="line"></div><div class="line"><span class="comment"># $1 是文件或者函数的第一个参数</span></div><div class="line"><span class="built_in">echo</span> <span class="variable">$&#123;1[2,4]&#125;</span></div></pre></td></tr></table></figure>
+<p>字符串切片还有另一种风格的方法，即 bash 风格，功能大同小异。通常没有必要用这个，而且因为字符位置是从 0 开始算，容易混淆。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">% str=abcdef</div><div class="line">% <span class="built_in">echo</span> <span class="variable">$&#123;str:1:3&#125;</span></div><div class="line">bcd</div><div class="line">% <span class="built_in">echo</span> <span class="variable">$&#123;str:1:-1&#125;</span></div><div class="line">bcde</div></pre></td></tr></table></figure>
+<h2 id="字符串截断"><a href="#字符串截断" class="headerlink" title="字符串截断"></a>字符串截断</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">% str=abcdeabcde</div><div class="line"></div><div class="line"><span class="comment"># 删除左端匹配到的内容，最小匹配</span></div><div class="line">% <span class="built_in">echo</span> <span class="variable">$&#123;str#*b&#125;</span></div><div class="line">cdeabcde</div><div class="line"></div><div class="line"><span class="comment"># 删除右端匹配到的内容，最小匹配</span></div><div class="line">% <span class="built_in">echo</span> <span class="variable">$&#123;str%d*&#125;</span></div><div class="line">abcdeabc</div><div class="line"></div><div class="line"><span class="comment"># 删除左端匹配到的内容，最大匹配</span></div><div class="line">% <span class="built_in">echo</span> <span class="variable">$&#123;str##*b&#125;</span></div><div class="line">cde</div><div class="line"></div><div class="line"><span class="comment"># 删除右端匹配到的内容</span></div><div class="line">% <span class="built_in">echo</span> <span class="variable">$&#123;str%%d*&#125;</span></div><div class="line">abc</div></pre></td></tr></table></figure>
+<h1 id="字符串查找"><a href="#字符串查找" class="headerlink" title="字符串查找"></a>字符串查找</h1><p>子字符串定位。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">% str=abcdef</div><div class="line"></div><div class="line"><span class="comment"># 这里用的是 i 的大写，不是 L 的小写</span></div><div class="line">% <span class="built_in">echo</span> <span class="variable">$str</span>[(I)<span class="built_in">cd</span>]</div><div class="line">3</div><div class="line"></div><div class="line"><span class="comment"># I 是从右往左找，如果找不到则为 0, 方便用来判断</span></div><div class="line">% ((<span class="variable">$str</span>[(I)<span class="built_in">cd</span>])) &amp;&amp; <span class="built_in">echo</span> good</div><div class="line">good</div><div class="line"></div><div class="line"><span class="comment"># 找不到则为 0</span></div><div class="line">% <span class="built_in">echo</span> <span class="variable">$str</span>[(I)cdd]</div><div class="line">0</div><div class="line"></div><div class="line"><span class="comment"># 也可以使用小 i，小 i 是从左往右找，找不到则返回数组大小 + 1</span></div><div class="line">% <span class="built_in">echo</span> <span class="variable">$str</span>[(i)<span class="built_in">cd</span>]</div><div class="line">3</div><div class="line"></div><div class="line">% <span class="built_in">echo</span> <span class="variable">$str</span>[(i)cdd]</div><div class="line">7</div></pre></td></tr></table></figure>
+<h1 id="遍历字符"><a href="#遍历字符" class="headerlink" title="遍历字符"></a>遍历字符</h1><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">% str=abcd</div><div class="line"></div><div class="line">% <span class="keyword">for</span> i (&#123;1..<span class="variable">$#str</span>&#125;) &#123;</div><div class="line">&gt;    <span class="built_in">echo</span> <span class="variable">$str</span>[i]</div><div class="line">&gt;&#125;</div><div class="line">a</div><div class="line">b</div><div class="line">c</div><div class="line">d</div></pre></td></tr></table></figure>
+<h1 id="字符串替换"><a href="#字符串替换" class="headerlink" title="字符串替换"></a>字符串替换</h1><p>按内容替换和删除字符。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">% str=abcdefg</div><div class="line"></div><div class="line"><span class="comment"># 一对一地替换</span></div><div class="line">% str[2]=1</div><div class="line">% <span class="built_in">echo</span> <span class="variable">$str</span></div><div class="line">a1cdefg</div><div class="line"></div><div class="line"><span class="comment"># 可以多对多（也包括一对多和多对一）地替换字符，两边的字符数量不需要一致。</span></div><div class="line"><span class="comment"># 把第二、三个字符替换成 2345</span></div><div class="line">% str[2,3]=2345</div><div class="line">% <span class="built_in">echo</span> <span class="variable">$str</span></div><div class="line">a2345defg</div></pre></td></tr></table></figure>
+        
+          <p class="article-more-link">
+            <a href="/2017/09/20/zsh-字符串常用操作/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <div class="article-footer-tag">
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/shell/">shell</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/zsh/">zsh</a></li></ul>
+
+      </div>
+      <!-- JiaThis Button BEGIN -->
+      <div class="jiathis_style">
+        <span class="jiathis_txt">分享到：</span>
+        <a class="jiathis_button_qzone">QQ空间</a>
+        <a class="jiathis_button_tsina">新浪微博</a>
+        <a class="jiathis_button_tqq">腾讯微博</a>
+        <a class="jiathis_button_weixin">微信</a>
+        <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+        <a class="jiathis_counter_style"></a>
+      </div>
+      <script type="text/javascript" src="http://v3.jiathis.com/code_mini/jia.js" charset="utf-8"></script>
+      <!-- JiaThis Button END -->
+      <!-- UJian Button BEGIN -->
+      <div class="ujian-hook"></div>
+      <script type="text/javascript" src="http://v1.ujian.cc/code/ujian.js"></script>
+      <!-- UJian Button END -->
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
   
     <article id="post-zsh-变量和语句" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
@@ -642,150 +834,6 @@
 
 
   
-    <article id="post-vim-move" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/03/29/vim-move/" class="article-date">
-  <time datetime="2016-03-29T11:48:35.000Z" itemprop="datePublished">2016-03-29</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/03/29/vim-move/">Vim系列之移动(三)</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="约定"><a href="#约定" class="headerlink" title="约定"></a>约定</h1><p> 除特殊说明以外，本篇所有操作都是在普通模式下进行的。</p>
-<h1 id="上下左右移动（基本操作）"><a href="#上下左右移动（基本操作）" class="headerlink" title="上下左右移动（基本操作）"></a>上下左右移动（基本操作）</h1><p>k/j/h/l可以操作光标在vim中上下左右移动。</p>
-<p>k：光标向上移动一行</p>
-<p>j：光标向下移动一行</p>
-<p>h：光标向左移动一个字符</p>
-<p>l：光标向右移动一个字符</p>
-<p>数字N加上kjhl相当于连续N次操作，比如5j表示光标向下移动5行。</p>
-<h1 id="以word为单位的移动"><a href="#以word为单位的移动" class="headerlink" title="以word为单位的移动"></a>以word为单位的移动</h1><p>w/b/W/B可以操作光标在vim中以word为单位移动。</p>
-<p>w：光标向后移动一个word；特殊字符作为分隔符(通常为非数字和字母的字符，比如逗号，空格，下划线等一些符号)</p>
-<p>b：光标向前移动一个word；分隔符同w</p>
-<p>W：光标向后移动一个word；空白作为分隔符(连续的多个空白当做一个)</p>
-<p>B：光标向前移动一个word；分隔符同W</p>
-<p>wbWB同kjhl一样可以结合数字连续多次操作</p>
-<h1 id="移动到行尾或行首"><a href="#移动到行尾或行首" class="headerlink" title="移动到行尾或行首"></a>移动到行尾或行首</h1><p>^/0/$可以操作光标移动到行尾或者行首。</p>
-<p>^：光标移动到行首的第一个非空白字符处</p>
-<p>0：光标移动到行首</p>
-<p>$：光标移动到行尾</p>
-        
-          <p class="article-more-link">
-            <a href="/2016/03/29/vim-move/#more">Read More</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      <div class="article-footer-tag">
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/vim/">vim</a></li></ul>
-
-      </div>
-      <!-- JiaThis Button BEGIN -->
-      <div class="jiathis_style">
-        <span class="jiathis_txt">分享到：</span>
-        <a class="jiathis_button_qzone">QQ空间</a>
-        <a class="jiathis_button_tsina">新浪微博</a>
-        <a class="jiathis_button_tqq">腾讯微博</a>
-        <a class="jiathis_button_weixin">微信</a>
-        <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
-        <a class="jiathis_counter_style"></a>
-      </div>
-      <script type="text/javascript" src="http://v3.jiathis.com/code_mini/jia.js" charset="utf-8"></script>
-      <!-- JiaThis Button END -->
-      <!-- UJian Button BEGIN -->
-      <div class="ujian-hook"></div>
-      <script type="text/javascript" src="http://v1.ujian.cc/code/ujian.js"></script>
-      <!-- UJian Button END -->
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-php-memcached" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/03/29/php-memcached/" class="article-date">
-  <time datetime="2016-03-29T10:45:32.000Z" itemprop="datePublished">2016-03-29</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/03/29/php-memcached/">PHP安装memcached扩展</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="安装GCC"><a href="#安装GCC" class="headerlink" title="安装GCC"></a>安装GCC</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo yum -y install gcc</div></pre></td></tr></table></figure>
-<h1 id="安装libevent"><a href="#安装libevent" class="headerlink" title="安装libevent"></a>安装libevent</h1><h2 id="下载libevent"><a href="#下载libevent" class="headerlink" title="下载libevent"></a>下载<a href="http://libevent.org/">libevent</a></h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">wget https://github.com/libevent/libevent/releases/download/release-2.0.22-stable/libevent-2.0.22-stable.tar.gz</div></pre></td></tr></table></figure>
-<h2 id="解压文件"><a href="#解压文件" class="headerlink" title="解压文件"></a>解压文件</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">tar -zvxf libevent-2.0.22-stable.tar.gz</div></pre></td></tr></table></figure>
-<h2 id="进入目录"><a href="#进入目录" class="headerlink" title="进入目录"></a>进入目录</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">cd</span> libevent-2.0.22-stable</div></pre></td></tr></table></figure>
-<h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">./configure --prefix=/usr/local</div></pre></td></tr></table></figure>
-<h2 id="编译"><a href="#编译" class="headerlink" title="编译"></a>编译</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">make</div></pre></td></tr></table></figure>
-<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">make <span class="built_in">test</span> &amp;&amp; make install</div></pre></td></tr></table></figure>
-        
-          <p class="article-more-link">
-            <a href="/2016/03/29/php-memcached/#more">Read More</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      <div class="article-footer-tag">
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/PHP/">PHP</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/memcached/">memcached</a></li></ul>
-
-      </div>
-      <!-- JiaThis Button BEGIN -->
-      <div class="jiathis_style">
-        <span class="jiathis_txt">分享到：</span>
-        <a class="jiathis_button_qzone">QQ空间</a>
-        <a class="jiathis_button_tsina">新浪微博</a>
-        <a class="jiathis_button_tqq">腾讯微博</a>
-        <a class="jiathis_button_weixin">微信</a>
-        <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
-        <a class="jiathis_counter_style"></a>
-      </div>
-      <script type="text/javascript" src="http://v3.jiathis.com/code_mini/jia.js" charset="utf-8"></script>
-      <!-- JiaThis Button END -->
-      <!-- UJian Button BEGIN -->
-      <div class="ujian-hook"></div>
-      <script type="text/javascript" src="http://v1.ujian.cc/code/ujian.js"></script>
-      <!-- UJian Button END -->
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
 
 
   <nav id="page-nav">
@@ -800,9 +848,9 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Tags</h3>
+    <h3 class="widget-title">Mot-clés</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Effective-Java/">Effective Java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PHP/">PHP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PHPUnit/">PHPUnit</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/c/">c</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cache/">cache</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/memcached/">memcached</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/redis/">redis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/shell/">shell</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vim/">vim</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/zsh/">zsh</a></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Effective-Java/">Effective Java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PHP/">PHP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PHPUnit/">PHPUnit</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/c/">c</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cache/">cache</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/memcached/">memcached</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/redis/">redis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/shell/">shell</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vim/">vim</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/zsh/">zsh</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/笔记/">笔记</a></li></ul>
     </div>
   </div>
 
@@ -810,9 +858,9 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Tag Cloud</h3>
+    <h3 class="widget-title">Nuage de mot-clés</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Effective-Java/" style="font-size: 13.33px;">Effective Java</a> <a href="/tags/Java/" style="font-size: 13.33px;">Java</a> <a href="/tags/PHP/" style="font-size: 13.33px;">PHP</a> <a href="/tags/PHPUnit/" style="font-size: 10px;">PHPUnit</a> <a href="/tags/c/" style="font-size: 10px;">c</a> <a href="/tags/cache/" style="font-size: 20px;">cache</a> <a href="/tags/memcached/" style="font-size: 10px;">memcached</a> <a href="/tags/redis/" style="font-size: 20px;">redis</a> <a href="/tags/shell/" style="font-size: 16.67px;">shell</a> <a href="/tags/vim/" style="font-size: 16.67px;">vim</a> <a href="/tags/zsh/" style="font-size: 16.67px;">zsh</a>
+      <a href="/tags/Effective-Java/" style="font-size: 13.33px;">Effective Java</a> <a href="/tags/Java/" style="font-size: 13.33px;">Java</a> <a href="/tags/PHP/" style="font-size: 13.33px;">PHP</a> <a href="/tags/PHPUnit/" style="font-size: 10px;">PHPUnit</a> <a href="/tags/c/" style="font-size: 10px;">c</a> <a href="/tags/cache/" style="font-size: 20px;">cache</a> <a href="/tags/memcached/" style="font-size: 10px;">memcached</a> <a href="/tags/redis/" style="font-size: 20px;">redis</a> <a href="/tags/shell/" style="font-size: 16.67px;">shell</a> <a href="/tags/vim/" style="font-size: 16.67px;">vim</a> <a href="/tags/zsh/" style="font-size: 16.67px;">zsh</a> <a href="/tags/笔记/" style="font-size: 10px;">笔记</a>
     </div>
   </div>
 
@@ -821,7 +869,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">June 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">April 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">March 2016</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">June 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">April 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">March 2016</a></li></ul>
     </div>
   </div>
 
@@ -829,9 +877,17 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Recent Posts</h3>
+    <h3 class="widget-title">Articles récents</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2018/03/20/架构师图谱/">架构师图谱</a>
+          </li>
+        
+          <li>
+            <a href="/2017/11/21/redis-object/">redis对象</a>
+          </li>
         
           <li>
             <a href="/2017/11/12/redis-ziplist/">redis压缩列表</a>
@@ -843,14 +899,6 @@
         
           <li>
             <a href="/2017/11/09/redis-skiplist/">redis跳跃表</a>
-          </li>
-        
-          <li>
-            <a href="/2017/11/07/redis-dict/">redis字典</a>
-          </li>
-        
-          <li>
-            <a href="/2017/11/07/c-point-method/">指针函数&amp;函数指针</a>
           </li>
         
       </ul>
@@ -891,8 +939,8 @@
   
   <div class="outer">
     <div id="footer-info" class="inner">
-      &copy; 2017 Kenneth Fan<br>
-      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+      &copy; 2018 Kenneth Fan<br>
+      Propulsé by <a href="http://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>
 </footer>

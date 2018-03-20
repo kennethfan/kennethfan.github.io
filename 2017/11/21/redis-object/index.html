@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>redis对象 | 夜未央</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <meta name="keyword" content="c,PHP,redis,cache,memcached,PHPUnit,vim,zsh,shell,Java,Effective Java,笔记">
+  
+  <meta name="description" content="前面的章节，介绍了Redis泳道的主要数据结构，比如简单动态字符串，双端列表，字典，压缩列表，整数集合等等。Redis并没有直接使用这些数据结构来实现键值对数据库，而是基于数据结构创建了一个对象系统，这个系统包含字符串对象，列表对象，哈希对象，集合对象和有序集合对象这五种类型的对象，每种对象都用到了至少一种前面说的数据结构。
+对象的类型和编码Redis使用对象来表示数据库中的键和值，每次当我们在R">
+<meta property="og:type" content="article">
+<meta property="og:title" content="redis对象">
+<meta property="og:url" content="http://kennethfan.github.io/2017/11/21/redis-object/index.html">
+<meta property="og:site_name" content="夜未央">
+<meta property="og:description" content="前面的章节，介绍了Redis泳道的主要数据结构，比如简单动态字符串，双端列表，字典，压缩列表，整数集合等等。Redis并没有直接使用这些数据结构来实现键值对数据库，而是基于数据结构创建了一个对象系统，这个系统包含字符串对象，列表对象，哈希对象，集合对象和有序集合对象这五种类型的对象，每种对象都用到了至少一种前面说的数据结构。
+对象的类型和编码Redis使用对象来表示数据库中的键和值，每次当我们在R">
+<meta property="og:updated_time" content="2017-11-22T11:02:44.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="redis对象">
+<meta name="twitter:description" content="前面的章节，介绍了Redis泳道的主要数据结构，比如简单动态字符串，双端列表，字典，压缩列表，整数集合等等。Redis并没有直接使用这些数据结构来实现键值对数据库，而是基于数据结构创建了一个对象系统，这个系统包含字符串对象，列表对象，哈希对象，集合对象和有序集合对象这五种类型的对象，每种对象都用到了至少一种前面说的数据结构。
+对象的类型和编码Redis使用对象来表示数据库中的键和值，每次当我们在R">
+  
+    <link rel="alternate" href="/atom.xml" title="夜未央" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">夜未央</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">感恩 &amp; 回馈 | 理解 &amp; 释怀 | 热爱 &amp; 敬畏</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="Flux RSS"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Rechercher"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://kennethfan.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-redis-object" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/11/21/redis-object/" class="article-date">
+  <time datetime="2017-11-21T15:03:42.000Z" itemprop="datePublished">2017-11-21</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      redis对象
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+
+        <!-- Table of Contents -->
+        
+        <div id="toc" class="toc-article">
+        <strong class="toc-title">文章目录</strong>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#对象的类型和编码"><span class="toc-number">1.</span> <span class="toc-text">对象的类型和编码</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#类型"><span class="toc-number">1.1.</span> <span class="toc-text">类型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#编码和底层实现"><span class="toc-number">1.2.</span> <span class="toc-text">编码和底层实现</span></a></li></ol></li></ol>
+        </div>
+        
+
+        <p>前面的章节，介绍了Redis泳道的主要数据结构，比如简单动态字符串，双端列表，字典，压缩列表，整数集合等等。Redis并没有直接使用这些数据结构来实现键值对数据库，而是基于数据结构创建了一个对象系统，这个系统包含字符串对象，列表对象，哈希对象，集合对象和有序集合对象这五种类型的对象，每种对象都用到了至少一种前面说的数据结构。</p>
+<h1 id="对象的类型和编码"><a href="#对象的类型和编码" class="headerlink" title="对象的类型和编码"></a>对象的类型和编码</h1><p>Redis使用对象来表示数据库中的键和值，每次当我们在Redis的数据库中新创建一个键值对时，我们至少会创建两个对象，一个对象用作键值对的键，另一个对象用作键值对的值。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">type <span class="keyword">struct</span> redisObject &#123;</div><div class="line">    <span class="comment">// 类型</span></div><div class="line">  	<span class="keyword">unsigned</span> type:<span class="number">4</span>;</div><div class="line">  	<span class="comment">// 编码</span></div><div class="line">  	<span class="keyword">unsigned</span> encoding:<span class="number">4</span>;</div><div class="line">  	<span class="comment">// 指向底层实现数据结构的指针</span></div><div class="line">  	<span class="keyword">void</span> *ptr;</div><div class="line">&#125; robj;</div></pre></td></tr></table></figure>
+<h2 id="类型"><a href="#类型" class="headerlink" title="类型"></a>类型</h2><table>
+<thead>
+<tr>
+<th>类型常量</th>
+<th>对象的名称</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>REDIS_STIRNG</td>
+<td>字符串对象</td>
+</tr>
+<tr>
+<td>REDIS_LIST</td>
+<td>列表对象</td>
+</tr>
+<tr>
+<td>REDIS_HASH</td>
+<td>哈希对象</td>
+</tr>
+<tr>
+<td>REDIS_SET</td>
+<td>集合对象</td>
+</tr>
+<tr>
+<td>REDIS_ZSET</td>
+<td>有序集合对象</td>
+</tr>
+</tbody>
+</table>
+<h2 id="编码和底层实现"><a href="#编码和底层实现" class="headerlink" title="编码和底层实现"></a>编码和底层实现</h2><p>对象的prt指针指向对象的底层实现数据结构，而这些数据结构由对象的encoding属性决定。encoding属性记录了对象所使用的编码，也即是说这个对象使用了什么数据结构作为对象的底层实现。</p>
+<table>
+<thead>
+<tr>
+<th>编码常量</th>
+<th>编码所对应的底层数据结构</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>REDIS_ENCODING_INT</td>
+<td>long类型的整数</td>
+</tr>
+<tr>
+<td>REDIS_ENCODING_EMBSTR</td>
+<td>embstr编码的简单动态字符串</td>
+</tr>
+<tr>
+<td>REDIS_ENCODING_RAW</td>
+<td>简单动态字符串</td>
+</tr>
+<tr>
+<td>REDIS_ENCODING_HT</td>
+<td>字典</td>
+</tr>
+<tr>
+<td>REDIS_ENCODING_LINKEDLIST</td>
+<td>双端链表</td>
+</tr>
+<tr>
+<td>DRDIS_ENCODING_ZIPLIST</td>
+<td>压缩列表</td>
+</tr>
+<tr>
+<td>REDIS_ENCODING_INTSET</td>
+<td>整数集合</td>
+</tr>
+<tr>
+<td>REDIS_ENCODING_SKIPLIST</td>
+<td>跳跃表和字典</td>
+</tr>
+</tbody>
+</table>
+<p>每种类型的对象都至少使用了两种不同的编码。</p>
+<table>
+<thead>
+<tr>
+<th>类型</th>
+<th>编码</th>
+<th>对象</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>REDIS_STRING</td>
+<td>REDIS_ENCODING_INT</td>
+<td>使用整数值实现的字符串对象</td>
+</tr>
+<tr>
+<td>REDIS_STRING</td>
+<td>REDIS_ENCODING_EMBSTR</td>
+<td>使用embstr编码的简单动态字符串实现的字符串对象</td>
+</tr>
+<tr>
+<td>REDIS_STRING</td>
+<td>REDIS_ENCODING_RAW</td>
+<td>使用简单动态字符串实现的字符串对象</td>
+</tr>
+<tr>
+<td>REDIS_LIST</td>
+<td>REDIS_ENDOGING_ZIPLIST</td>
+<td>使用压缩列表实现的列表对象</td>
+</tr>
+<tr>
+<td>REDIS_LIST</td>
+<td>REDIS_ENDOGING_LINKEDLIST</td>
+<td>使用双端列表实现的列表对象</td>
+</tr>
+<tr>
+<td>REDIS_HASH</td>
+<td>REDIS_ENDOGING_ZIPLIST</td>
+<td>使用压缩列表实现的哈希对象</td>
+</tr>
+<tr>
+<td>REDIS_HASH</td>
+<td>REDIS_ENDOGING_HT</td>
+<td>使用字典实现的哈希对象</td>
+</tr>
+<tr>
+<td>REDIS_SET</td>
+<td>REDIS_ENDOGING_INTSET</td>
+<td>使用整数集合实现的哈希对象</td>
+</tr>
+<tr>
+<td>REDIS_SET</td>
+<td>REDIS_ENDOGING_HT</td>
+<td>使用字典集合实现的哈希对象</td>
+</tr>
+<tr>
+<td>REDIS_ZSET</td>
+<td>REDIS_ENDOGING_ZIPLIST</td>
+<td>使用压缩列表实现的有序列表集合</td>
+</tr>
+<tr>
+<td>REDIS_ZSET</td>
+<td>REDIS_ENDOGING_SKIPLIST</td>
+<td>使用跳跃表实现的有序集合</td>
+</tr>
+</tbody>
+</table>
+
+      
+    </div>
+    <footer class="article-footer">
+      <div class="article-footer-tag">
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/cache/">cache</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/redis/">redis</a></li></ul>
+
+      </div>
+      <!-- JiaThis Button BEGIN -->
+      <div class="jiathis_style">
+        <span class="jiathis_txt">分享到：</span>
+        <a class="jiathis_button_qzone">QQ空间</a>
+        <a class="jiathis_button_tsina">新浪微博</a>
+        <a class="jiathis_button_tqq">腾讯微博</a>
+        <a class="jiathis_button_weixin">微信</a>
+        <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+        <a class="jiathis_counter_style"></a>
+      </div>
+      <script type="text/javascript" src="http://v3.jiathis.com/code_mini/jia.js" charset="utf-8"></script>
+      <!-- JiaThis Button END -->
+      <!-- UJian Button BEGIN -->
+      <div class="ujian-hook"></div>
+      <script type="text/javascript" src="http://v1.ujian.cc/code/ujian.js"></script>
+      <!-- UJian Button END -->
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/03/20/架构师图谱/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Récent</strong>
+      <div class="article-nav-title">
+        
+          架构师图谱
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/11/12/redis-ziplist/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Ancien</strong>
+      <div class="article-nav-title">redis压缩列表</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+<section id="comments">
+<!-- 多说评论框 start -->
+<div class="ds-thread" data-thread-key="post-redis-object" data-title="redis对象" data-url="http://kennethfan.github.io/2017/11/21/redis-object/"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:'kennethfan'};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+  </script>
+<!-- 多说公共JS代码 end -->
+</section>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Mot-clés</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Effective-Java/">Effective Java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PHP/">PHP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PHPUnit/">PHPUnit</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/c/">c</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cache/">cache</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/memcached/">memcached</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/redis/">redis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/shell/">shell</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vim/">vim</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/zsh/">zsh</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/笔记/">笔记</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Nuage de mot-clés</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Effective-Java/" style="font-size: 13.33px;">Effective Java</a> <a href="/tags/Java/" style="font-size: 13.33px;">Java</a> <a href="/tags/PHP/" style="font-size: 13.33px;">PHP</a> <a href="/tags/PHPUnit/" style="font-size: 10px;">PHPUnit</a> <a href="/tags/c/" style="font-size: 10px;">c</a> <a href="/tags/cache/" style="font-size: 20px;">cache</a> <a href="/tags/memcached/" style="font-size: 10px;">memcached</a> <a href="/tags/redis/" style="font-size: 20px;">redis</a> <a href="/tags/shell/" style="font-size: 16.67px;">shell</a> <a href="/tags/vim/" style="font-size: 16.67px;">vim</a> <a href="/tags/zsh/" style="font-size: 16.67px;">zsh</a> <a href="/tags/笔记/" style="font-size: 10px;">笔记</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">June 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">April 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">March 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Articles récents</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2018/03/20/架构师图谱/">架构师图谱</a>
+          </li>
+        
+          <li>
+            <a href="/2017/11/21/redis-object/">redis对象</a>
+          </li>
+        
+          <li>
+            <a href="/2017/11/12/redis-ziplist/">redis压缩列表</a>
+          </li>
+        
+          <li>
+            <a href="/2017/11/09/redis-intset/">redis整数集合</a>
+          </li>
+        
+          <li>
+            <a href="/2017/11/09/redis-skiplist/">redis跳跃表</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+      <div class="widget-wrap">
+    <h3 class="widget-title">友情链接</h3>
+    <div class="widget">
+      <ul>
+          
+          <li>
+            <a href="http://pedroneer.github.io">龙羽</a>
+          </li>
+          
+          <li>
+            <a href="https://github.com/buptzhanghao">好神</a>
+          </li>
+          
+          <li>
+            <a href="http://www.bencaimao.com/">笨财猫</a>
+          </li>
+          
+          <li>
+            <a href="http://www.beva.com">贝瓦网</a>
+          </li>
+          
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 Kenneth Fan<br>
+      Propulsé by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>
