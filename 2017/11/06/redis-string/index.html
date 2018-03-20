@@ -6,7 +6,7 @@
   <title>redis字符串 | 夜未央</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
-  <meta name="keyword" content="c,PHP,redis,cache,memcached,PHPUnit,vim,zsh,shell,Java,Effective Java,笔记">
+  <meta name="keyword" content="PHP,c,redis,cache,memcached,PHPUnit,vim,zsh,shell,Java,Effective Java,笔记">
   
   <meta name="description" content="Redis没有直接使用C语言传统的字符串表示（以空字符串结尾的字符数组），而是自己构建了一种名为动态字符串（simple dynamic string，SDS）的抽象类型，并将SDS用作Redis的默认字符串表示。Redis的数据库里面，包含字符串值的键值对在底层都是用SDS实现的；除此之外，SDS还被用作缓冲区（buffer）：AOF模块中的AOF缓冲区，以及客户端状态中的输入缓冲区，都是有SD">
 <meta property="og:type" content="article">
