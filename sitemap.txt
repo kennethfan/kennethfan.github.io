@@ -23,8 +23,8 @@ http://kennethfan.github.io/2016/03/30/phpunit/
 http://kennethfan.github.io/2016/03/29/php-memcached/
 http://kennethfan.github.io/2017/06/05/hello-world/
 http://kennethfan.github.io/
-http://kennethfan.github.io/tags/PHP/
 http://kennethfan.github.io/tags/c/
+http://kennethfan.github.io/tags/PHP/
 http://kennethfan.github.io/tags/memcached/
 http://kennethfan.github.io/tags/PHPUnit/
 http://kennethfan.github.io/tags/redis/
@@ -32,6 +32,6 @@ http://kennethfan.github.io/tags/cache/
 http://kennethfan.github.io/tags/vim/
 http://kennethfan.github.io/tags/zsh/
 http://kennethfan.github.io/tags/shell/
+http://kennethfan.github.io/tags/%E7%AC%94%E8%AE%B0/
 http://kennethfan.github.io/tags/Java/
 http://kennethfan.github.io/tags/Effective-Java/
-http://kennethfan.github.io/tags/%E7%AC%94%E8%AE%B0/
