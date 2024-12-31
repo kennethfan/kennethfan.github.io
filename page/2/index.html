@@ -6,7 +6,7 @@
   <title>夜未央</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
-  <meta name="keyword" content="c,PHP,memcached,PHPUnit,redis,cache,vim,zsh,shell,Java,Effective Java,笔记">
+  <meta name="keyword" content="PHP,c,memcached,PHPUnit,redis,cache,vim,zsh,shell,Java,Effective Java,笔记">
   
   <meta name="description" content="一个IT从业人员的工作笔记和生活感悟">
 <meta property="og:type" content="website">
@@ -14,9 +14,9 @@
 <meta property="og:url" content="http://kennethfan.github.io/page/2/index.html">
 <meta property="og:site_name" content="夜未央">
 <meta property="og:description" content="一个IT从业人员的工作笔记和生活感悟">
+<meta property="og:locale">
+<meta property="article:author" content="Kenneth Fan">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="夜未央">
-<meta name="twitter:description" content="一个IT从业人员的工作笔记和生活感悟">
   
     <link rel="alternate" href="/atom.xml" title="夜未央" type="application/atom+xml">
   
@@ -26,10 +26,12 @@
   
     <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
   
-  <link rel="stylesheet" href="/css/style.css">
+  
+<link rel="stylesheet" href="/css/style.css">
+
   
 
-</head>
+<meta name="generator" content="Hexo 6.3.0"></head>
 
 <body>
   <div id="container">
@@ -41,10 +43,6 @@
       <h1 id="logo-wrap">
         <a href="/" id="logo">夜未央</a>
       </h1>
-      
-        <h2 id="subtitle-wrap">
-          <a href="/" id="subtitle">感恩 &amp; 回馈 | 理解 &amp; 释怀 | 热爱 &amp; 敬畏</a>
-        </h2>
       
     </div>
     <div id="header-inner" class="inner">
@@ -63,7 +61,7 @@
         <a id="nav-search-btn" class="nav-icon" title="Search"></a>
       </nav>
       <div id="search-form-wrap">
-        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://kennethfan.github.io"></form>
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://kennethfan.github.io"></form>
       </div>
     </div>
   </div>
@@ -74,7 +72,7 @@
   
     <article id="post-zsh-字符串转义和格式化" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2017/09/20/zsh-字符串转义和格式化/" class="article-date">
+    <a href="/2017/09/20/zsh-%E5%AD%97%E7%AC%A6%E4%B8%B2%E8%BD%AC%E4%B9%89%E5%92%8C%E6%A0%BC%E5%BC%8F%E5%8C%96/" class="article-date">
   <time datetime="2017-09-20T13:57:16.000Z" itemprop="datePublished">2017-09-20</time>
 </a>
     
@@ -86,7 +84,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/09/20/zsh-字符串转义和格式化/">zsh-字符串转义和格式化</a>
+      <a class="article-title" href="/2017/09/20/zsh-%E5%AD%97%E7%AC%A6%E4%B8%B2%E8%BD%AC%E4%B9%89%E5%92%8C%E6%A0%BC%E5%BC%8F%E5%8C%96/">zsh-字符串转义和格式化</a>
     </h1>
   
 
@@ -98,7 +96,8 @@
 <h1 id="转义字符"><a href="#转义字符" class="headerlink" title="转义字符"></a>转义字符</h1><p>转义字符是很多编程语言中都有的概念，它主要解决某些字符因为没有对应键盘按键无法直接输出、字符本身有特殊含义（比如 <code>\</code>、<code>&quot;</code>）或者显示不直观（比如难以区别多个空格和一个 tab）等问题。</p>
 <p>最常用的转义字符是 <code>\n</code>（换行）、<code>\r</code>（回车）、<code>\t</code>（tab）。</p>
 <p>直接用 <code>echo</code>、<code>print</code> 或者 <code>printf</code> 内置命令都可以正常输出转义字符，但包括转义字符的字符串需要用引号（单双引号都可以）扩起来。</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">% <span class="built_in">echo</span> <span class="string">'Hello\n\tWorld'</span></div><div class="line">Hello</div><div class="line">        World</div></pre></td></tr></table></figure>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">% <span class="built_in">echo</span> <span class="string">&#x27;Hello\n\tWorld&#x27;</span></span><br><span class="line">Hello</span><br><span class="line">        World</span><br></pre></td></tr></table></figure>
+
 <p>常用转义字符对照表，不常用的可以去查 ASCII 码表，然后使用 <code>\xnn</code>（如 <code>\x14</code>）。</p>
 <table>
 <thead>
@@ -108,8 +107,7 @@
 <th>ASCII 码值（十六进制）</th>
 </tr>
 </thead>
-<tbody>
-<tr>
+<tbody><tr>
 <td>\n</td>
 <td>换行</td>
 <td>0a</td>
@@ -131,7 +129,7 @@
 </tr>
 <tr>
 <td>`</td>
-<td>`</td>
+<td>&#96;</td>
 <td>60</td>
 </tr>
 <tr>
@@ -139,24 +137,28 @@
 <td>取决于 nn</td>
 <td>nn</td>
 </tr>
-</tbody>
-</table>
+</tbody></table>
 <p>可以用 <code>hexdump</code> 命令查看字符的 ASCII 码值。</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">% <span class="built_in">echo</span> ab= | hexdump -C</div><div class="line">00000000  61 62 3d 0a                                       |ab=.|</div><div class="line">00000004</div></pre></td></tr></table></figure>
-<p>还有一些字符是可选转义（通常有特殊含义的字符都是如此）的，比如空格、<code>&quot;</code>、<code>&#39;</code>、<code>*</code>、<code>~</code>、<code>$</code>、<code>&amp;</code>、<code>(</code>、<code>)</code>、<code>[</code>、<code>]</code>、<code>{</code>、<code>}</code>、<code>;</code>、<code>?</code> 等等，即如果在引号里边则无需转义（即使转义也不出错，转义方法都说前边加一个 <code>\</code>），但如果在引号外边则需要转义。谨慎起见，包含半角符号的字符串全部用引号包含即可，可以避免不必要的麻烦。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">% <span class="built_in">echo</span> ab= | hexdump -C</span><br><span class="line">00000000  61 62 3d 0a                                       |ab=.|</span><br><span class="line">00000004</span><br></pre></td></tr></table></figure>
+
+<p>还有一些字符是可选转义（通常有特殊含义的字符都是如此）的，比如空格、<code>&quot;</code>、<code>&#39;</code>、<code>*</code>、<code>~</code>、<code>$</code>、<code>&amp;</code>、<code>(</code>、<code>)</code>、<code>[</code>、<code>]</code>、<code>&#123;</code>、<code>&#125;</code>、<code>;</code>、<code>?</code> 等等，即如果在引号里边则无需转义（即使转义也不出错，转义方法都说前边加一个 <code>\</code>），但如果在引号外边则需要转义。谨慎起见，包含半角符号的字符串全部用引号包含即可，可以避免不必要的麻烦。</p>
 <p>可以这样检查一个字符在空格外是否需要转义，输出的字符中前边带 <code>\</code> 的都是需要的。</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">% str=<span class="string">'~!@#$%^&amp;*()_+-=&#123;&#125;|[]:;&lt;&gt;?,./"'</span></div><div class="line"><span class="comment"># -r 选项代表忽略字符串中的转义符合</span></div><div class="line"><span class="comment"># $&#123;(q)str&#125; 功能是为字符串中的特殊符号添加转义符号</span></div><div class="line">% <span class="built_in">print</span> -r <span class="variable">$&#123;(q)str&#125;</span></div><div class="line">\~\!@\<span class="comment">#\$%\^\&amp;\*\(\)_+-=\&#123;\&#125;\|\[\]:\;\&lt;\&gt;\?,./\"</span></div></pre></td></tr></table></figure>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">% str=<span class="string">&#x27;~!@#$%^&amp;*()_+-=&#123;&#125;|[]:;&lt;&gt;?,./&quot;&#x27;</span></span><br><span class="line"><span class="comment"># -r 选项代表忽略字符串中的转义符合</span></span><br><span class="line"><span class="comment"># $&#123;(q)str&#125; 功能是为字符串中的特殊符号添加转义符号</span></span><br><span class="line">% <span class="built_in">print</span> -r <span class="variable">$&#123;(q)str&#125;</span></span><br><span class="line">\~\!@\<span class="comment">#\$%\^\&amp;\*\(\)_+-=\&#123;\&#125;\|\[\]:\;\&lt;\&gt;\?,./\&quot;</span></span><br></pre></td></tr></table></figure>
+
 <h1 id="单引号"><a href="#单引号" class="headerlink" title="单引号"></a>单引号</h1><p>单引号的左右主要是为了避免字符串里的特殊字符起作用。在单引号中，只有一个字符需要转义，转义符号 <code>\</code> 。所以如果字符串里包含特殊符号时，最好使用单引号包含起来，避免不必要的麻烦。如果字符串需要包含单引号，可以使用这几种方法。</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 用双引号包含</span></div><div class="line">% <span class="built_in">echo</span> <span class="string">"a'b"</span></div><div class="line">a<span class="string">'b</div><div class="line"></div><div class="line"># 用转义符号</div><div class="line">% echo a\'</span>b</div><div class="line">a<span class="string">'b</div><div class="line"></div><div class="line"># 同时使用单引号和转义符号，用于包含单引号和其他特殊符号的场景</div><div class="line">% echo '</span>a<span class="string">"\'\''b*?'</div><div class="line">a"</span>\<span class="string">'b*?</span></div></pre></td></tr></table></figure>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 用双引号包含</span></span><br><span class="line">% <span class="built_in">echo</span> <span class="string">&quot;a&#x27;b&quot;</span></span><br><span class="line">a<span class="string">&#x27;b</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string"># 用转义符号</span></span><br><span class="line"><span class="string">% echo a\&#x27;</span>b</span><br><span class="line">a<span class="string">&#x27;b</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string"># 同时使用单引号和转义符号，用于包含单引号和其他特殊符号的场景</span></span><br><span class="line"><span class="string">% echo &#x27;</span>a<span class="string">&quot;\&#x27;\&#x27;&#x27;b*?&#x27;</span></span><br><span class="line"><span class="string">a&quot;</span>\<span class="string">&#x27;b*?</span></span><br></pre></td></tr></table></figure>
+
 <h1 id="双引号"><a href="#双引号" class="headerlink" title="双引号"></a>双引号</h1><p>双引号的作用类似单引号，但没有单引号那么严格，有些特殊字符在双引号里可以继续起作用。</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 以使用变量</span></div><div class="line">% str=abc</div><div class="line">% <span class="built_in">echo</span> <span class="string">"<span class="variable">$str</span>"</span></div><div class="line">abc</div><div class="line"></div><div class="line"><span class="comment"># 可以使用 $( ) 运行命令</span></div><div class="line">% <span class="built_in">echo</span> <span class="string">"<span class="variable">$(ls)</span>"</span></div><div class="line">git</div><div class="line">tmp</div><div class="line"></div><div class="line"><span class="comment"># 可以使用 ` ` 运行命令，不建议在脚本里使用 ` `</span></div><div class="line">% <span class="built_in">echo</span> <span class="string">"`date`"</span></div><div class="line">Mon Aug 28 09:49:11 CST 2017</div><div class="line"></div><div class="line"><span class="comment"># 可以使用 $(( )) 计算数值</span></div><div class="line">% <span class="built_in">echo</span> <span class="string">"<span class="variable">$((1 + 2)</span>)"</span></div><div class="line">3</div><div class="line"></div><div class="line"><span class="comment"># 可以使用 $[ ] 计算数值</span></div><div class="line">% <span class="built_in">echo</span> <span class="string">"$[1 + 2]"</span></div><div class="line">3</div></pre></td></tr></table></figure>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 以使用变量</span></span><br><span class="line">% str=abc</span><br><span class="line">% <span class="built_in">echo</span> <span class="string">&quot;<span class="variable">$str</span>&quot;</span></span><br><span class="line">abc</span><br><span class="line"></span><br><span class="line"><span class="comment"># 可以使用 $( ) 运行命令</span></span><br><span class="line">% <span class="built_in">echo</span> <span class="string">&quot;<span class="subst">$(ls)</span>&quot;</span></span><br><span class="line">git</span><br><span class="line">tmp</span><br><span class="line"></span><br><span class="line"><span class="comment"># 可以使用 ` ` 运行命令，不建议在脚本里使用 ` `</span></span><br><span class="line">% <span class="built_in">echo</span> <span class="string">&quot;`date`&quot;</span></span><br><span class="line">Mon Aug 28 09:49:11 CST 2017</span><br><span class="line"></span><br><span class="line"><span class="comment"># 可以使用 $(( )) 计算数值</span></span><br><span class="line">% <span class="built_in">echo</span> <span class="string">&quot;<span class="subst">$((1 + 2)</span>)&quot;</span></span><br><span class="line">3</span><br><span class="line"></span><br><span class="line"><span class="comment"># 可以使用 $[ ] 计算数值</span></span><br><span class="line">% <span class="built_in">echo</span> <span class="string">&quot;$[1 + 2]&quot;</span></span><br><span class="line">3</span><br></pre></td></tr></table></figure>
+
 <p>简单说，<code>$</code> 加各种东西的用法在双引号里都是可以正常使用的，而其他特殊符号（比如 <code>*</code>、<code>?</code>、<code>&gt;</code>）的功能通常不可用。</p>
 <h1 id="反引号"><a href="#反引号" class="headerlink" title="反引号"></a>反引号</h1><p>反引号是用来运行命令的，它会返回命令结果，以便保存到变量等等。</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">% str=`ls`</div><div class="line">% <span class="built_in">echo</span> <span class="variable">$str</span></div><div class="line">git</div><div class="line">tmp</div><div class="line"></div><div class="line"><span class="comment"># 完全可以用 $( ) 取代</span></div><div class="line">% str=$(ls)</div><div class="line">% <span class="built_in">echo</span> <span class="variable">$str</span></div><div class="line">git</div><div class="line">tmp</div></pre></td></tr></table></figure>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">% str=`<span class="built_in">ls</span>`</span><br><span class="line">% <span class="built_in">echo</span> <span class="variable">$str</span></span><br><span class="line">git</span><br><span class="line">tmp</span><br><span class="line"></span><br><span class="line"><span class="comment"># 完全可以用 $( ) 取代</span></span><br><span class="line">% str=$(<span class="built_in">ls</span>)</span><br><span class="line">% <span class="built_in">echo</span> <span class="variable">$str</span></span><br><span class="line">git</span><br><span class="line">tmp</span><br></pre></td></tr></table></figure>
+
 <p>反引号的功能和 <code>$( )</code> 功能基本一样，但 <code>$( )</code> 可以嵌套，而反引号不可以，而且反引号看起来更费事，某些字体中的反引号和单引号差别不大。所以在脚本里不建议使用反引号。</p>
         
           <p class="article-more-link">
-            <a href="/2017/09/20/zsh-字符串转义和格式化/#more">Read More</a>
+            <a href="/2017/09/20/zsh-%E5%AD%97%E7%AC%A6%E4%B8%B2%E8%BD%AC%E4%B9%89%E5%92%8C%E6%A0%BC%E5%BC%8F%E5%8C%96/#more">Read More</a>
           </p>
         
       
@@ -164,7 +166,7 @@
     <footer class="article-footer">
       <div class="article-footer-tag">
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/shell/">shell</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/zsh/">zsh</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/shell/" rel="tag">shell</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/zsh/" rel="tag">zsh</a></li></ul>
 
       </div>
       <!-- JiaThis Button BEGIN -->
@@ -194,7 +196,7 @@
   
     <article id="post-zsh-字符串常用操作" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2017/09/20/zsh-字符串常用操作/" class="article-date">
+    <a href="/2017/09/20/zsh-%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%B8%B8%E7%94%A8%E6%93%8D%E4%BD%9C/" class="article-date">
   <time datetime="2017-09-20T13:10:45.000Z" itemprop="datePublished">2017-09-20</time>
 </a>
     
@@ -206,7 +208,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/09/20/zsh-字符串常用操作/">zsh-字符串常用操作</a>
+      <a class="article-title" href="/2017/09/20/zsh-%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%B8%B8%E7%94%A8%E6%93%8D%E4%BD%9C/">zsh-字符串常用操作</a>
     </h1>
   
 
@@ -215,20 +217,27 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p>   zsh 的字符串处理功能，要比绝大多数编程语言自带的字符串函数库或者类库要强大（在不依赖外部命令的情况）。同时各种用法也比较怪异，很多时候简洁性和可读性是有矛盾的，很难兼顾。而 shell 的使用场景决定简洁性是不能被牺牲掉的，即使用 Python 这样比较简洁的语言来处理字符串，很多时候也只能写出冗长的代码，而 zsh 经常可以一行搞定（可能有人想到了 Perl，Perl 在处理文本方面确实有比较明显的优势，但使用 Perl 的话也要承担更多的成本），如果再加上适当地使用外部命令，基本可以应付大多数字符串处理场景。因为字符串处理的内容比较丰富，我会分多篇文章写。本篇只涉及最基础和常用的字符串操作，包括字符串的拼接、切片、截断、查找、遍历、替换、匹配、大小写转换、分隔等等。</p>
-<h1 id="字符串长度"><a href="#字符串长度" class="headerlink" title="字符串长度"></a>字符串长度</h1><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">% str=abcde</div><div class="line">% <span class="built_in">echo</span> <span class="variable">$#str</span></div><div class="line">5</div><div class="line"></div><div class="line"><span class="comment"># 读取函数或者脚本的第一个参数的长度</span></div><div class="line">% <span class="built_in">echo</span> <span class="variable">$#1</span></div></pre></td></tr></table></figure>
-<h1 id="字符串拼接"><a href="#字符串拼接" class="headerlink" title="字符串拼接"></a>字符串拼接</h1><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">% str1=abc</div><div class="line">% str2=def</div><div class="line"></div><div class="line">% str2+=<span class="variable">$str1</span></div><div class="line">% <span class="built_in">echo</span> <span class="variable">$str2</span></div><div class="line">defabc</div><div class="line"></div><div class="line">% str3=<span class="variable">$str1</span><span class="variable">$str2</span></div><div class="line">abcdefabc</div></pre></td></tr></table></figure>
-<h1 id="字符串切片"><a href="#字符串切片" class="headerlink" title="字符串切片"></a>字符串切片</h1><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">% str=abcdef</div><div class="line">% <span class="built_in">echo</span> <span class="variable">$str</span>[2,4]</div><div class="line">bcd</div><div class="line">% <span class="built_in">echo</span> <span class="variable">$str</span>[2,-1]</div><div class="line">bcdef</div><div class="line"></div><div class="line"><span class="comment"># $1 是文件或者函数的第一个参数</span></div><div class="line"><span class="built_in">echo</span> <span class="variable">$&#123;1[2,4]&#125;</span></div></pre></td></tr></table></figure>
+<h1 id="字符串长度"><a href="#字符串长度" class="headerlink" title="字符串长度"></a>字符串长度</h1><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">% str=abcde</span><br><span class="line">% <span class="built_in">echo</span> <span class="variable">$#str</span></span><br><span class="line">5</span><br><span class="line"></span><br><span class="line"><span class="comment"># 读取函数或者脚本的第一个参数的长度</span></span><br><span class="line">% <span class="built_in">echo</span> <span class="variable">$#1</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="字符串拼接"><a href="#字符串拼接" class="headerlink" title="字符串拼接"></a>字符串拼接</h1><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">% str1=abc</span><br><span class="line">% str2=def</span><br><span class="line"></span><br><span class="line">% str2+=<span class="variable">$str1</span></span><br><span class="line">% <span class="built_in">echo</span> <span class="variable">$str2</span></span><br><span class="line">defabc</span><br><span class="line"></span><br><span class="line">% str3=$str1<span class="variable">$str2</span></span><br><span class="line">abcdefabc</span><br></pre></td></tr></table></figure>
+
+<h1 id="字符串切片"><a href="#字符串切片" class="headerlink" title="字符串切片"></a>字符串切片</h1><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">% str=abcdef</span><br><span class="line">% <span class="built_in">echo</span> <span class="variable">$str</span>[2,4]</span><br><span class="line">bcd</span><br><span class="line">% <span class="built_in">echo</span> <span class="variable">$str</span>[2,-1]</span><br><span class="line">bcdef</span><br><span class="line"></span><br><span class="line"><span class="comment"># $1 是文件或者函数的第一个参数</span></span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$&#123;1[2,4]&#125;</span></span><br></pre></td></tr></table></figure>
+
 <p>字符串切片还有另一种风格的方法，即 bash 风格，功能大同小异。通常没有必要用这个，而且因为字符位置是从 0 开始算，容易混淆。</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">% str=abcdef</div><div class="line">% <span class="built_in">echo</span> <span class="variable">$&#123;str:1:3&#125;</span></div><div class="line">bcd</div><div class="line">% <span class="built_in">echo</span> <span class="variable">$&#123;str:1:-1&#125;</span></div><div class="line">bcde</div></pre></td></tr></table></figure>
-<h2 id="字符串截断"><a href="#字符串截断" class="headerlink" title="字符串截断"></a>字符串截断</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">% str=abcdeabcde</div><div class="line"></div><div class="line"><span class="comment"># 删除左端匹配到的内容，最小匹配</span></div><div class="line">% <span class="built_in">echo</span> <span class="variable">$&#123;str#*b&#125;</span></div><div class="line">cdeabcde</div><div class="line"></div><div class="line"><span class="comment"># 删除右端匹配到的内容，最小匹配</span></div><div class="line">% <span class="built_in">echo</span> <span class="variable">$&#123;str%d*&#125;</span></div><div class="line">abcdeabc</div><div class="line"></div><div class="line"><span class="comment"># 删除左端匹配到的内容，最大匹配</span></div><div class="line">% <span class="built_in">echo</span> <span class="variable">$&#123;str##*b&#125;</span></div><div class="line">cde</div><div class="line"></div><div class="line"><span class="comment"># 删除右端匹配到的内容</span></div><div class="line">% <span class="built_in">echo</span> <span class="variable">$&#123;str%%d*&#125;</span></div><div class="line">abc</div></pre></td></tr></table></figure>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">% str=abcdef</span><br><span class="line">% <span class="built_in">echo</span> <span class="variable">$&#123;str:1:3&#125;</span></span><br><span class="line">bcd</span><br><span class="line">% <span class="built_in">echo</span> <span class="variable">$&#123;str:1:-1&#125;</span></span><br><span class="line">bcde</span><br></pre></td></tr></table></figure>
+
+<h2 id="字符串截断"><a href="#字符串截断" class="headerlink" title="字符串截断"></a>字符串截断</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">% str=abcdeabcde</span><br><span class="line"></span><br><span class="line"><span class="comment"># 删除左端匹配到的内容，最小匹配</span></span><br><span class="line">% <span class="built_in">echo</span> <span class="variable">$&#123;str#*b&#125;</span></span><br><span class="line">cdeabcde</span><br><span class="line"></span><br><span class="line"><span class="comment"># 删除右端匹配到的内容，最小匹配</span></span><br><span class="line">% <span class="built_in">echo</span> <span class="variable">$&#123;str%d*&#125;</span></span><br><span class="line">abcdeabc</span><br><span class="line"></span><br><span class="line"><span class="comment"># 删除左端匹配到的内容，最大匹配</span></span><br><span class="line">% <span class="built_in">echo</span> <span class="variable">$&#123;str##*b&#125;</span></span><br><span class="line">cde</span><br><span class="line"></span><br><span class="line"><span class="comment"># 删除右端匹配到的内容</span></span><br><span class="line">% <span class="built_in">echo</span> <span class="variable">$&#123;str%%d*&#125;</span></span><br><span class="line">abc</span><br></pre></td></tr></table></figure>
+
 <h1 id="字符串查找"><a href="#字符串查找" class="headerlink" title="字符串查找"></a>字符串查找</h1><p>子字符串定位。</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">% str=abcdef</div><div class="line"></div><div class="line"><span class="comment"># 这里用的是 i 的大写，不是 L 的小写</span></div><div class="line">% <span class="built_in">echo</span> <span class="variable">$str</span>[(I)<span class="built_in">cd</span>]</div><div class="line">3</div><div class="line"></div><div class="line"><span class="comment"># I 是从右往左找，如果找不到则为 0, 方便用来判断</span></div><div class="line">% ((<span class="variable">$str</span>[(I)<span class="built_in">cd</span>])) &amp;&amp; <span class="built_in">echo</span> good</div><div class="line">good</div><div class="line"></div><div class="line"><span class="comment"># 找不到则为 0</span></div><div class="line">% <span class="built_in">echo</span> <span class="variable">$str</span>[(I)cdd]</div><div class="line">0</div><div class="line"></div><div class="line"><span class="comment"># 也可以使用小 i，小 i 是从左往右找，找不到则返回数组大小 + 1</span></div><div class="line">% <span class="built_in">echo</span> <span class="variable">$str</span>[(i)<span class="built_in">cd</span>]</div><div class="line">3</div><div class="line"></div><div class="line">% <span class="built_in">echo</span> <span class="variable">$str</span>[(i)cdd]</div><div class="line">7</div></pre></td></tr></table></figure>
-<h1 id="遍历字符"><a href="#遍历字符" class="headerlink" title="遍历字符"></a>遍历字符</h1><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">% str=abcd</div><div class="line"></div><div class="line">% <span class="keyword">for</span> i (&#123;1..<span class="variable">$#str</span>&#125;) &#123;</div><div class="line">&gt;    <span class="built_in">echo</span> <span class="variable">$str</span>[i]</div><div class="line">&gt;&#125;</div><div class="line">a</div><div class="line">b</div><div class="line">c</div><div class="line">d</div></pre></td></tr></table></figure>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">% str=abcdef</span><br><span class="line"></span><br><span class="line"><span class="comment"># 这里用的是 i 的大写，不是 L 的小写</span></span><br><span class="line">% <span class="built_in">echo</span> <span class="variable">$str</span>[(I)<span class="built_in">cd</span>]</span><br><span class="line">3</span><br><span class="line"></span><br><span class="line"><span class="comment"># I 是从右往左找，如果找不到则为 0, 方便用来判断</span></span><br><span class="line">% ((<span class="variable">$str</span>[(I)cd])) &amp;&amp; <span class="built_in">echo</span> good</span><br><span class="line">good</span><br><span class="line"></span><br><span class="line"><span class="comment"># 找不到则为 0</span></span><br><span class="line">% <span class="built_in">echo</span> <span class="variable">$str</span>[(I)cdd]</span><br><span class="line">0</span><br><span class="line"></span><br><span class="line"><span class="comment"># 也可以使用小 i，小 i 是从左往右找，找不到则返回数组大小 + 1</span></span><br><span class="line">% <span class="built_in">echo</span> <span class="variable">$str</span>[(i)<span class="built_in">cd</span>]</span><br><span class="line">3</span><br><span class="line"></span><br><span class="line">% <span class="built_in">echo</span> <span class="variable">$str</span>[(i)cdd]</span><br><span class="line">7</span><br></pre></td></tr></table></figure>
+
+<h1 id="遍历字符"><a href="#遍历字符" class="headerlink" title="遍历字符"></a>遍历字符</h1><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">% str=abcd</span><br><span class="line"></span><br><span class="line">% <span class="keyword">for</span> i (&#123;1..<span class="variable">$#str</span>&#125;) &#123;</span><br><span class="line">&gt;    <span class="built_in">echo</span> <span class="variable">$str</span>[i]</span><br><span class="line">&gt;&#125;</span><br><span class="line">a</span><br><span class="line">b</span><br><span class="line">c</span><br><span class="line">d</span><br></pre></td></tr></table></figure>
+
 <h1 id="字符串替换"><a href="#字符串替换" class="headerlink" title="字符串替换"></a>字符串替换</h1><p>按内容替换和删除字符。</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">% str=abcdefg</div><div class="line"></div><div class="line"><span class="comment"># 一对一地替换</span></div><div class="line">% str[2]=1</div><div class="line">% <span class="built_in">echo</span> <span class="variable">$str</span></div><div class="line">a1cdefg</div><div class="line"></div><div class="line"><span class="comment"># 可以多对多（也包括一对多和多对一）地替换字符，两边的字符数量不需要一致。</span></div><div class="line"><span class="comment"># 把第二、三个字符替换成 2345</span></div><div class="line">% str[2,3]=2345</div><div class="line">% <span class="built_in">echo</span> <span class="variable">$str</span></div><div class="line">a2345defg</div></pre></td></tr></table></figure>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">% str=abcdefg</span><br><span class="line"></span><br><span class="line"><span class="comment"># 一对一地替换</span></span><br><span class="line">% str[2]=1</span><br><span class="line">% <span class="built_in">echo</span> <span class="variable">$str</span></span><br><span class="line">a1cdefg</span><br><span class="line"></span><br><span class="line"><span class="comment"># 可以多对多（也包括一对多和多对一）地替换字符，两边的字符数量不需要一致。</span></span><br><span class="line"><span class="comment"># 把第二、三个字符替换成 2345</span></span><br><span class="line">% str[2,3]=2345</span><br><span class="line">% <span class="built_in">echo</span> <span class="variable">$str</span></span><br><span class="line">a2345defg</span><br></pre></td></tr></table></figure>
         
           <p class="article-more-link">
-            <a href="/2017/09/20/zsh-字符串常用操作/#more">Read More</a>
+            <a href="/2017/09/20/zsh-%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%B8%B8%E7%94%A8%E6%93%8D%E4%BD%9C/#more">Read More</a>
           </p>
         
       
@@ -236,7 +245,7 @@
     <footer class="article-footer">
       <div class="article-footer-tag">
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/shell/">shell</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/zsh/">zsh</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/shell/" rel="tag">shell</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/zsh/" rel="tag">zsh</a></li></ul>
 
       </div>
       <!-- JiaThis Button BEGIN -->
@@ -266,7 +275,7 @@
   
     <article id="post-zsh-变量和语句" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2017/09/20/zsh-变量和语句/" class="article-date">
+    <a href="/2017/09/20/zsh-%E5%8F%98%E9%87%8F%E5%92%8C%E8%AF%AD%E5%8F%A5/" class="article-date">
   <time datetime="2017-09-20T12:32:35.000Z" itemprop="datePublished">2017-09-20</time>
 </a>
     
@@ -278,7 +287,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/09/20/zsh-变量和语句/">zsh-变量和语句</a>
+      <a class="article-title" href="/2017/09/20/zsh-%E5%8F%98%E9%87%8F%E5%92%8C%E8%AF%AD%E5%8F%A5/">zsh-变量和语句</a>
     </h1>
   
 
@@ -291,11 +300,12 @@
 <p>所以这一篇讲最基本的变量和语句。</p>
 <p>zsh 有 5 种变量：整数、浮点数（bash 不支持）、字符串、数组、哈希表（或者叫关联数组或者字典，本系列文章统一使用“哈希表”这一名词），另外还有一些其他语言少有的东西，比如 alias（但主要是交互时使用，编程时基本用不到）。此篇只涉及整数、浮点数、字符串，并且不涉及数值计算和字符串处理等内容。</p>
 <h2 id="变量定义"><a href="#变量定义" class="headerlink" title="变量定义"></a>变量定义</h2><p>Zsh 的变量多数情况不需要提前声明或者指定类型，可以直接赋值和使用（但哈希表是一个例外）。</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 等号两端不能有空格</span></div><div class="line">% num1=123</div><div class="line">% num2=123.456</div><div class="line">% str1=abcde</div><div class="line"><span class="comment"># 如果字符串中包含空格等特殊字符，需要加引号</span></div><div class="line">% str2=<span class="string">'abc def'</span></div><div class="line"><span class="comment"># 也可以用双引号，但和单引号有区别，比如双引号里可以使用变量，而单引号不可以</span></div><div class="line">% str3=<span class="string">"abc def <span class="variable">$num1</span>"</span></div><div class="line"><span class="comment"># 在字符串中可以使用转义字符，单双引号均可</span></div><div class="line">% str4=<span class="string">"abc\tdef\ng"</span></div><div class="line"></div><div class="line"><span class="comment"># 输出变量，也可以使用 print</span></div><div class="line">% <span class="built_in">echo</span> <span class="variable">$str1</span></div><div class="line">abcde</div><div class="line"></div><div class="line"><span class="comment"># 简单的数值计算</span></div><div class="line">% num3=$((<span class="variable">$num1</span> + <span class="variable">$num2</span>))</div><div class="line"><span class="comment"># (( 中的变量名可以不用 $</span></div><div class="line">% num3=$((num1 + num2))</div><div class="line"></div><div class="line"><span class="comment"># 简单的字符串操作</span></div><div class="line">% str=abcdef</div><div class="line"><span class="comment"># 2 和 4 都是字符在数组的位置，从 1 开始数，逗号两边不能有空格</span></div><div class="line">% <span class="built_in">echo</span> <span class="variable">$str</span>[2,4]</div><div class="line">bcd</div><div class="line"><span class="comment"># -1 是最后一个字符</span></div><div class="line">% <span class="built_in">echo</span> <span class="variable">$str</span>[4,-1]</div><div class="line">def</div></pre></td></tr></table></figure>
-<h2 id="变量比较"><a href="#变量比较" class="headerlink" title="变量比较"></a>变量比较</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 比较数值</span></div><div class="line">% num=123</div><div class="line"><span class="comment"># (( )) 用于数值比较等操作，如果为真返回 0，否则返回 1</span></div><div class="line"><span class="comment"># &amp;&amp; 后边的语句在前边的语句为真时才执行</span></div><div class="line"><span class="comment"># 注意这里只能使用双等号来比较</span></div><div class="line">% ((num == 123)) &amp;&amp; <span class="built_in">echo</span> good</div><div class="line">good</div><div class="line"><span class="comment"># (( 里边可以使用与（&amp;&amp;）或（||）非（!）操作符，同 c 系列语言</span></div><div class="line">% ((num == 1 || num == 2)) &amp;&amp; <span class="built_in">echo</span> good</div><div class="line"></div><div class="line"><span class="comment"># 比较字符串</span></div><div class="line">% str=abc</div><div class="line"><span class="comment"># 比较字符串要用 [[，内侧要有空格，[[ 的具体用法之后会讲到</span></div><div class="line"><span class="comment"># 这里双等号可以替换成单等号，可以根据自己的习惯选用</span></div><div class="line"><span class="comment"># 本系列文章统一使用双等号，因为和 (( )) 一致，并且使用双等号的常用编程语言更多些</span></div><div class="line"><span class="comment"># $str 两侧不需要加双引号，即使 str 未定义或者 $str 中含空格和特殊符号</span></div><div class="line">% [[ <span class="variable">$str</span> == abc ]] &amp;&amp; <span class="built_in">echo</span> good</div><div class="line">good</div><div class="line"><span class="comment"># 可以和空字符串 "" 比较，未定义的字符串和空字符串比较结果为真</span></div><div class="line"><span class="comment"># [[ 里也可以用 &amp;&amp; || !</span></div><div class="line">% [[ <span class="variable">$str</span> == <span class="string">""</span> || <span class="variable">$str</span> == 123 ]] &amp;&amp; <span class="built_in">echo</span> good</div></pre></td></tr></table></figure>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 等号两端不能有空格</span></span><br><span class="line">% num1=123</span><br><span class="line">% num2=123.456</span><br><span class="line">% str1=abcde</span><br><span class="line"><span class="comment"># 如果字符串中包含空格等特殊字符，需要加引号</span></span><br><span class="line">% str2=<span class="string">&#x27;abc def&#x27;</span></span><br><span class="line"><span class="comment"># 也可以用双引号，但和单引号有区别，比如双引号里可以使用变量，而单引号不可以</span></span><br><span class="line">% str3=<span class="string">&quot;abc def <span class="variable">$num1</span>&quot;</span></span><br><span class="line"><span class="comment"># 在字符串中可以使用转义字符，单双引号均可</span></span><br><span class="line">% str4=<span class="string">&quot;abc\tdef\ng&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 输出变量，也可以使用 print</span></span><br><span class="line">% <span class="built_in">echo</span> <span class="variable">$str1</span></span><br><span class="line">abcde</span><br><span class="line"></span><br><span class="line"><span class="comment"># 简单的数值计算</span></span><br><span class="line">% num3=$((<span class="variable">$num1</span> + <span class="variable">$num2</span>))</span><br><span class="line"><span class="comment"># (( 中的变量名可以不用 $</span></span><br><span class="line">% num3=$((num1 + num2))</span><br><span class="line"></span><br><span class="line"><span class="comment"># 简单的字符串操作</span></span><br><span class="line">% str=abcdef</span><br><span class="line"><span class="comment"># 2 和 4 都是字符在数组的位置，从 1 开始数，逗号两边不能有空格</span></span><br><span class="line">% <span class="built_in">echo</span> <span class="variable">$str</span>[2,4]</span><br><span class="line">bcd</span><br><span class="line"><span class="comment"># -1 是最后一个字符</span></span><br><span class="line">% <span class="built_in">echo</span> <span class="variable">$str</span>[4,-1]</span><br><span class="line">def</span><br></pre></td></tr></table></figure>
+
+<h2 id="变量比较"><a href="#变量比较" class="headerlink" title="变量比较"></a>变量比较</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 比较数值</span></span><br><span class="line">% num=123</span><br><span class="line"><span class="comment"># (( )) 用于数值比较等操作，如果为真返回 0，否则返回 1</span></span><br><span class="line"><span class="comment"># &amp;&amp; 后边的语句在前边的语句为真时才执行</span></span><br><span class="line"><span class="comment"># 注意这里只能使用双等号来比较</span></span><br><span class="line">% ((num == <span class="number">123</span>)) &amp;&amp; <span class="built_in">echo</span> good</span><br><span class="line">good</span><br><span class="line"><span class="comment"># (( 里边可以使用与（&amp;&amp;）或（||）非（!）操作符，同 c 系列语言</span></span><br><span class="line">% ((num == <span class="number">1</span> || num == <span class="number">2</span>)) &amp;&amp; <span class="built_in">echo</span> good</span><br><span class="line"></span><br><span class="line"><span class="comment"># 比较字符串</span></span><br><span class="line">% str=abc</span><br><span class="line"><span class="comment"># 比较字符串要用 [[，内侧要有空格，[[ 的具体用法之后会讲到</span></span><br><span class="line"><span class="comment"># 这里双等号可以替换成单等号，可以根据自己的习惯选用</span></span><br><span class="line"><span class="comment"># 本系列文章统一使用双等号，因为和 (( )) 一致，并且使用双等号的常用编程语言更多些</span></span><br><span class="line"><span class="comment"># $str 两侧不需要加双引号，即使 str 未定义或者 $str 中含空格和特殊符号</span></span><br><span class="line">% [[ <span class="variable">$str</span> == abc ]] &amp;&amp; <span class="built_in">echo</span> good</span><br><span class="line">good</span><br><span class="line"><span class="comment"># 可以和空字符串 &quot;&quot; 比较，未定义的字符串和空字符串比较结果为真</span></span><br><span class="line"><span class="comment"># [[ 里也可以用 &amp;&amp; || !</span></span><br><span class="line">% [[ <span class="variable">$str</span> == <span class="string">&quot;&quot;</span> || <span class="variable">$str</span> == 123 ]] &amp;&amp; <span class="built_in">echo</span> good</span><br></pre></td></tr></table></figure>
         
           <p class="article-more-link">
-            <a href="/2017/09/20/zsh-变量和语句/#more">Read More</a>
+            <a href="/2017/09/20/zsh-%E5%8F%98%E9%87%8F%E5%92%8C%E8%AF%AD%E5%8F%A5/#more">Read More</a>
           </p>
         
       
@@ -303,7 +313,7 @@
     <footer class="article-footer">
       <div class="article-footer-tag">
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/shell/">shell</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/zsh/">zsh</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/shell/" rel="tag">shell</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/zsh/" rel="tag">zsh</a></li></ul>
 
       </div>
       <!-- JiaThis Button BEGIN -->
@@ -357,15 +367,19 @@
         <!-- Table of Contents -->
         
 
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo new <span class="string">"My New Post"</span></div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo server</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo generate</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo deploy</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
+        <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/deployment.html">Deployment</a></p>
 
       
     </div>
@@ -400,7 +414,7 @@
   
     <article id="post-PHP总结" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2017/06/05/PHP总结/" class="article-date">
+    <a href="/2017/06/05/PHP%E6%80%BB%E7%BB%93/" class="article-date">
   <time datetime="2017-06-05T12:22:06.000Z" itemprop="datePublished">2017-06-05</time>
 </a>
     
@@ -412,7 +426,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/06/05/PHP总结/">PHP总结</a>
+      <a class="article-title" href="/2017/06/05/PHP%E6%80%BB%E7%BB%93/">PHP总结</a>
     </h1>
   
 
@@ -421,27 +435,20 @@
     <div class="article-entry" itemprop="articleBody">
       
         <h1 id="基础篇"><a href="#基础篇" class="headerlink" title="基础篇"></a>基础篇</h1><h2 id="PHP如何实现类自动加载？"><a href="#PHP如何实现类自动加载？" class="headerlink" title="PHP如何实现类自动加载？"></a>PHP如何实现类自动加载？</h2><ul>
-<li><p>设置自动加载目录 set_include_path(String $path)。</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">set_include_path(dirname(<span class="keyword">__file__</span>) . <span class="string">'/classes'</span>);</div></pre></td></tr></table></figure>
-</li>
-<li><p>修改php.ini文件include_path选项</p>
-</li>
-<li><p>写一个__autoload($class)方法。</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">__autoload</span><span class="params">($class)</span> </span>&#123;</div><div class="line">    $path = dirname(<span class="keyword">__FILE__</span>) . <span class="string">"/autoload/$class.php"</span>;</div><div class="line">    <span class="keyword">echo</span> $path;</div><div class="line">    <span class="keyword">if</span> (!file_exists($path)) &#123;</div><div class="line">        <span class="keyword">die</span> (<span class="string">"class $class can not load\n"</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">include</span> $path;</div><div class="line">&#125;</div><div class="line"></div><div class="line">$b = <span class="keyword">new</span> B();</div></pre></td></tr></table></figure>
-</li>
-<li><p>写一个加载器，然后用spl_autoload_register方法注册。</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;?php</span></div><div class="line">DEFINE(<span class="string">'ROOT_PATH'</span>, dirname(<span class="keyword">__FILE__</span>));</div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Loader</span> </span>&#123;</div><div class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="function"><span class="keyword">function</span> <span class="title">load</span><span class="params">($class)</span> </span>&#123;</div><div class="line">        $path = <span class="keyword">null</span>;</div><div class="line">        <span class="keyword">if</span> (substr($class, <span class="number">0</span> - strlen(<span class="string">'Controller'</span>)) == <span class="string">'Controller'</span>) &#123;</div><div class="line">            $path = ROOT_PATH . <span class="string">'/Controllers/'</span>;</div><div class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (substr($class, <span class="number">0</span> - strlen(<span class="string">'Model'</span>)) == <span class="string">'Model'</span>) &#123;</div><div class="line">            $path = ROOT_PATH . <span class="string">'/Models/'</span>;</div><div class="line">        &#125; <span class="keyword">else</span> &#123;</div><div class="line">            $path = ROOT_PATH . <span class="string">'/Components/'</span>;</div><div class="line">        &#125;</div><div class="line">        $path .= <span class="string">"$class.php"</span>;</div><div class="line"></div><div class="line">        <span class="keyword">if</span> (file_exists($path)) &#123;</div><div class="line">            <span class="keyword">include</span> $path;</div><div class="line">            <span class="keyword">return</span>;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">spl_autoload_register(<span class="keyword">array</span>(<span class="string">'Loader'</span>, <span class="string">'load'</span>), <span class="keyword">false</span>, <span class="keyword">false</span>);</div><div class="line"></div><div class="line"></div><div class="line">$controller = <span class="keyword">new</span> AController();</div></pre></td></tr></table></figure>
-</li>
+<li>设置自动加载目录 set_include_path(String $path)。<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_ invoke__">set_include_path</span>(<span class="title function_ invoke__">dirname</span>(__file__) . <span class="string">&#x27;/classes&#x27;</span>);</span><br></pre></td></tr></table></figure></li>
+<li>修改php.ini文件include_path选项</li>
+<li>写一个__autoload($class)方法。<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">__autoload</span>(<span class="params"><span class="variable">$class</span></span>) </span>&#123;</span><br><span class="line">    <span class="variable">$path</span> = <span class="title function_ invoke__">dirname</span>(<span class="keyword">__FILE__</span>) . <span class="string">&quot;/autoload/<span class="subst">$class</span>.php&quot;</span>;</span><br><span class="line">    <span class="keyword">echo</span> <span class="variable">$path</span>;</span><br><span class="line">    <span class="keyword">if</span> (!<span class="title function_ invoke__">file_exists</span>(<span class="variable">$path</span>)) &#123;</span><br><span class="line">        <span class="keyword">die</span> (<span class="string">&quot;class <span class="subst">$class</span> can not load\n&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">include</span> <span class="variable">$path</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="variable">$b</span> = <span class="keyword">new</span> <span class="title function_ invoke__">B</span>();</span><br></pre></td></tr></table></figure></li>
+<li>写一个加载器，然后用spl_autoload_register方法注册。<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="title function_ invoke__">DEFINE</span>(<span class="string">&#x27;ROOT_PATH&#x27;</span>, <span class="title function_ invoke__">dirname</span>(<span class="keyword">__FILE__</span>));</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Loader</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="built_in">static</span> <span class="function"><span class="keyword">function</span> <span class="title">load</span>(<span class="params"><span class="variable">$class</span></span>) </span>&#123;</span><br><span class="line">        <span class="variable">$path</span> = <span class="literal">null</span>;</span><br><span class="line">        <span class="keyword">if</span> (<span class="title function_ invoke__">substr</span>(<span class="variable">$class</span>, <span class="number">0</span> - <span class="title function_ invoke__">strlen</span>(<span class="string">&#x27;Controller&#x27;</span>)) == <span class="string">&#x27;Controller&#x27;</span>) &#123;</span><br><span class="line">            <span class="variable">$path</span> = ROOT_PATH . <span class="string">&#x27;/Controllers/&#x27;</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (<span class="title function_ invoke__">substr</span>(<span class="variable">$class</span>, <span class="number">0</span> - <span class="title function_ invoke__">strlen</span>(<span class="string">&#x27;Model&#x27;</span>)) == <span class="string">&#x27;Model&#x27;</span>) &#123;</span><br><span class="line">            <span class="variable">$path</span> = ROOT_PATH . <span class="string">&#x27;/Models/&#x27;</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="variable">$path</span> = ROOT_PATH . <span class="string">&#x27;/Components/&#x27;</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="variable">$path</span> .= <span class="string">&quot;<span class="subst">$class</span>.php&quot;</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (<span class="title function_ invoke__">file_exists</span>(<span class="variable">$path</span>)) &#123;</span><br><span class="line">            <span class="keyword">include</span> <span class="variable">$path</span>;</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="title function_ invoke__">spl_autoload_register</span>(<span class="keyword">array</span>(<span class="string">&#x27;Loader&#x27;</span>, <span class="string">&#x27;load&#x27;</span>), <span class="literal">false</span>, <span class="literal">false</span>);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="variable">$controller</span> = <span class="keyword">new</span> <span class="title class_">AController</span>();</span><br></pre></td></tr></table></figure></li>
 </ul>
 <p>推荐第四种，原因如下</p>
 <p>第一第二种不够灵活</p>
 <p>第三种灵活，但是__autoload只能被重写一次</p>
 <p>第四种相对灵活，而且在引用第三方差价或者工具的时候有非常明显的优势</p>
-<h2 id="include-include-once-require-require-once的区别？"><a href="#include-include-once-require-require-once的区别？" class="headerlink" title="include/include_once/require/require_once的区别？"></a>include/include_once/require/require_once的区别？</h2><p>include在文件不存在的时候会打印警告信息然后继续执行，而require会终止程序，相对来说include效率更高</p>
+<h2 id="include-include-once-require-require-once的区别？"><a href="#include-include-once-require-require-once的区别？" class="headerlink" title="include&#x2F;include_once&#x2F;require&#x2F;require_once的区别？"></a>include&#x2F;include_once&#x2F;require&#x2F;require_once的区别？</h2><p>include在文件不存在的时候会打印警告信息然后继续执行，而require会终止程序，相对来说include效率更高</p>
 <p>include_once和require_once在加载文件之前都会先判断文件是否已经被加载过，相对来说效率低一些</p>
         
           <p class="article-more-link">
-            <a href="/2017/06/05/PHP总结/#more">Read More</a>
+            <a href="/2017/06/05/PHP%E6%80%BB%E7%BB%93/#more">Read More</a>
           </p>
         
       
@@ -449,7 +456,7 @@
     <footer class="article-footer">
       <div class="article-footer-tag">
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/PHP/">PHP</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/PHP/" rel="tag">PHP</a></li></ul>
 
       </div>
       <!-- JiaThis Button BEGIN -->
@@ -479,7 +486,7 @@
   
     <article id="post-类和接口" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2017/03/21/类和接口/" class="article-date">
+    <a href="/2017/03/21/%E7%B1%BB%E5%92%8C%E6%8E%A5%E5%8F%A3/" class="article-date">
   <time datetime="2017-03-21T13:45:08.000Z" itemprop="datePublished">2017-03-21</time>
 </a>
     
@@ -491,7 +498,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/03/21/类和接口/">类和接口</a>
+      <a class="article-title" href="/2017/03/21/%E7%B1%BB%E5%92%8C%E6%8E%A5%E5%8F%A3/">类和接口</a>
     </h1>
   
 
@@ -509,7 +516,7 @@
     <footer class="article-footer">
       <div class="article-footer-tag">
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Effective-Java/">Effective Java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Effective-Java/" rel="tag">Effective Java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/" rel="tag">Java</a></li></ul>
 
       </div>
       <!-- JiaThis Button BEGIN -->
@@ -539,7 +546,7 @@
   
     <article id="post-对于所有对象都通用的方法" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2017/03/20/对于所有对象都通用的方法/" class="article-date">
+    <a href="/2017/03/20/%E5%AF%B9%E4%BA%8E%E6%89%80%E6%9C%89%E5%AF%B9%E8%B1%A1%E9%83%BD%E9%80%9A%E7%94%A8%E7%9A%84%E6%96%B9%E6%B3%95/" class="article-date">
   <time datetime="2017-03-20T14:31:20.000Z" itemprop="datePublished">2017-03-20</time>
 </a>
     
@@ -551,7 +558,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/03/20/对于所有对象都通用的方法/">对于所有对象都通用的方法</a>
+      <a class="article-title" href="/2017/03/20/%E5%AF%B9%E4%BA%8E%E6%89%80%E6%9C%89%E5%AF%B9%E8%B1%A1%E9%83%BD%E9%80%9A%E7%94%A8%E7%9A%84%E6%96%B9%E6%B3%95/">对于所有对象都通用的方法</a>
     </h1>
   
 
@@ -576,7 +583,7 @@
 </ul>
         
           <p class="article-more-link">
-            <a href="/2017/03/20/对于所有对象都通用的方法/#more">Read More</a>
+            <a href="/2017/03/20/%E5%AF%B9%E4%BA%8E%E6%89%80%E6%9C%89%E5%AF%B9%E8%B1%A1%E9%83%BD%E9%80%9A%E7%94%A8%E7%9A%84%E6%96%B9%E6%B3%95/#more">Read More</a>
           </p>
         
       
@@ -584,7 +591,7 @@
     <footer class="article-footer">
       <div class="article-footer-tag">
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Effective-Java/">Effective Java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Effective-Java/" rel="tag">Effective Java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/" rel="tag">Java</a></li></ul>
 
       </div>
       <!-- JiaThis Button BEGIN -->
@@ -614,7 +621,7 @@
   
     <article id="post-创建和销毁对象" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2017/03/19/创建和销毁对象/" class="article-date">
+    <a href="/2017/03/19/%E5%88%9B%E5%BB%BA%E5%92%8C%E9%94%80%E6%AF%81%E5%AF%B9%E8%B1%A1/" class="article-date">
   <time datetime="2017-03-19T03:45:24.000Z" itemprop="datePublished">2017-03-19</time>
 </a>
     
@@ -626,7 +633,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/03/19/创建和销毁对象/">创建和销毁对象</a>
+      <a class="article-title" href="/2017/03/19/%E5%88%9B%E5%BB%BA%E5%92%8C%E9%94%80%E6%AF%81%E5%AF%B9%E8%B1%A1/">创建和销毁对象</a>
     </h1>
   
 
@@ -635,12 +642,13 @@
     <div class="article-entry" itemprop="articleBody">
       
         <h1 id="考虑用静态工厂方法代替构造器"><a href="#考虑用静态工厂方法代替构造器" class="headerlink" title="考虑用静态工厂方法代替构造器"></a>考虑用静态工厂方法代替构造器</h1><p>  对于类而言，为了让客户端获取它的每一个实例，最常用的方法就是提供一个公有的构造器。还有一种方法，也应该在每个程序员的工具箱中占有一席之地。类可以提供一个公有的静态工厂方法，它只是一个返回类的实例的静态方法。下面是一个来自Boolean的简单示例。这个方法将boolean基本类型值转换成了一个Boolean对象引用：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Boolean <span class="title">valueOf</span><span class="params">(<span class="keyword">boolean</span> b)</span> </span>&#123;</div><div class="line">    <span class="keyword">return</span> b ? Boolean.TRUE : Boolean.FALSE;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> Boolean <span class="title function_">valueOf</span><span class="params">(<span class="type">boolean</span> b)</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> b ? Boolean.TRUE : Boolean.FALSE;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p>  注意，静态工厂方法与设计模式中的工厂方法模式不同。</p>
 <p>  类可以通过静态工厂方法来提供它的客户端，而不是通过构造器。提供静态方法而不是公有的构造器，这样做有几大优势。</p>
         
           <p class="article-more-link">
-            <a href="/2017/03/19/创建和销毁对象/#more">Read More</a>
+            <a href="/2017/03/19/%E5%88%9B%E5%BB%BA%E5%92%8C%E9%94%80%E6%AF%81%E5%AF%B9%E8%B1%A1/#more">Read More</a>
           </p>
         
       
@@ -648,7 +656,7 @@
     <footer class="article-footer">
       <div class="article-footer-tag">
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Effective-Java/">Effective Java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Effective-Java/" rel="tag">Effective Java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/" rel="tag">Java</a></li></ul>
 
       </div>
       <!-- JiaThis Button BEGIN -->
@@ -714,7 +722,7 @@
     <footer class="article-footer">
       <div class="article-footer-tag">
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/vim/">vim</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/vim/" rel="tag">vim</a></li></ul>
 
       </div>
       <!-- JiaThis Button BEGIN -->
@@ -765,25 +773,29 @@
     <div class="article-entry" itemprop="articleBody">
       
         <h1 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h1><blockquote><p>PHPUnit is a programmer-oriented testing framework for PHP.<br>It is an instance of the xUnit architecture for unit testing frameworks.</p>
-<footer><strong>PHPUnit官网</strong><cite><a href="https://phpunit.de/">phpunit.de</a></cite></footer></blockquote>
+<footer><strong>PHPUnit官网</strong><cite><a target="_blank" rel="noopener" href="https://phpunit.de/">phpunit.de</a></cite></footer></blockquote>
+
 <blockquote><p>PHPUnit是一个轻量级的PHP测试框架。它是在PHP5下面对JUnit3系列版本的完整移植，是xUnit测试框架家族的一员(它们都基于模式先锋Kent Beck的设计)。</p>
-<footer><strong>百度百科</strong><cite><a href="http://baike.baidu.com/link?url=lQvRzx-ygpKvUJfuZryOIxK49Db5Tnan-qHhBvDiWxJRQsE3s_jFc1oIY--KAB5X2TjtijltP5OWyAXJpM1vgK">baike.baidu.com/link?url=lQvRzx-ygpKvUJfuZryOIxK49Db5Tnan-qHhBvDiWxJRQsE3s_jFc1oIY--KAB5X2TjtijltP5OWyAXJpM1vgK</a></cite></footer></blockquote>
+<footer><strong>百度百科</strong><cite><a target="_blank" rel="noopener" href="http://baike.baidu.com/link?url=lQvRzx-ygpKvUJfuZryOIxK49Db5Tnan-qHhBvDiWxJRQsE3s_jFc1oIY--KAB5X2TjtijltP5OWyAXJpM1vgK">baike.baidu.com/link?url=lQvRzx-ygpKvUJfuZryOIxK49Db5Tnan-qHhBvDiWxJRQsE3s_jFc1oIY--KAB5X2TjtijltP5OWyAXJpM1vgK</a></cite></footer></blockquote>
 <h1 id="PHPUnit的依赖"><a href="#PHPUnit的依赖" class="headerlink" title="PHPUnit的依赖"></a>PHPUnit的依赖</h1><ul>
-<li><a href="http://php.net/manual/en/dom.setup.php">dom</a>，PHP默认启用</li>
-<li><a href="http://php.net/manual/en/json.installation.php">json</a>，PHP默认启用</li>
-<li><a href="http://php.net/manual/en/pcre.installation.php">pcre</a>，PHP默认启用</li>
-<li><a href="http://php.net/manual/en/reflection.installation.php">reflection</a>，PHP默认启用</li>
-<li><a href="http://php.net/manual/en/spl.installation.php">spl</a>，PHP默认启用</li>
-<li><a href="http://php.net/manual/en/tokenizer.installation.php">tokenizer</a>，PHP默认启用，生成代码覆盖率测试报告用到</li>
-<li><a href="https://xdebug.org/">xdebug</a>，需要自己安装，生成代码覆盖率测试报告用到</li>
-<li><a href="http://php.net/manual/en/xmlwriter.installation.php">xmlwriter</a>，PHP默认启用，生成XML格式的报告用到</li>
+<li><a target="_blank" rel="noopener" href="http://php.net/manual/en/dom.setup.php">dom</a>，PHP默认启用</li>
+<li><a target="_blank" rel="noopener" href="http://php.net/manual/en/json.installation.php">json</a>，PHP默认启用</li>
+<li><a target="_blank" rel="noopener" href="http://php.net/manual/en/pcre.installation.php">pcre</a>，PHP默认启用</li>
+<li><a target="_blank" rel="noopener" href="http://php.net/manual/en/reflection.installation.php">reflection</a>，PHP默认启用</li>
+<li><a target="_blank" rel="noopener" href="http://php.net/manual/en/spl.installation.php">spl</a>，PHP默认启用</li>
+<li><a target="_blank" rel="noopener" href="http://php.net/manual/en/tokenizer.installation.php">tokenizer</a>，PHP默认启用，生成代码覆盖率测试报告用到</li>
+<li><a target="_blank" rel="noopener" href="https://xdebug.org/">xdebug</a>，需要自己安装，生成代码覆盖率测试报告用到</li>
+<li><a target="_blank" rel="noopener" href="http://php.net/manual/en/xmlwriter.installation.php">xmlwriter</a>，PHP默认启用，生成XML格式的报告用到</li>
 </ul>
 <p>检查PHP是否启用了这些模块可以使用如下命令</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">php -m | grep <span class="string">'模块名称'</span></div></pre></td></tr></table></figure>
-<h1 id="PHPUnit的安装"><a href="#PHPUnit的安装" class="headerlink" title="PHPUnit的安装"></a>PHPUnit的安装</h1><h2 id="PHP档案包方式"><a href="#PHP档案包方式" class="headerlink" title="PHP档案包方式"></a>PHP档案包方式</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">wget https://phar.phpunit.de/phpunit.phar <span class="comment">#  下载档案包</span></div><div class="line">chmod +x phpunit.phar <span class="comment">#  赋可执行权限</span></div><div class="line">sudo mv phpunit.phar /usr/<span class="built_in">local</span>/bin/phpunit</div><div class="line">phpunit --version <span class="comment">#  查看PHPUnit版本</span></div></pre></td></tr></table></figure>
-<h2 id="Composer方式"><a href="#Composer方式" class="headerlink" title="Composer方式"></a>Composer方式</h2><p>Composer使用参考<a href="https://getcomposer.org/">https://getcomposer.org/</a></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">php -m | grep <span class="string">&#x27;模块名称&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="PHPUnit的安装"><a href="#PHPUnit的安装" class="headerlink" title="PHPUnit的安装"></a>PHPUnit的安装</h1><h2 id="PHP档案包方式"><a href="#PHP档案包方式" class="headerlink" title="PHP档案包方式"></a>PHP档案包方式</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">wget https://phar.phpunit.de/phpunit.phar <span class="comment">#  下载档案包</span></span><br><span class="line"><span class="built_in">chmod</span> +x phpunit.phar <span class="comment">#  赋可执行权限</span></span><br><span class="line">sudo <span class="built_in">mv</span> phpunit.phar /usr/local/bin/phpunit</span><br><span class="line">phpunit --version <span class="comment">#  查看PHPUnit版本</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="Composer方式"><a href="#Composer方式" class="headerlink" title="Composer方式"></a>Composer方式</h2><p>Composer使用参考<a target="_blank" rel="noopener" href="https://getcomposer.org/">https://getcomposer.org/</a></p>
 <p>composer文件如下</p>
-<figure class="highlight json"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">    <span class="attr">"require-dev"</span>: &#123;</div><div class="line">        <span class="attr">"phpunit/phpunit"</span>: <span class="string">"5.0.*"</span></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;require-dev&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;phpunit/phpunit&quot;</span><span class="punctuation">:</span> <span class="string">&quot;5.0.*&quot;</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
 <h1 id="编写PHPUnit测试"><a href="#编写PHPUnit测试" class="headerlink" title="编写PHPUnit测试"></a>编写PHPUnit测试</h1><h2 id="惯例和基本步骤"><a href="#惯例和基本步骤" class="headerlink" title="惯例和基本步骤"></a>惯例和基本步骤</h2><ol>
 <li>针对类Class的测试写在类ClassTest中。</li>
 <li>ClassTest通常继承自PHPUnit_Framework_TestCase。</li>
@@ -791,11 +803,13 @@
 <li>在测试方法内，类似于assertEquals()这样的断言方法用来对实际值与预期值的匹配做出断言</li>
 </ol>
 <p>举个例子：</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;?php</span></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">HelloWolrdTest</span> <span class="keyword">extends</span> <span class="title">PHPUnit_Framework_TestCase</span></div><div class="line"></span>&#123;</div><div class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">testString</span><span class="params">()</span></div><div class="line">    </span>&#123;</div><div class="line">        $string = <span class="string">'Hello, World'</span>;</div><div class="line">        <span class="keyword">$this</span>-&gt;assertEquals(<span class="string">'Hello, World'</span>, $string);</div><div class="line">        <span class="keyword">$this</span>-&gt;assertNotEquals(<span class="string">'Hello,World'</span>, $string);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">testAarry</span><span class="params">()</span></div><div class="line">    </span>&#123;</div><div class="line">        $arr = <span class="keyword">array</span>();</div><div class="line">        <span class="keyword">$this</span>-&gt;assertEmpty($arr);</div><div class="line">        <span class="comment">//$this-&gt;assertArrayHasKey('hello', $arr);</span></div><div class="line"></div><div class="line">        $arr[<span class="string">'hello'</span>] = <span class="string">'world'</span>;</div><div class="line">        <span class="comment">//$this-&gt;assertEmpty($arr);</span></div><div class="line">        <span class="keyword">$this</span>-&gt;assertArrayHasKey(<span class="string">'hello'</span>, $arr);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">HelloWolrdTest</span> <span class="keyword">extends</span> <span class="title">PHPUnit_Framework_TestCase</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">testString</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="variable">$string</span> = <span class="string">&#x27;Hello, World&#x27;</span>;</span><br><span class="line">        <span class="variable language_">$this</span>-&gt;<span class="title function_ invoke__">assertEquals</span>(<span class="string">&#x27;Hello, World&#x27;</span>, <span class="variable">$string</span>);</span><br><span class="line">        <span class="variable language_">$this</span>-&gt;<span class="title function_ invoke__">assertNotEquals</span>(<span class="string">&#x27;Hello,World&#x27;</span>, <span class="variable">$string</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">testAarry</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="variable">$arr</span> = <span class="keyword">array</span>();</span><br><span class="line">        <span class="variable language_">$this</span>-&gt;<span class="title function_ invoke__">assertEmpty</span>(<span class="variable">$arr</span>);</span><br><span class="line">        <span class="comment">//$this-&gt;assertArrayHasKey(&#x27;hello&#x27;, $arr);</span></span><br><span class="line"></span><br><span class="line">        <span class="variable">$arr</span>[<span class="string">&#x27;hello&#x27;</span>] = <span class="string">&#x27;world&#x27;</span>;</span><br><span class="line">        <span class="comment">//$this-&gt;assertEmpty($arr);</span></span><br><span class="line">        <span class="variable language_">$this</span>-&gt;<span class="title function_ invoke__">assertArrayHasKey</span>(<span class="string">&#x27;hello&#x27;</span>, <span class="variable">$arr</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p>执行测试命令</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">phpunit HelloWorldTest</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">phpunit HelloWorldTest</span><br></pre></td></tr></table></figure>
+
 <p>结果</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">PHPUnit 4.8.24 by Sebastian Bergmann and contributors.</div><div class="line"></div><div class="line">..</div><div class="line"></div><div class="line">Time: 103 ms, Memory: 12.50Mb</div><div class="line"></div><div class="line">OK (2 tests, 4 assertions)</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">PHPUnit 4.8.24 by Sebastian Bergmann and contributors.</span><br><span class="line"></span><br><span class="line">..</span><br><span class="line"></span><br><span class="line">Time: 103 ms, Memory: 12.50Mb</span><br><span class="line"></span><br><span class="line">OK (2 tests, 4 assertions)</span><br></pre></td></tr></table></figure>
         
           <p class="article-more-link">
             <a href="/2016/03/30/phpunit/#more">Read More</a>
@@ -806,7 +820,7 @@
     <footer class="article-footer">
       <div class="article-footer-tag">
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/PHP/">PHP</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/PHPUnit/">PHPUnit</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/PHP/" rel="tag">PHP</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/PHPUnit/" rel="tag">PHPUnit</a></li></ul>
 
       </div>
       <!-- JiaThis Button BEGIN -->
@@ -837,7 +851,7 @@
 
 
   <nav id="page-nav">
-    <a class="extend prev" rel="prev" href="/">&laquo; __('prev')</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/3/">__('next') &raquo;</a>
+    <a class="extend prev" rel="prev" href="/">&amp;laquo; __(&#39;prev&#39;)</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/3/">__(&#39;next&#39;) &amp;raquo;</a>
   </nav>
 </section>
         
@@ -850,7 +864,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Effective-Java/">Effective Java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PHP/">PHP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PHPUnit/">PHPUnit</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/c/">c</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cache/">cache</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/memcached/">memcached</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/redis/">redis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/shell/">shell</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vim/">vim</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/zsh/">zsh</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/笔记/">笔记</a></li></ul>
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Effective-Java/" rel="tag">Effective Java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/" rel="tag">Java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PHP/" rel="tag">PHP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PHPUnit/" rel="tag">PHPUnit</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/c/" rel="tag">c</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cache/" rel="tag">cache</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/memcached/" rel="tag">memcached</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/redis/" rel="tag">redis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/shell/" rel="tag">shell</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vim/" rel="tag">vim</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/zsh/" rel="tag">zsh</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%AC%94%E8%AE%B0/" rel="tag">笔记</a></li></ul>
     </div>
   </div>
 
@@ -860,7 +874,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Effective-Java/" style="font-size: 13.33px;">Effective Java</a> <a href="/tags/Java/" style="font-size: 13.33px;">Java</a> <a href="/tags/PHP/" style="font-size: 13.33px;">PHP</a> <a href="/tags/PHPUnit/" style="font-size: 10px;">PHPUnit</a> <a href="/tags/c/" style="font-size: 10px;">c</a> <a href="/tags/cache/" style="font-size: 20px;">cache</a> <a href="/tags/memcached/" style="font-size: 10px;">memcached</a> <a href="/tags/redis/" style="font-size: 20px;">redis</a> <a href="/tags/shell/" style="font-size: 16.67px;">shell</a> <a href="/tags/vim/" style="font-size: 16.67px;">vim</a> <a href="/tags/zsh/" style="font-size: 16.67px;">zsh</a> <a href="/tags/笔记/" style="font-size: 10px;">笔记</a>
+      <a href="/tags/Effective-Java/" style="font-size: 13.33px;">Effective Java</a> <a href="/tags/Java/" style="font-size: 13.33px;">Java</a> <a href="/tags/PHP/" style="font-size: 13.33px;">PHP</a> <a href="/tags/PHPUnit/" style="font-size: 10px;">PHPUnit</a> <a href="/tags/c/" style="font-size: 10px;">c</a> <a href="/tags/cache/" style="font-size: 20px;">cache</a> <a href="/tags/memcached/" style="font-size: 10px;">memcached</a> <a href="/tags/redis/" style="font-size: 20px;">redis</a> <a href="/tags/shell/" style="font-size: 16.67px;">shell</a> <a href="/tags/vim/" style="font-size: 16.67px;">vim</a> <a href="/tags/zsh/" style="font-size: 16.67px;">zsh</a> <a href="/tags/%E7%AC%94%E8%AE%B0/" style="font-size: 10px;">笔记</a>
     </div>
   </div>
 
@@ -882,7 +896,7 @@
       <ul>
         
           <li>
-            <a href="/2018/03/20/架构师图谱/">架构师图谱</a>
+            <a href="/2018/03/20/%E6%9E%B6%E6%9E%84%E5%B8%88%E5%9B%BE%E8%B0%B1/">架构师图谱</a>
           </li>
         
           <li>
@@ -912,19 +926,11 @@
       <ul>
           
           <li>
-            <a href="http://pedroneer.github.io">死胖子</a>
+            <a target="_blank" rel="noopener" href="https://github.com/buptzhanghao">好神</a>
           </li>
           
           <li>
-            <a href="https://github.com/buptzhanghao">好神</a>
-          </li>
-          
-          <li>
-            <a href="http://www.bencaimao.com/">笨财猫</a>
-          </li>
-          
-          <li>
-            <a href="http://www.beva.com">贝瓦网</a>
+            <a href="https://kennethfan.github.io/gitbook">椒哥gitbook</a>
           </li>
           
       </ul>
@@ -939,7 +945,7 @@
   
   <div class="outer">
     <div id="footer-info" class="inner">
-      &copy; 2018 Kenneth Fan<br>
+      &copy; 2024 Kenneth Fan<br>
       Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>
@@ -957,11 +963,17 @@
 <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 
 
-  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
-  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
 
 
 <script src="/js/script.js"></script>
+
 
   </div>
 </body>

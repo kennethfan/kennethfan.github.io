@@ -6,24 +6,21 @@
   <title>zsh-字符串通配符 | 夜未央</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
-  <meta name="keyword" content="c,PHP,memcached,PHPUnit,redis,cache,vim,zsh,shell,Java,Effective Java,笔记">
+  <meta name="keyword" content="PHP,c,memcached,PHPUnit,redis,cache,vim,zsh,shell,Java,Effective Java,笔记">
   
-  <meta name="description" content="通配符（glob）是 shell 中的一个比较重要的概念，可以认为是正则表达式的简化版本。通配符在字符串匹配和文件名搜索等方面非常有用。本篇只讲它在字符串匹配上的用法
-通配符的基本用法之前在讲字符串匹配判断时，通配符出现过，就是 *&amp;quot;$str&amp;quot;* 两边的星号。
-123456789% str1=abcd% str2=bc# 星号要在引号外边% [[ $str1 == *&quot;$str">
+  <meta name="description" content="通配符（glob）是 shell 中的一个比较重要的概念，可以认为是正则表达式的简化版本。通配符在字符串匹配和文件名搜索等方面非常有用。本篇只讲它在字符串匹配上的用法 通配符的基本用法之前在讲字符串匹配判断时，通配符出现过，就是 *&quot;$str&quot;* 两边的星号。 123456789% str1&#x3D;abcd% str2&#x3D;bc# 星号要在引号外边% [[ $str1 &#x3D;&#x3D; *&amp;quot">
 <meta property="og:type" content="article">
 <meta property="og:title" content="zsh-字符串通配符">
-<meta property="og:url" content="http://kennethfan.github.io/2017/09/21/zsh-字符串通配符/index.html">
+<meta property="og:url" content="http://kennethfan.github.io/2017/09/21/zsh-%E5%AD%97%E7%AC%A6%E4%B8%B2%E9%80%9A%E9%85%8D%E7%AC%A6/index.html">
 <meta property="og:site_name" content="夜未央">
-<meta property="og:description" content="通配符（glob）是 shell 中的一个比较重要的概念，可以认为是正则表达式的简化版本。通配符在字符串匹配和文件名搜索等方面非常有用。本篇只讲它在字符串匹配上的用法
-通配符的基本用法之前在讲字符串匹配判断时，通配符出现过，就是 *&amp;quot;$str&amp;quot;* 两边的星号。
-123456789% str1=abcd% str2=bc# 星号要在引号外边% [[ $str1 == *&quot;$str">
-<meta property="og:updated_time" content="2017-09-20T16:15:36.000Z">
+<meta property="og:description" content="通配符（glob）是 shell 中的一个比较重要的概念，可以认为是正则表达式的简化版本。通配符在字符串匹配和文件名搜索等方面非常有用。本篇只讲它在字符串匹配上的用法 通配符的基本用法之前在讲字符串匹配判断时，通配符出现过，就是 *&quot;$str&quot;* 两边的星号。 123456789% str1&#x3D;abcd% str2&#x3D;bc# 星号要在引号外边% [[ $str1 &#x3D;&#x3D; *&amp;quot">
+<meta property="og:locale">
+<meta property="article:published_time" content="2017-09-20T16:03:35.000Z">
+<meta property="article:modified_time" content="2017-09-20T16:15:36.000Z">
+<meta property="article:author" content="Kenneth Fan">
+<meta property="article:tag" content="zsh">
+<meta property="article:tag" content="shell">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="zsh-字符串通配符">
-<meta name="twitter:description" content="通配符（glob）是 shell 中的一个比较重要的概念，可以认为是正则表达式的简化版本。通配符在字符串匹配和文件名搜索等方面非常有用。本篇只讲它在字符串匹配上的用法
-通配符的基本用法之前在讲字符串匹配判断时，通配符出现过，就是 *&amp;quot;$str&amp;quot;* 两边的星号。
-123456789% str1=abcd% str2=bc# 星号要在引号外边% [[ $str1 == *&quot;$str">
   
     <link rel="alternate" href="/atom.xml" title="夜未央" type="application/atom+xml">
   
@@ -33,10 +30,12 @@
   
     <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
   
-  <link rel="stylesheet" href="/css/style.css">
+  
+<link rel="stylesheet" href="/css/style.css">
+
   
 
-</head>
+<meta name="generator" content="Hexo 6.3.0"></head>
 
 <body>
   <div id="container">
@@ -48,10 +47,6 @@
       <h1 id="logo-wrap">
         <a href="/" id="logo">夜未央</a>
       </h1>
-      
-        <h2 id="subtitle-wrap">
-          <a href="/" id="subtitle">感恩 &amp; 回馈 | 理解 &amp; 释怀 | 热爱 &amp; 敬畏</a>
-        </h2>
       
     </div>
     <div id="header-inner" class="inner">
@@ -70,7 +65,7 @@
         <a id="nav-search-btn" class="nav-icon" title="Search"></a>
       </nav>
       <div id="search-form-wrap">
-        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://kennethfan.github.io"></form>
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://kennethfan.github.io"></form>
       </div>
     </div>
   </div>
@@ -79,7 +74,7 @@
       <div class="outer">
         <section id="main"><article id="post-zsh-字符串通配符" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2017/09/21/zsh-字符串通配符/" class="article-date">
+    <a href="/2017/09/21/zsh-%E5%AD%97%E7%AC%A6%E4%B8%B2%E9%80%9A%E9%85%8D%E7%AC%A6/" class="article-date">
   <time datetime="2017-09-20T16:03:35.000Z" itemprop="datePublished">2017-09-21</time>
 </a>
     
@@ -104,16 +99,19 @@
         
         <div id="toc" class="toc-article">
         <strong class="toc-title">文章目录</strong>
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#通配符的基本用法"><span class="toc-number">1.</span> <span class="toc-text">通配符的基本用法</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#加强版通配符"><span class="toc-number">2.</span> <span class="toc-text">加强版通配符</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#参考"><span class="toc-number">3.</span> <span class="toc-text">参考</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%80%9A%E9%85%8D%E7%AC%A6%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95"><span class="toc-number">1.</span> <span class="toc-text">通配符的基本用法</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8A%A0%E5%BC%BA%E7%89%88%E9%80%9A%E9%85%8D%E7%AC%A6"><span class="toc-number">2.</span> <span class="toc-text">加强版通配符</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8F%82%E8%80%83"><span class="toc-number">3.</span> <span class="toc-text">参考</span></a></li></ol>
         </div>
         
 
         <p>通配符（glob）是 shell 中的一个比较重要的概念，可以认为是正则表达式的简化版本。通配符在字符串匹配和文件名搜索等方面非常有用。本篇只讲它在字符串匹配上的用法</p>
 <h1 id="通配符的基本用法"><a href="#通配符的基本用法" class="headerlink" title="通配符的基本用法"></a>通配符的基本用法</h1><p>之前在讲字符串匹配判断时，通配符出现过，就是 <code>*&quot;$str&quot;*</code> 两边的星号。</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">% str1=abcd</div><div class="line">% str2=bc</div><div class="line"></div><div class="line"><span class="comment"># 星号要在引号外边</span></div><div class="line">% [[ <span class="variable">$str1</span> == *<span class="string">"<span class="variable">$str2</span>"</span>* ]] &amp;&amp; <span class="built_in">echo</span> good</div><div class="line">good</div><div class="line"></div><div class="line"><span class="comment"># 注意带通配符的字符串必须放在右边</span></div><div class="line">% [[ *<span class="string">"<span class="variable">$str2</span>"</span>* == <span class="variable">$str1</span> ]] &amp;&amp; <span class="built_in">echo</span> good</div></pre></td></tr></table></figure>
-<a id="more"></a>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">% str1=abcd</span><br><span class="line">% str2=bc</span><br><span class="line"></span><br><span class="line"><span class="comment"># 星号要在引号外边</span></span><br><span class="line">% [[ <span class="variable">$str1</span> == *<span class="string">&quot;<span class="variable">$str2</span>&quot;</span>* ]] &amp;&amp; <span class="built_in">echo</span> good</span><br><span class="line">good</span><br><span class="line"></span><br><span class="line"><span class="comment"># 注意带通配符的字符串必须放在右边</span></span><br><span class="line">% [[ *<span class="string">&quot;<span class="variable">$str2</span>&quot;</span>* == <span class="variable">$str1</span> ]] &amp;&amp; <span class="built_in">echo</span> good</span><br></pre></td></tr></table></figure>
+
+<span id="more"></span>
+
 <p>星号是最常用的通配符，用于匹配任意数量（包括 0 个）的任意字符。</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 问号用于匹配一个任意字符</span></div><div class="line">% [[ abcd == ab?? ]] &amp;&amp; <span class="built_in">echo</span> good</div><div class="line">good</div><div class="line"></div><div class="line"><span class="comment"># 中括号用于匹配出现在其中的单个字符</span></div><div class="line">% [[ abcd == abc[bcd] ]] &amp;&amp; <span class="built_in">echo</span> good</div><div class="line">good</div><div class="line"></div><div class="line"><span class="comment"># 如果中括号里第一个字符是 ^，则匹配除了除了中括号里的单个字符</span></div><div class="line">% [[ abcd == abc[^de] ]] &amp;&amp; <span class="built_in">echo</span> good</div><div class="line">% [[ abcd == abc[^ce] ]] &amp;&amp; <span class="built_in">echo</span> good</div><div class="line">good</div><div class="line"></div><div class="line"><span class="comment"># 中括号里可以指定字符的范围</span></div><div class="line">% [[ a4 == [a-b][2-5] ]] &amp;&amp; <span class="built_in">echo</span> good</div><div class="line">good</div><div class="line"></div><div class="line"><span class="comment"># 可以指定多个字符范围，并且可以掺杂其他字符</span></div><div class="line">% [[ B4 == [a-cdddA-B][2-5] ]] &amp;&amp; <span class="built_in">echo</span> good</div><div class="line">good</div><div class="line"></div><div class="line"><span class="comment"># 尖括号用于匹配一定范围的单个整数</span></div><div class="line">% [[ 123 == 12&lt;3-4&gt; ]] &amp;&amp; <span class="built_in">echo</span> good</div><div class="line">good</div><div class="line"></div><div class="line"><span class="comment"># 可以匹配整个整数</span></div><div class="line">% [[ 123 == &lt;100-200&gt; ]] &amp;&amp; <span class="built_in">echo</span> good</div><div class="line">good</div><div class="line"></div><div class="line"><span class="comment"># 可以没有上下界，默认的下界是 0，上界是正无穷</span></div><div class="line">% [[ 123 == &lt;100-&gt; &amp;&amp; 123 == &lt;-200&gt; ]] &amp;&amp; <span class="built_in">echo</span> good</div><div class="line">good</div><div class="line"></div><div class="line"><span class="comment"># 可以上下界都没有，那么会匹配任意正整数和 0</span></div><div class="line"><span class="comment"># 这个可以用来判断字符串是否构成整数</span></div><div class="line"><span class="comment"># [[ 123 == &lt;-&gt; ]] &amp;&amp; echo good</span></div><div class="line">good</div><div class="line"></div><div class="line"><span class="comment"># ( 1 | 2 | ... ) 用于同时判断多个条件，满足一个即可</span></div><div class="line">%  [[ ab == (aa|ab) ]] &amp;&amp; <span class="built_in">echo</span> good</div><div class="line">good</div><div class="line"></div><div class="line"><span class="comment"># 如果中括号里要用 - 或者 ^，放在最后即可，不需要转义</span></div><div class="line">% [[ -^3 == [a-c-][3^-][3^-] ]] &amp;&amp; <span class="built_in">echo</span> good</div><div class="line">good</div></pre></td></tr></table></figure>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 问号用于匹配一个任意字符</span></span><br><span class="line">% [[ abcd == ab?? ]] &amp;&amp; <span class="built_in">echo</span> good</span><br><span class="line">good</span><br><span class="line"></span><br><span class="line"><span class="comment"># 中括号用于匹配出现在其中的单个字符</span></span><br><span class="line">% [[ abcd == abc[bcd] ]] &amp;&amp; <span class="built_in">echo</span> good</span><br><span class="line">good</span><br><span class="line"></span><br><span class="line"><span class="comment"># 如果中括号里第一个字符是 ^，则匹配除了除了中括号里的单个字符</span></span><br><span class="line">% [[ abcd == abc[^de] ]] &amp;&amp; <span class="built_in">echo</span> good</span><br><span class="line">% [[ abcd == abc[^ce] ]] &amp;&amp; <span class="built_in">echo</span> good</span><br><span class="line">good</span><br><span class="line"></span><br><span class="line"><span class="comment"># 中括号里可以指定字符的范围</span></span><br><span class="line">% [[ a4 == [a-b][2-5] ]] &amp;&amp; <span class="built_in">echo</span> good</span><br><span class="line">good</span><br><span class="line"></span><br><span class="line"><span class="comment"># 可以指定多个字符范围，并且可以掺杂其他字符</span></span><br><span class="line">% [[ B4 == [a-cdddA-B][2-5] ]] &amp;&amp; <span class="built_in">echo</span> good</span><br><span class="line">good</span><br><span class="line"></span><br><span class="line"><span class="comment"># 尖括号用于匹配一定范围的单个整数</span></span><br><span class="line">% [[ 123 == 12&lt;3-4&gt; ]] &amp;&amp; <span class="built_in">echo</span> good</span><br><span class="line">good</span><br><span class="line"></span><br><span class="line"><span class="comment"># 可以匹配整个整数</span></span><br><span class="line">% [[ 123 == &lt;100-200&gt; ]] &amp;&amp; <span class="built_in">echo</span> good</span><br><span class="line">good</span><br><span class="line"></span><br><span class="line"><span class="comment"># 可以没有上下界，默认的下界是 0，上界是正无穷</span></span><br><span class="line">% [[ 123 == &lt;100-&gt; &amp;&amp; 123 == &lt;-200&gt; ]] &amp;&amp; <span class="built_in">echo</span> good</span><br><span class="line">good</span><br><span class="line"></span><br><span class="line"><span class="comment"># 可以上下界都没有，那么会匹配任意正整数和 0</span></span><br><span class="line"><span class="comment"># 这个可以用来判断字符串是否构成整数</span></span><br><span class="line"><span class="comment"># [[ 123 == &lt;-&gt; ]] &amp;&amp; echo good</span></span><br><span class="line">good</span><br><span class="line"></span><br><span class="line"><span class="comment"># ( 1 | 2 | ... ) 用于同时判断多个条件，满足一个即可</span></span><br><span class="line">%  [[ ab == (aa|ab) ]] &amp;&amp; <span class="built_in">echo</span> good</span><br><span class="line">good</span><br><span class="line"></span><br><span class="line"><span class="comment"># 如果中括号里要用 - 或者 ^，放在最后即可，不需要转义</span></span><br><span class="line">% [[ -^3 == [a-c-][3^-][3^-] ]] &amp;&amp; <span class="built_in">echo</span> good</span><br><span class="line">good</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
 <p>以上是通配符的基本用法，总结一下。</p>
 <table>
 <thead>
@@ -123,8 +121,7 @@
 <th></th>
 </tr>
 </thead>
-<tbody>
-<tr>
+<tbody><tr>
 <td>通配符</td>
 <td>含义</td>
 <td></td>
@@ -160,7 +157,7 @@
 <td></td>
 </tr>
 <tr>
-<td><1-100></1-100></td>
+<td>&lt;1-100&gt;</td>
 <td>1 和 100 之间的整数</td>
 <td></td>
 </tr>
@@ -170,7 +167,7 @@
 <td></td>
 </tr>
 <tr>
-<td><100-></100-></td>
+<td>&lt;100-&gt;</td>
 <td>大于 100 的整数</td>
 <td></td>
 </tr>
@@ -180,12 +177,11 @@
 <td></td>
 </tr>
 <tr>
-<td>([a-c]\</td>
-<td><1-100>)</1-100></td>
+<td>([a-c]|&lt;1-100&gt;)</td>
 <td>a 和 c 之间的一个字符或者 1 和 100 之间的整数</td>
+<td></td>
 </tr>
-</tbody>
-</table>
+</tbody></table>
 <h1 id="加强版通配符"><a href="#加强版通配符" class="headerlink" title="加强版通配符"></a>加强版通配符</h1><p>Zsh 还支持加强版通配符，功能更多一些。如果使用加强版的通配符，需要先在代码里加上 <code>setopt EXTENDED_GLOB</code>。</p>
 <table>
 <thead>
@@ -195,8 +191,7 @@
 <th>匹配的样例</th>
 </tr>
 </thead>
-<tbody>
-<tr>
+<tbody><tr>
 <td>^abc</td>
 <td>除了 abc 外的任意字符串</td>
 <td>aaa</td>
@@ -246,16 +241,15 @@
 <td>最多错（多或缺也算）一个字符的 abc</td>
 <td>a2c 或 ab 或 abcd</td>
 </tr>
-</tbody>
-</table>
-<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a href="https://github.com/goreliu/zshguide" target="_blank" rel="external">zsh开发指南</a></p>
+</tbody></table>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a target="_blank" rel="noopener" href="https://github.com/goreliu/zshguide">zsh开发指南</a></p>
 
       
     </div>
     <footer class="article-footer">
       <div class="article-footer-tag">
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/shell/">shell</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/zsh/">zsh</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/shell/" rel="tag">shell</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/zsh/" rel="tag">zsh</a></li></ul>
 
       </div>
       <!-- JiaThis Button BEGIN -->
@@ -291,7 +285,7 @@
     </a>
   
   
-    <a href="/2017/09/20/zsh-字符串转义和格式化/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2017/09/20/zsh-%E5%AD%97%E7%AC%A6%E4%B8%B2%E8%BD%AC%E4%B9%89%E5%92%8C%E6%A0%BC%E5%BC%8F%E5%8C%96/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Older</strong>
       <div class="article-nav-title">zsh-字符串转义和格式化</div>
     </a>
@@ -304,7 +298,7 @@
 
 <section id="comments">
 <!-- 多说评论框 start -->
-<div class="ds-thread" data-thread-key="post-zsh-字符串通配符" data-title="zsh-字符串通配符" data-url="http://kennethfan.github.io/2017/09/21/zsh-字符串通配符/"></div>
+<div class="ds-thread" data-thread-key="post-zsh-字符串通配符" data-title="zsh-字符串通配符" data-url="http://kennethfan.github.io/2017/09/21/zsh-%E5%AD%97%E7%AC%A6%E4%B8%B2%E9%80%9A%E9%85%8D%E7%AC%A6/"></div>
 <!-- 多说评论框 end -->
 <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 <script type="text/javascript">
@@ -332,7 +326,7 @@ var duoshuoQuery = {short_name:'kennethfan'};
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Effective-Java/">Effective Java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PHP/">PHP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PHPUnit/">PHPUnit</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/c/">c</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cache/">cache</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/memcached/">memcached</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/redis/">redis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/shell/">shell</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vim/">vim</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/zsh/">zsh</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/笔记/">笔记</a></li></ul>
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Effective-Java/" rel="tag">Effective Java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/" rel="tag">Java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PHP/" rel="tag">PHP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PHPUnit/" rel="tag">PHPUnit</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/c/" rel="tag">c</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cache/" rel="tag">cache</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/memcached/" rel="tag">memcached</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/redis/" rel="tag">redis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/shell/" rel="tag">shell</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vim/" rel="tag">vim</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/zsh/" rel="tag">zsh</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%AC%94%E8%AE%B0/" rel="tag">笔记</a></li></ul>
     </div>
   </div>
 
@@ -342,7 +336,7 @@ var duoshuoQuery = {short_name:'kennethfan'};
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Effective-Java/" style="font-size: 13.33px;">Effective Java</a> <a href="/tags/Java/" style="font-size: 13.33px;">Java</a> <a href="/tags/PHP/" style="font-size: 13.33px;">PHP</a> <a href="/tags/PHPUnit/" style="font-size: 10px;">PHPUnit</a> <a href="/tags/c/" style="font-size: 10px;">c</a> <a href="/tags/cache/" style="font-size: 20px;">cache</a> <a href="/tags/memcached/" style="font-size: 10px;">memcached</a> <a href="/tags/redis/" style="font-size: 20px;">redis</a> <a href="/tags/shell/" style="font-size: 16.67px;">shell</a> <a href="/tags/vim/" style="font-size: 16.67px;">vim</a> <a href="/tags/zsh/" style="font-size: 16.67px;">zsh</a> <a href="/tags/笔记/" style="font-size: 10px;">笔记</a>
+      <a href="/tags/Effective-Java/" style="font-size: 13.33px;">Effective Java</a> <a href="/tags/Java/" style="font-size: 13.33px;">Java</a> <a href="/tags/PHP/" style="font-size: 13.33px;">PHP</a> <a href="/tags/PHPUnit/" style="font-size: 10px;">PHPUnit</a> <a href="/tags/c/" style="font-size: 10px;">c</a> <a href="/tags/cache/" style="font-size: 20px;">cache</a> <a href="/tags/memcached/" style="font-size: 10px;">memcached</a> <a href="/tags/redis/" style="font-size: 20px;">redis</a> <a href="/tags/shell/" style="font-size: 16.67px;">shell</a> <a href="/tags/vim/" style="font-size: 16.67px;">vim</a> <a href="/tags/zsh/" style="font-size: 16.67px;">zsh</a> <a href="/tags/%E7%AC%94%E8%AE%B0/" style="font-size: 10px;">笔记</a>
     </div>
   </div>
 
@@ -364,7 +358,7 @@ var duoshuoQuery = {short_name:'kennethfan'};
       <ul>
         
           <li>
-            <a href="/2018/03/20/架构师图谱/">架构师图谱</a>
+            <a href="/2018/03/20/%E6%9E%B6%E6%9E%84%E5%B8%88%E5%9B%BE%E8%B0%B1/">架构师图谱</a>
           </li>
         
           <li>
@@ -394,19 +388,11 @@ var duoshuoQuery = {short_name:'kennethfan'};
       <ul>
           
           <li>
-            <a href="http://pedroneer.github.io">死胖子</a>
+            <a target="_blank" rel="noopener" href="https://github.com/buptzhanghao">好神</a>
           </li>
           
           <li>
-            <a href="https://github.com/buptzhanghao">好神</a>
-          </li>
-          
-          <li>
-            <a href="http://www.bencaimao.com/">笨财猫</a>
-          </li>
-          
-          <li>
-            <a href="http://www.beva.com">贝瓦网</a>
+            <a href="https://kennethfan.github.io/gitbook">椒哥gitbook</a>
           </li>
           
       </ul>
@@ -421,7 +407,7 @@ var duoshuoQuery = {short_name:'kennethfan'};
   
   <div class="outer">
     <div id="footer-info" class="inner">
-      &copy; 2018 Kenneth Fan<br>
+      &copy; 2024 Kenneth Fan<br>
       Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>
@@ -439,11 +425,17 @@ var duoshuoQuery = {short_name:'kennethfan'};
 <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 
 
-  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
-  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
 
 
 <script src="/js/script.js"></script>
+
 
   </div>
 </body>

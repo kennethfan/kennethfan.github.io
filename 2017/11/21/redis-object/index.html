@@ -6,21 +6,21 @@
   <title>redis对象 | 夜未央</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
-  <meta name="keyword" content="c,PHP,memcached,PHPUnit,redis,cache,vim,zsh,shell,Java,Effective Java,笔记">
+  <meta name="keyword" content="PHP,c,memcached,PHPUnit,redis,cache,vim,zsh,shell,Java,Effective Java,笔记">
   
-  <meta name="description" content="前面的章节，介绍了Redis泳道的主要数据结构，比如简单动态字符串，双端列表，字典，压缩列表，整数集合等等。Redis并没有直接使用这些数据结构来实现键值对数据库，而是基于数据结构创建了一个对象系统，这个系统包含字符串对象，列表对象，哈希对象，集合对象和有序集合对象这五种类型的对象，每种对象都用到了至少一种前面说的数据结构。
-对象的类型和编码Redis使用对象来表示数据库中的键和值，每次当我们在R">
+  <meta name="description" content="前面的章节，介绍了Redis泳道的主要数据结构，比如简单动态字符串，双端列表，字典，压缩列表，整数集合等等。Redis并没有直接使用这些数据结构来实现键值对数据库，而是基于数据结构创建了一个对象系统，这个系统包含字符串对象，列表对象，哈希对象，集合对象和有序集合对象这五种类型的对象，每种对象都用到了至少一种前面说的数据结构。 对象的类型和编码Redis使用对象来表示数据库中的键和值，每次当我们在R">
 <meta property="og:type" content="article">
 <meta property="og:title" content="redis对象">
 <meta property="og:url" content="http://kennethfan.github.io/2017/11/21/redis-object/index.html">
 <meta property="og:site_name" content="夜未央">
-<meta property="og:description" content="前面的章节，介绍了Redis泳道的主要数据结构，比如简单动态字符串，双端列表，字典，压缩列表，整数集合等等。Redis并没有直接使用这些数据结构来实现键值对数据库，而是基于数据结构创建了一个对象系统，这个系统包含字符串对象，列表对象，哈希对象，集合对象和有序集合对象这五种类型的对象，每种对象都用到了至少一种前面说的数据结构。
-对象的类型和编码Redis使用对象来表示数据库中的键和值，每次当我们在R">
-<meta property="og:updated_time" content="2017-11-22T11:02:44.000Z">
+<meta property="og:description" content="前面的章节，介绍了Redis泳道的主要数据结构，比如简单动态字符串，双端列表，字典，压缩列表，整数集合等等。Redis并没有直接使用这些数据结构来实现键值对数据库，而是基于数据结构创建了一个对象系统，这个系统包含字符串对象，列表对象，哈希对象，集合对象和有序集合对象这五种类型的对象，每种对象都用到了至少一种前面说的数据结构。 对象的类型和编码Redis使用对象来表示数据库中的键和值，每次当我们在R">
+<meta property="og:locale">
+<meta property="article:published_time" content="2017-11-21T15:03:42.000Z">
+<meta property="article:modified_time" content="2017-11-22T11:02:44.000Z">
+<meta property="article:author" content="Kenneth Fan">
+<meta property="article:tag" content="redis">
+<meta property="article:tag" content="cache">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="redis对象">
-<meta name="twitter:description" content="前面的章节，介绍了Redis泳道的主要数据结构，比如简单动态字符串，双端列表，字典，压缩列表，整数集合等等。Redis并没有直接使用这些数据结构来实现键值对数据库，而是基于数据结构创建了一个对象系统，这个系统包含字符串对象，列表对象，哈希对象，集合对象和有序集合对象这五种类型的对象，每种对象都用到了至少一种前面说的数据结构。
-对象的类型和编码Redis使用对象来表示数据库中的键和值，每次当我们在R">
   
     <link rel="alternate" href="/atom.xml" title="夜未央" type="application/atom+xml">
   
@@ -30,10 +30,12 @@
   
     <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
   
-  <link rel="stylesheet" href="/css/style.css">
+  
+<link rel="stylesheet" href="/css/style.css">
+
   
 
-</head>
+<meta name="generator" content="Hexo 6.3.0"></head>
 
 <body>
   <div id="container">
@@ -45,10 +47,6 @@
       <h1 id="logo-wrap">
         <a href="/" id="logo">夜未央</a>
       </h1>
-      
-        <h2 id="subtitle-wrap">
-          <a href="/" id="subtitle">感恩 &amp; 回馈 | 理解 &amp; 释怀 | 热爱 &amp; 敬畏</a>
-        </h2>
       
     </div>
     <div id="header-inner" class="inner">
@@ -67,7 +65,7 @@
         <a id="nav-search-btn" class="nav-icon" title="Search"></a>
       </nav>
       <div id="search-form-wrap">
-        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://kennethfan.github.io"></form>
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://kennethfan.github.io"></form>
       </div>
     </div>
   </div>
@@ -101,13 +99,14 @@
         
         <div id="toc" class="toc-article">
         <strong class="toc-title">文章目录</strong>
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#对象的类型和编码"><span class="toc-number">1.</span> <span class="toc-text">对象的类型和编码</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#类型"><span class="toc-number">1.1.</span> <span class="toc-text">类型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#编码和底层实现"><span class="toc-number">1.2.</span> <span class="toc-text">编码和底层实现</span></a></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%AF%B9%E8%B1%A1%E7%9A%84%E7%B1%BB%E5%9E%8B%E5%92%8C%E7%BC%96%E7%A0%81"><span class="toc-number">1.</span> <span class="toc-text">对象的类型和编码</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%B1%BB%E5%9E%8B"><span class="toc-number">1.1.</span> <span class="toc-text">类型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BC%96%E7%A0%81%E5%92%8C%E5%BA%95%E5%B1%82%E5%AE%9E%E7%8E%B0"><span class="toc-number">1.2.</span> <span class="toc-text">编码和底层实现</span></a></li></ol></li></ol>
         </div>
         
 
         <p>前面的章节，介绍了Redis泳道的主要数据结构，比如简单动态字符串，双端列表，字典，压缩列表，整数集合等等。Redis并没有直接使用这些数据结构来实现键值对数据库，而是基于数据结构创建了一个对象系统，这个系统包含字符串对象，列表对象，哈希对象，集合对象和有序集合对象这五种类型的对象，每种对象都用到了至少一种前面说的数据结构。</p>
 <h1 id="对象的类型和编码"><a href="#对象的类型和编码" class="headerlink" title="对象的类型和编码"></a>对象的类型和编码</h1><p>Redis使用对象来表示数据库中的键和值，每次当我们在Redis的数据库中新创建一个键值对时，我们至少会创建两个对象，一个对象用作键值对的键，另一个对象用作键值对的值。</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">type <span class="keyword">struct</span> redisObject &#123;</div><div class="line">    <span class="comment">// 类型</span></div><div class="line">  	<span class="keyword">unsigned</span> type:<span class="number">4</span>;</div><div class="line">  	<span class="comment">// 编码</span></div><div class="line">  	<span class="keyword">unsigned</span> encoding:<span class="number">4</span>;</div><div class="line">  	<span class="comment">// 指向底层实现数据结构的指针</span></div><div class="line">  	<span class="keyword">void</span> *ptr;</div><div class="line">&#125; robj;</div></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">type <span class="class"><span class="keyword">struct</span> <span class="title">redisObject</span> &#123;</span></span><br><span class="line">    <span class="comment">// 类型</span></span><br><span class="line">  	<span class="type">unsigned</span> type:<span class="number">4</span>;</span><br><span class="line">  	<span class="comment">// 编码</span></span><br><span class="line">  	<span class="type">unsigned</span> encoding:<span class="number">4</span>;</span><br><span class="line">  	<span class="comment">// 指向底层实现数据结构的指针</span></span><br><span class="line">  	<span class="type">void</span> *ptr;</span><br><span class="line">&#125; robj;</span><br></pre></td></tr></table></figure>
+
 <h2 id="类型"><a href="#类型" class="headerlink" title="类型"></a>类型</h2><table>
 <thead>
 <tr>
@@ -115,8 +114,7 @@
 <th>对象的名称</th>
 </tr>
 </thead>
-<tbody>
-<tr>
+<tbody><tr>
 <td>REDIS_STIRNG</td>
 <td>字符串对象</td>
 </tr>
@@ -136,8 +134,7 @@
 <td>REDIS_ZSET</td>
 <td>有序集合对象</td>
 </tr>
-</tbody>
-</table>
+</tbody></table>
 <h2 id="编码和底层实现"><a href="#编码和底层实现" class="headerlink" title="编码和底层实现"></a>编码和底层实现</h2><p>对象的prt指针指向对象的底层实现数据结构，而这些数据结构由对象的encoding属性决定。encoding属性记录了对象所使用的编码，也即是说这个对象使用了什么数据结构作为对象的底层实现。</p>
 <table>
 <thead>
@@ -146,8 +143,7 @@
 <th>编码所对应的底层数据结构</th>
 </tr>
 </thead>
-<tbody>
-<tr>
+<tbody><tr>
 <td>REDIS_ENCODING_INT</td>
 <td>long类型的整数</td>
 </tr>
@@ -179,8 +175,7 @@
 <td>REDIS_ENCODING_SKIPLIST</td>
 <td>跳跃表和字典</td>
 </tr>
-</tbody>
-</table>
+</tbody></table>
 <p>每种类型的对象都至少使用了两种不同的编码。</p>
 <table>
 <thead>
@@ -190,8 +185,7 @@
 <th>对象</th>
 </tr>
 </thead>
-<tbody>
-<tr>
+<tbody><tr>
 <td>REDIS_STRING</td>
 <td>REDIS_ENCODING_INT</td>
 <td>使用整数值实现的字符串对象</td>
@@ -246,15 +240,14 @@
 <td>REDIS_ENDOGING_SKIPLIST</td>
 <td>使用跳跃表实现的有序集合</td>
 </tr>
-</tbody>
-</table>
+</tbody></table>
 
       
     </div>
     <footer class="article-footer">
       <div class="article-footer-tag">
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/cache/">cache</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/redis/">redis</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/cache/" rel="tag">cache</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/redis/" rel="tag">redis</a></li></ul>
 
       </div>
       <!-- JiaThis Button BEGIN -->
@@ -280,7 +273,7 @@
     
 <nav id="article-nav">
   
-    <a href="/2018/03/20/架构师图谱/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2018/03/20/%E6%9E%B6%E6%9E%84%E5%B8%88%E5%9B%BE%E8%B0%B1/" id="article-nav-newer" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Newer</strong>
       <div class="article-nav-title">
         
@@ -331,7 +324,7 @@ var duoshuoQuery = {short_name:'kennethfan'};
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Effective-Java/">Effective Java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PHP/">PHP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PHPUnit/">PHPUnit</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/c/">c</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cache/">cache</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/memcached/">memcached</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/redis/">redis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/shell/">shell</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vim/">vim</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/zsh/">zsh</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/笔记/">笔记</a></li></ul>
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Effective-Java/" rel="tag">Effective Java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/" rel="tag">Java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PHP/" rel="tag">PHP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PHPUnit/" rel="tag">PHPUnit</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/c/" rel="tag">c</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cache/" rel="tag">cache</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/memcached/" rel="tag">memcached</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/redis/" rel="tag">redis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/shell/" rel="tag">shell</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vim/" rel="tag">vim</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/zsh/" rel="tag">zsh</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%AC%94%E8%AE%B0/" rel="tag">笔记</a></li></ul>
     </div>
   </div>
 
@@ -341,7 +334,7 @@ var duoshuoQuery = {short_name:'kennethfan'};
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Effective-Java/" style="font-size: 13.33px;">Effective Java</a> <a href="/tags/Java/" style="font-size: 13.33px;">Java</a> <a href="/tags/PHP/" style="font-size: 13.33px;">PHP</a> <a href="/tags/PHPUnit/" style="font-size: 10px;">PHPUnit</a> <a href="/tags/c/" style="font-size: 10px;">c</a> <a href="/tags/cache/" style="font-size: 20px;">cache</a> <a href="/tags/memcached/" style="font-size: 10px;">memcached</a> <a href="/tags/redis/" style="font-size: 20px;">redis</a> <a href="/tags/shell/" style="font-size: 16.67px;">shell</a> <a href="/tags/vim/" style="font-size: 16.67px;">vim</a> <a href="/tags/zsh/" style="font-size: 16.67px;">zsh</a> <a href="/tags/笔记/" style="font-size: 10px;">笔记</a>
+      <a href="/tags/Effective-Java/" style="font-size: 13.33px;">Effective Java</a> <a href="/tags/Java/" style="font-size: 13.33px;">Java</a> <a href="/tags/PHP/" style="font-size: 13.33px;">PHP</a> <a href="/tags/PHPUnit/" style="font-size: 10px;">PHPUnit</a> <a href="/tags/c/" style="font-size: 10px;">c</a> <a href="/tags/cache/" style="font-size: 20px;">cache</a> <a href="/tags/memcached/" style="font-size: 10px;">memcached</a> <a href="/tags/redis/" style="font-size: 20px;">redis</a> <a href="/tags/shell/" style="font-size: 16.67px;">shell</a> <a href="/tags/vim/" style="font-size: 16.67px;">vim</a> <a href="/tags/zsh/" style="font-size: 16.67px;">zsh</a> <a href="/tags/%E7%AC%94%E8%AE%B0/" style="font-size: 10px;">笔记</a>
     </div>
   </div>
 
@@ -363,7 +356,7 @@ var duoshuoQuery = {short_name:'kennethfan'};
       <ul>
         
           <li>
-            <a href="/2018/03/20/架构师图谱/">架构师图谱</a>
+            <a href="/2018/03/20/%E6%9E%B6%E6%9E%84%E5%B8%88%E5%9B%BE%E8%B0%B1/">架构师图谱</a>
           </li>
         
           <li>
@@ -393,19 +386,11 @@ var duoshuoQuery = {short_name:'kennethfan'};
       <ul>
           
           <li>
-            <a href="http://pedroneer.github.io">死胖子</a>
+            <a target="_blank" rel="noopener" href="https://github.com/buptzhanghao">好神</a>
           </li>
           
           <li>
-            <a href="https://github.com/buptzhanghao">好神</a>
-          </li>
-          
-          <li>
-            <a href="http://www.bencaimao.com/">笨财猫</a>
-          </li>
-          
-          <li>
-            <a href="http://www.beva.com">贝瓦网</a>
+            <a href="https://kennethfan.github.io/gitbook">椒哥gitbook</a>
           </li>
           
       </ul>
@@ -420,7 +405,7 @@ var duoshuoQuery = {short_name:'kennethfan'};
   
   <div class="outer">
     <div id="footer-info" class="inner">
-      &copy; 2018 Kenneth Fan<br>
+      &copy; 2024 Kenneth Fan<br>
       Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>
@@ -438,11 +423,17 @@ var duoshuoQuery = {short_name:'kennethfan'};
 <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 
 
-  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
-  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
 
 
 <script src="/js/script.js"></script>
+
 
   </div>
 </body>

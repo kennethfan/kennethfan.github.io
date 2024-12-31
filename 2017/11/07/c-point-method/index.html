@@ -6,33 +6,20 @@
   <title>指针函数&amp;函数指针 | 夜未央</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
-  <meta name="keyword" content="c,PHP,memcached,PHPUnit,redis,cache,vim,zsh,shell,Java,Effective Java,笔记">
+  <meta name="keyword" content="PHP,c,memcached,PHPUnit,redis,cache,vim,zsh,shell,Java,Effective Java,笔记">
   
-  <meta name="description" content="引言在看redis原理的时候，看到链表结构中，用到了函数指针，想起了之前容易弄混的指针函数和函数指针，所以记录一下
-函数指针和指针函数的区别定义
-函数指针是指向函数地址的指针，本质是一个指针
-指针函数是返回类型是指针的函数，本质上是函数
-
-如何区分看星号是否被括号包含：被括号包含是函数指针，反之是指针函数。">
+  <meta name="description" content="引言在看redis原理的时候，看到链表结构中，用到了函数指针，想起了之前容易弄混的指针函数和函数指针，所以记录一下 函数指针和指针函数的区别定义 函数指针是指向函数地址的指针，本质是一个指针 指针函数是返回类型是指针的函数，本质上是函数  如何区分看星号是否被括号包含：被括号包含是函数指针，反之是指针函数。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="指针函数&函数指针">
+<meta property="og:title" content="指针函数&amp;函数指针">
 <meta property="og:url" content="http://kennethfan.github.io/2017/11/07/c-point-method/index.html">
 <meta property="og:site_name" content="夜未央">
-<meta property="og:description" content="引言在看redis原理的时候，看到链表结构中，用到了函数指针，想起了之前容易弄混的指针函数和函数指针，所以记录一下
-函数指针和指针函数的区别定义
-函数指针是指向函数地址的指针，本质是一个指针
-指针函数是返回类型是指针的函数，本质上是函数
-
-如何区分看星号是否被括号包含：被括号包含是函数指针，反之是指针函数。">
-<meta property="og:updated_time" content="2017-11-07T13:39:25.000Z">
+<meta property="og:description" content="引言在看redis原理的时候，看到链表结构中，用到了函数指针，想起了之前容易弄混的指针函数和函数指针，所以记录一下 函数指针和指针函数的区别定义 函数指针是指向函数地址的指针，本质是一个指针 指针函数是返回类型是指针的函数，本质上是函数  如何区分看星号是否被括号包含：被括号包含是函数指针，反之是指针函数。">
+<meta property="og:locale">
+<meta property="article:published_time" content="2017-11-07T13:01:58.000Z">
+<meta property="article:modified_time" content="2017-11-07T13:39:25.000Z">
+<meta property="article:author" content="Kenneth Fan">
+<meta property="article:tag" content="c">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="指针函数&函数指针">
-<meta name="twitter:description" content="引言在看redis原理的时候，看到链表结构中，用到了函数指针，想起了之前容易弄混的指针函数和函数指针，所以记录一下
-函数指针和指针函数的区别定义
-函数指针是指向函数地址的指针，本质是一个指针
-指针函数是返回类型是指针的函数，本质上是函数
-
-如何区分看星号是否被括号包含：被括号包含是函数指针，反之是指针函数。">
   
     <link rel="alternate" href="/atom.xml" title="夜未央" type="application/atom+xml">
   
@@ -42,10 +29,12 @@
   
     <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
   
-  <link rel="stylesheet" href="/css/style.css">
+  
+<link rel="stylesheet" href="/css/style.css">
+
   
 
-</head>
+<meta name="generator" content="Hexo 6.3.0"></head>
 
 <body>
   <div id="container">
@@ -57,10 +46,6 @@
       <h1 id="logo-wrap">
         <a href="/" id="logo">夜未央</a>
       </h1>
-      
-        <h2 id="subtitle-wrap">
-          <a href="/" id="subtitle">感恩 &amp; 回馈 | 理解 &amp; 释怀 | 热爱 &amp; 敬畏</a>
-        </h2>
       
     </div>
     <div id="header-inner" class="inner">
@@ -79,7 +64,7 @@
         <a id="nav-search-btn" class="nav-icon" title="Search"></a>
       </nav>
       <div id="search-form-wrap">
-        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://kennethfan.github.io"></form>
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://kennethfan.github.io"></form>
       </div>
     </div>
   </div>
@@ -113,7 +98,7 @@
         
         <div id="toc" class="toc-article">
         <strong class="toc-title">文章目录</strong>
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#引言"><span class="toc-number">1.</span> <span class="toc-text">引言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#函数指针和指针函数的区别"><span class="toc-number">2.</span> <span class="toc-text">函数指针和指针函数的区别</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#定义"><span class="toc-number">2.1.</span> <span class="toc-text">定义</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#如何区分"><span class="toc-number">2.2.</span> <span class="toc-text">如何区分</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#函数指针示例"><span class="toc-number">2.2.1.</span> <span class="toc-text">函数指针示例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#指针函数示例"><span class="toc-number">2.2.2.</span> <span class="toc-text">指针函数示例</span></a></li></ol></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%BC%95%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">引言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%87%BD%E6%95%B0%E6%8C%87%E9%92%88%E5%92%8C%E6%8C%87%E9%92%88%E5%87%BD%E6%95%B0%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-number">2.</span> <span class="toc-text">函数指针和指针函数的区别</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9A%E4%B9%89"><span class="toc-number">2.1.</span> <span class="toc-text">定义</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E5%8C%BA%E5%88%86"><span class="toc-number">2.2.</span> <span class="toc-text">如何区分</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%87%BD%E6%95%B0%E6%8C%87%E9%92%88%E7%A4%BA%E4%BE%8B"><span class="toc-number">2.2.1.</span> <span class="toc-text">函数指针示例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8C%87%E9%92%88%E5%87%BD%E6%95%B0%E7%A4%BA%E4%BE%8B"><span class="toc-number">2.2.2.</span> <span class="toc-text">指针函数示例</span></a></li></ol></li></ol></li></ol>
         </div>
         
 
@@ -123,18 +108,26 @@
 <li>指针函数是返回类型是指针的函数，本质上是函数</li>
 </ul>
 <h2 id="如何区分"><a href="#如何区分" class="headerlink" title="如何区分"></a>如何区分</h2><p>看星号是否被括号包含：被括号包含是函数指针，反之是指针函数。</p>
-<a id="more"></a>
-<h3 id="函数指针示例"><a href="#函数指针示例" class="headerlink" title="函数指针示例"></a>函数指针示例</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></div><div class="line"><span class="comment">// 申明一个函数，做加法操作</span></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">sum</span><span class="params">(<span class="keyword">int</span> a, <span class="keyword">int</span> b)</span> </span>&#123;</div><div class="line">    <span class="keyword">return</span> a + b;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// 申明一个函数，做乘法操作</span></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">mul</span><span class="params">(<span class="keyword">int</span> a, <span class="keyword">int</span> b)</span> </span>&#123;</div><div class="line">    <span class="keyword">return</span> a * b;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="comment">// 申明一个函数指针，参数两个int，返回int</span></div><div class="line">    <span class="keyword">int</span> (*method_point) (<span class="keyword">int</span> a, <span class="keyword">int</span> b);</div><div class="line"></div><div class="line">    <span class="comment">// 赋值给加法函数</span></div><div class="line">    method_point = &amp;sum;</div><div class="line">    <span class="comment">// 打印函数地址</span></div><div class="line">    <span class="built_in">printf</span>(<span class="string">"%p\n"</span>, method_point);</div><div class="line">    <span class="comment">// 打印执行结果</span></div><div class="line">    <span class="built_in">printf</span>(<span class="string">"%d\n"</span>, method_point(<span class="number">3</span>, <span class="number">5</span>));</div><div class="line"></div><div class="line">    <span class="comment">// 赋值给乘法函数</span></div><div class="line">    method_point = &amp;mul;</div><div class="line">    <span class="comment">// 打印函数地址</span></div><div class="line">    <span class="built_in">printf</span>(<span class="string">"%p\n"</span>, method_point);</div><div class="line">    <span class="comment">// 打印执行结果</span></div><div class="line">    <span class="built_in">printf</span>(<span class="string">"%d\n"</span>, method_point(<span class="number">3</span>, <span class="number">5</span>));</div><div class="line"></div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<span id="more"></span>
+
+<h3 id="函数指针示例"><a href="#函数指针示例" class="headerlink" title="函数指针示例"></a>函数指针示例</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="comment">// 申明一个函数，做加法操作</span></span><br><span class="line"><span class="type">int</span> <span class="title function_">sum</span><span class="params">(<span class="type">int</span> a, <span class="type">int</span> b)</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> a + b;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 申明一个函数，做乘法操作</span></span><br><span class="line"><span class="type">int</span> <span class="title function_">mul</span><span class="params">(<span class="type">int</span> a, <span class="type">int</span> b)</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> a * b;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="comment">// 申明一个函数指针，参数两个int，返回int</span></span><br><span class="line">    <span class="type">int</span> (*method_point) (<span class="type">int</span> a, <span class="type">int</span> b);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 赋值给加法函数</span></span><br><span class="line">    method_point = &amp;sum;</span><br><span class="line">    <span class="comment">// 打印函数地址</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%p\n&quot;</span>, method_point);</span><br><span class="line">    <span class="comment">// 打印执行结果</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>, method_point(<span class="number">3</span>, <span class="number">5</span>));</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 赋值给乘法函数</span></span><br><span class="line">    method_point = &amp;mul;</span><br><span class="line">    <span class="comment">// 打印函数地址</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%p\n&quot;</span>, method_point);</span><br><span class="line">    <span class="comment">// 打印执行结果</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>, method_point(<span class="number">3</span>, <span class="number">5</span>));</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p>执行结果：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">0x102256eb0</div><div class="line">8</div><div class="line">0x102256ed0</div><div class="line">15</div></pre></td></tr></table></figure>
-<h3 id="指针函数示例"><a href="#指针函数示例" class="headerlink" title="指针函数示例"></a>指针函数示例</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></div><div class="line"><span class="comment">// 定义一个函数，返回int指针类型</span></div><div class="line"><span class="function"><span class="keyword">int</span> *<span class="title">sum</span><span class="params">(<span class="keyword">int</span> a, <span class="keyword">int</span> b)</span> </span>&#123;</div><div class="line">    <span class="keyword">int</span> c = a + b;</div><div class="line">    <span class="keyword">return</span> &amp;c;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="comment">// 申明一个变量，赋值函数返回结果</span></div><div class="line">    <span class="keyword">int</span>* c = sum(<span class="number">3</span>, <span class="number">5</span>);</div><div class="line">    <span class="comment">// 打印结果</span></div><div class="line">  	<span class="built_in">printf</span>(<span class="string">"%d\n"</span>, *c);</div><div class="line">  	<span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">0x102256eb0</span><br><span class="line">8</span><br><span class="line">0x102256ed0</span><br><span class="line">15</span><br></pre></td></tr></table></figure>
+
+<h3 id="指针函数示例"><a href="#指针函数示例" class="headerlink" title="指针函数示例"></a>指针函数示例</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="comment">// 定义一个函数，返回int指针类型</span></span><br><span class="line"><span class="type">int</span> *<span class="title function_">sum</span><span class="params">(<span class="type">int</span> a, <span class="type">int</span> b)</span> &#123;</span><br><span class="line">    <span class="type">int</span> c = a + b;</span><br><span class="line">    <span class="keyword">return</span> &amp;c;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="comment">// 申明一个变量，赋值函数返回结果</span></span><br><span class="line">    <span class="type">int</span>* c = sum(<span class="number">3</span>, <span class="number">5</span>);</span><br><span class="line">    <span class="comment">// 打印结果</span></span><br><span class="line">  	<span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>, *c);</span><br><span class="line">  	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
 
       
     </div>
     <footer class="article-footer">
       <div class="article-footer-tag">
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/c/">c</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/c/" rel="tag">c</a></li></ul>
 
       </div>
       <!-- JiaThis Button BEGIN -->
@@ -211,7 +204,7 @@ var duoshuoQuery = {short_name:'kennethfan'};
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Effective-Java/">Effective Java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PHP/">PHP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PHPUnit/">PHPUnit</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/c/">c</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cache/">cache</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/memcached/">memcached</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/redis/">redis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/shell/">shell</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vim/">vim</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/zsh/">zsh</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/笔记/">笔记</a></li></ul>
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Effective-Java/" rel="tag">Effective Java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/" rel="tag">Java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PHP/" rel="tag">PHP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PHPUnit/" rel="tag">PHPUnit</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/c/" rel="tag">c</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cache/" rel="tag">cache</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/memcached/" rel="tag">memcached</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/redis/" rel="tag">redis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/shell/" rel="tag">shell</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vim/" rel="tag">vim</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/zsh/" rel="tag">zsh</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%AC%94%E8%AE%B0/" rel="tag">笔记</a></li></ul>
     </div>
   </div>
 
@@ -221,7 +214,7 @@ var duoshuoQuery = {short_name:'kennethfan'};
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Effective-Java/" style="font-size: 13.33px;">Effective Java</a> <a href="/tags/Java/" style="font-size: 13.33px;">Java</a> <a href="/tags/PHP/" style="font-size: 13.33px;">PHP</a> <a href="/tags/PHPUnit/" style="font-size: 10px;">PHPUnit</a> <a href="/tags/c/" style="font-size: 10px;">c</a> <a href="/tags/cache/" style="font-size: 20px;">cache</a> <a href="/tags/memcached/" style="font-size: 10px;">memcached</a> <a href="/tags/redis/" style="font-size: 20px;">redis</a> <a href="/tags/shell/" style="font-size: 16.67px;">shell</a> <a href="/tags/vim/" style="font-size: 16.67px;">vim</a> <a href="/tags/zsh/" style="font-size: 16.67px;">zsh</a> <a href="/tags/笔记/" style="font-size: 10px;">笔记</a>
+      <a href="/tags/Effective-Java/" style="font-size: 13.33px;">Effective Java</a> <a href="/tags/Java/" style="font-size: 13.33px;">Java</a> <a href="/tags/PHP/" style="font-size: 13.33px;">PHP</a> <a href="/tags/PHPUnit/" style="font-size: 10px;">PHPUnit</a> <a href="/tags/c/" style="font-size: 10px;">c</a> <a href="/tags/cache/" style="font-size: 20px;">cache</a> <a href="/tags/memcached/" style="font-size: 10px;">memcached</a> <a href="/tags/redis/" style="font-size: 20px;">redis</a> <a href="/tags/shell/" style="font-size: 16.67px;">shell</a> <a href="/tags/vim/" style="font-size: 16.67px;">vim</a> <a href="/tags/zsh/" style="font-size: 16.67px;">zsh</a> <a href="/tags/%E7%AC%94%E8%AE%B0/" style="font-size: 10px;">笔记</a>
     </div>
   </div>
 
@@ -243,7 +236,7 @@ var duoshuoQuery = {short_name:'kennethfan'};
       <ul>
         
           <li>
-            <a href="/2018/03/20/架构师图谱/">架构师图谱</a>
+            <a href="/2018/03/20/%E6%9E%B6%E6%9E%84%E5%B8%88%E5%9B%BE%E8%B0%B1/">架构师图谱</a>
           </li>
         
           <li>
@@ -273,19 +266,11 @@ var duoshuoQuery = {short_name:'kennethfan'};
       <ul>
           
           <li>
-            <a href="http://pedroneer.github.io">死胖子</a>
+            <a target="_blank" rel="noopener" href="https://github.com/buptzhanghao">好神</a>
           </li>
           
           <li>
-            <a href="https://github.com/buptzhanghao">好神</a>
-          </li>
-          
-          <li>
-            <a href="http://www.bencaimao.com/">笨财猫</a>
-          </li>
-          
-          <li>
-            <a href="http://www.beva.com">贝瓦网</a>
+            <a href="https://kennethfan.github.io/gitbook">椒哥gitbook</a>
           </li>
           
       </ul>
@@ -300,7 +285,7 @@ var duoshuoQuery = {short_name:'kennethfan'};
   
   <div class="outer">
     <div id="footer-info" class="inner">
-      &copy; 2018 Kenneth Fan<br>
+      &copy; 2024 Kenneth Fan<br>
       Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>
@@ -318,11 +303,17 @@ var duoshuoQuery = {short_name:'kennethfan'};
 <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 
 
-  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
-  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
 
 
 <script src="/js/script.js"></script>
+
 
   </div>
 </body>

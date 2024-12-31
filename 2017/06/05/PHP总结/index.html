@@ -6,39 +6,20 @@
   <title>PHP总结 | 夜未央</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
-  <meta name="keyword" content="c,PHP,memcached,PHPUnit,redis,cache,vim,zsh,shell,Java,Effective Java,笔记">
+  <meta name="keyword" content="PHP,c,memcached,PHPUnit,redis,cache,vim,zsh,shell,Java,Effective Java,笔记">
   
-  <meta name="description" content="基础篇PHP如何实现类自动加载？
-设置自动加载目录 set_include_path(String $path)。
-1set_include_path(dirname(__file__) . &apos;/classes&apos;);
-
-修改php.ini文件include_path选项
-
-写一个__autoload($class)方法。
-1234567891011function __autoload($clas">
+  <meta name="description" content="基础篇PHP如何实现类自动加载？ 设置自动加载目录 set_include_path(String $path)。1set_include_path(dirname(__file__) . &amp;#x27;&#x2F;classes&amp;#x27;); 修改php.ini文件include_path选项 写一个__autoload($class)方法。1234567891011function __autoload">
 <meta property="og:type" content="article">
 <meta property="og:title" content="PHP总结">
-<meta property="og:url" content="http://kennethfan.github.io/2017/06/05/PHP总结/index.html">
+<meta property="og:url" content="http://kennethfan.github.io/2017/06/05/PHP%E6%80%BB%E7%BB%93/index.html">
 <meta property="og:site_name" content="夜未央">
-<meta property="og:description" content="基础篇PHP如何实现类自动加载？
-设置自动加载目录 set_include_path(String $path)。
-1set_include_path(dirname(__file__) . &apos;/classes&apos;);
-
-修改php.ini文件include_path选项
-
-写一个__autoload($class)方法。
-1234567891011function __autoload($clas">
-<meta property="og:updated_time" content="2017-06-05T12:48:23.000Z">
+<meta property="og:description" content="基础篇PHP如何实现类自动加载？ 设置自动加载目录 set_include_path(String $path)。1set_include_path(dirname(__file__) . &amp;#x27;&#x2F;classes&amp;#x27;); 修改php.ini文件include_path选项 写一个__autoload($class)方法。1234567891011function __autoload">
+<meta property="og:locale">
+<meta property="article:published_time" content="2017-06-05T12:22:06.000Z">
+<meta property="article:modified_time" content="2017-06-05T12:48:23.000Z">
+<meta property="article:author" content="Kenneth Fan">
+<meta property="article:tag" content="PHP">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="PHP总结">
-<meta name="twitter:description" content="基础篇PHP如何实现类自动加载？
-设置自动加载目录 set_include_path(String $path)。
-1set_include_path(dirname(__file__) . &apos;/classes&apos;);
-
-修改php.ini文件include_path选项
-
-写一个__autoload($class)方法。
-1234567891011function __autoload($clas">
   
     <link rel="alternate" href="/atom.xml" title="夜未央" type="application/atom+xml">
   
@@ -48,10 +29,12 @@
   
     <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
   
-  <link rel="stylesheet" href="/css/style.css">
+  
+<link rel="stylesheet" href="/css/style.css">
+
   
 
-</head>
+<meta name="generator" content="Hexo 6.3.0"></head>
 
 <body>
   <div id="container">
@@ -63,10 +46,6 @@
       <h1 id="logo-wrap">
         <a href="/" id="logo">夜未央</a>
       </h1>
-      
-        <h2 id="subtitle-wrap">
-          <a href="/" id="subtitle">感恩 &amp; 回馈 | 理解 &amp; 释怀 | 热爱 &amp; 敬畏</a>
-        </h2>
       
     </div>
     <div id="header-inner" class="inner">
@@ -85,7 +64,7 @@
         <a id="nav-search-btn" class="nav-icon" title="Search"></a>
       </nav>
       <div id="search-form-wrap">
-        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://kennethfan.github.io"></form>
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://kennethfan.github.io"></form>
       </div>
     </div>
   </div>
@@ -94,7 +73,7 @@
       <div class="outer">
         <section id="main"><article id="post-PHP总结" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2017/06/05/PHP总结/" class="article-date">
+    <a href="/2017/06/05/PHP%E6%80%BB%E7%BB%93/" class="article-date">
   <time datetime="2017-06-05T12:22:06.000Z" itemprop="datePublished">2017-06-05</time>
 </a>
     
@@ -119,30 +98,23 @@
         
         <div id="toc" class="toc-article">
         <strong class="toc-title">文章目录</strong>
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#基础篇"><span class="toc-number">1.</span> <span class="toc-text">基础篇</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#PHP如何实现类自动加载？"><span class="toc-number">1.1.</span> <span class="toc-text">PHP如何实现类自动加载？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#include-include-once-require-require-once的区别？"><span class="toc-number">1.2.</span> <span class="toc-text">include/include_once/require/require_once的区别？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#双引号和单引号的区别？"><span class="toc-number">1.3.</span> <span class="toc-text">双引号和单引号的区别？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#常见的超全局变量"><span class="toc-number">1.4.</span> <span class="toc-text">常见的超全局变量</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#全局变量怎么获取？"><span class="toc-number">1.5.</span> <span class="toc-text">全局变量怎么获取？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#PHP的几种魔术方法？"><span class="toc-number">1.6.</span> <span class="toc-text">PHP的几种魔术方法？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#自定义错误日志级别"><span class="toc-number">1.7.</span> <span class="toc-text">自定义错误日志级别</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#自定义异常"><span class="toc-number">1.8.</span> <span class="toc-text">自定义异常</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#自定义错误处理"><span class="toc-number">1.9.</span> <span class="toc-text">自定义错误处理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#自定义异常处理"><span class="toc-number">1.10.</span> <span class="toc-text">自定义异常处理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#什么是魔术引号"><span class="toc-number">1.11.</span> <span class="toc-text">什么是魔术引号</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#方法前面加-和不加的区别"><span class="toc-number">1.12.</span> <span class="toc-text">方法前面加@和不加的区别</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#传值和传引用"><span class="toc-number">1.13.</span> <span class="toc-text">传值和传引用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#PHP内存回收机制"><span class="toc-number">1.14.</span> <span class="toc-text">PHP内存回收机制</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#协议篇"><span class="toc-number">2.</span> <span class="toc-text">协议篇</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#http常见的响应码"><span class="toc-number">2.1.</span> <span class="toc-text">http常见的响应码</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#GET方法和POST方法区别"><span class="toc-number">2.2.</span> <span class="toc-text">GET方法和POST方法区别</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#REST-RESTFUL接口是什么意思？"><span class="toc-number">2.3.</span> <span class="toc-text">REST/RESTFUL接口是什么意思？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#session和cookie的区别和联系？"><span class="toc-number">2.4.</span> <span class="toc-text">session和cookie的区别和联系？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#cookie的格式，有效期，访问权限控制"><span class="toc-number">2.5.</span> <span class="toc-text">cookie的格式，有效期，访问权限控制</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#跨域限制如何解决？"><span class="toc-number">2.6.</span> <span class="toc-text">跨域限制如何解决？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#TCP的三次握手和4次挥手协议"><span class="toc-number">2.7.</span> <span class="toc-text">TCP的三次握手和4次挥手协议</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#三次握手"><span class="toc-number">2.7.1.</span> <span class="toc-text">三次握手</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#超时重传"><span class="toc-number">2.7.2.</span> <span class="toc-text">超时重传</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#四次挥手"><span class="toc-number">2.7.3.</span> <span class="toc-text">四次挥手</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#客户端状态变化"><span class="toc-number">2.7.4.</span> <span class="toc-text">客户端状态变化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#服务端状态变化"><span class="toc-number">2.7.5.</span> <span class="toc-text">服务端状态变化</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HTTPS和HTTP的区别"><span class="toc-number">2.8.</span> <span class="toc-text">HTTPS和HTTP的区别</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#数据库篇"><span class="toc-number">3.</span> <span class="toc-text">数据库篇</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#MyISAM和InnoDB的区别"><span class="toc-number">3.1.</span> <span class="toc-text">MyISAM和InnoDB的区别</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#索引结构"><span class="toc-number">3.2.</span> <span class="toc-text">索引结构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#索引创建的一些原则"><span class="toc-number">3.3.</span> <span class="toc-text">索引创建的一些原则</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#如何查看sql语句性能"><span class="toc-number">3.4.</span> <span class="toc-text">如何查看sql语句性能</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#如何找到查询比较慢的sql"><span class="toc-number">3.5.</span> <span class="toc-text">如何找到查询比较慢的sql</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#什么情况下索引无效"><span class="toc-number">3.6.</span> <span class="toc-text">什么情况下索引无效</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#数据库隔离级别什么意思？"><span class="toc-number">3.7.</span> <span class="toc-text">数据库隔离级别什么意思？</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#缓存篇"><span class="toc-number">4.</span> <span class="toc-text">缓存篇</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#memcache"><span class="toc-number">4.1.</span> <span class="toc-text">memcache</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#redis"><span class="toc-number">4.2.</span> <span class="toc-text">redis</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#队列篇"><span class="toc-number">5.</span> <span class="toc-text">队列篇</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#beanstalkd"><span class="toc-number">5.1.</span> <span class="toc-text">beanstalkd</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#kafka"><span class="toc-number">5.2.</span> <span class="toc-text">kafka</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#分布式"><span class="toc-number">6.</span> <span class="toc-text">分布式</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#CAP"><span class="toc-number">6.1.</span> <span class="toc-text">CAP</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#分布式算法"><span class="toc-number">6.2.</span> <span class="toc-text">分布式算法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#两阶段提交和三阶段提交"><span class="toc-number">6.2.1.</span> <span class="toc-text">两阶段提交和三阶段提交</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#两阶段提交"><span class="toc-number">6.2.1.1.</span> <span class="toc-text">两阶段提交</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#三阶段提交"><span class="toc-number">6.2.1.2.</span> <span class="toc-text">三阶段提交</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#paxos-amp-raft"><span class="toc-number">6.2.1.3.</span> <span class="toc-text">paxos & raft</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#高并发"><span class="toc-number">7.</span> <span class="toc-text">高并发</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#常见的方法"><span class="toc-number">7.1.</span> <span class="toc-text">常见的方法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#说到无状态，分布式session怎么做？"><span class="toc-number">7.2.</span> <span class="toc-text">说到无状态，分布式session怎么做？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SOA和微服务的区别？"><span class="toc-number">7.3.</span> <span class="toc-text">SOA和微服务的区别？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#分表的一些做法"><span class="toc-number">7.4.</span> <span class="toc-text">分表的一些做法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#限流"><span class="toc-number">7.5.</span> <span class="toc-text">限流</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#网络安全篇"><span class="toc-number">8.</span> <span class="toc-text">网络安全篇</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#设计模式篇"><span class="toc-number">9.</span> <span class="toc-text">设计模式篇</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#其他"><span class="toc-number">10.</span> <span class="toc-text">其他</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#PHP变量的实现以及内存回收"><span class="toc-number">10.1.</span> <span class="toc-text">PHP变量的实现以及内存回收</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#PHP数组的底层实现"><span class="toc-number">10.2.</span> <span class="toc-text">PHP数组的底层实现</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#PHP扩展可以做连接池吗？"><span class="toc-number">10.3.</span> <span class="toc-text">PHP扩展可以做连接池吗？</span></a></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%9F%BA%E7%A1%80%E7%AF%87"><span class="toc-number">1.</span> <span class="toc-text">基础篇</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#PHP%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0%E7%B1%BB%E8%87%AA%E5%8A%A8%E5%8A%A0%E8%BD%BD%EF%BC%9F"><span class="toc-number">1.1.</span> <span class="toc-text">PHP如何实现类自动加载？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#include-include-once-require-require-once%E7%9A%84%E5%8C%BA%E5%88%AB%EF%BC%9F"><span class="toc-number">1.2.</span> <span class="toc-text">include&#x2F;include_once&#x2F;require&#x2F;require_once的区别？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%8C%E5%BC%95%E5%8F%B7%E5%92%8C%E5%8D%95%E5%BC%95%E5%8F%B7%E7%9A%84%E5%8C%BA%E5%88%AB%EF%BC%9F"><span class="toc-number">1.3.</span> <span class="toc-text">双引号和单引号的区别？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B8%B8%E8%A7%81%E7%9A%84%E8%B6%85%E5%85%A8%E5%B1%80%E5%8F%98%E9%87%8F"><span class="toc-number">1.4.</span> <span class="toc-text">常见的超全局变量</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%A8%E5%B1%80%E5%8F%98%E9%87%8F%E6%80%8E%E4%B9%88%E8%8E%B7%E5%8F%96%EF%BC%9F"><span class="toc-number">1.5.</span> <span class="toc-text">全局变量怎么获取？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#PHP%E7%9A%84%E5%87%A0%E7%A7%8D%E9%AD%94%E6%9C%AF%E6%96%B9%E6%B3%95%EF%BC%9F"><span class="toc-number">1.6.</span> <span class="toc-text">PHP的几种魔术方法？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89%E9%94%99%E8%AF%AF%E6%97%A5%E5%BF%97%E7%BA%A7%E5%88%AB"><span class="toc-number">1.7.</span> <span class="toc-text">自定义错误日志级别</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89%E5%BC%82%E5%B8%B8"><span class="toc-number">1.8.</span> <span class="toc-text">自定义异常</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89%E9%94%99%E8%AF%AF%E5%A4%84%E7%90%86"><span class="toc-number">1.9.</span> <span class="toc-text">自定义错误处理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86"><span class="toc-number">1.10.</span> <span class="toc-text">自定义异常处理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E9%AD%94%E6%9C%AF%E5%BC%95%E5%8F%B7"><span class="toc-number">1.11.</span> <span class="toc-text">什么是魔术引号</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%96%B9%E6%B3%95%E5%89%8D%E9%9D%A2%E5%8A%A0-%E5%92%8C%E4%B8%8D%E5%8A%A0%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-number">1.12.</span> <span class="toc-text">方法前面加@和不加的区别</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BC%A0%E5%80%BC%E5%92%8C%E4%BC%A0%E5%BC%95%E7%94%A8"><span class="toc-number">1.13.</span> <span class="toc-text">传值和传引用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#PHP%E5%86%85%E5%AD%98%E5%9B%9E%E6%94%B6%E6%9C%BA%E5%88%B6"><span class="toc-number">1.14.</span> <span class="toc-text">PHP内存回收机制</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8D%8F%E8%AE%AE%E7%AF%87"><span class="toc-number">2.</span> <span class="toc-text">协议篇</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#http%E5%B8%B8%E8%A7%81%E7%9A%84%E5%93%8D%E5%BA%94%E7%A0%81"><span class="toc-number">2.1.</span> <span class="toc-text">http常见的响应码</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#GET%E6%96%B9%E6%B3%95%E5%92%8CPOST%E6%96%B9%E6%B3%95%E5%8C%BA%E5%88%AB"><span class="toc-number">2.2.</span> <span class="toc-text">GET方法和POST方法区别</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#REST-RESTFUL%E6%8E%A5%E5%8F%A3%E6%98%AF%E4%BB%80%E4%B9%88%E6%84%8F%E6%80%9D%EF%BC%9F"><span class="toc-number">2.3.</span> <span class="toc-text">REST&#x2F;RESTFUL接口是什么意思？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#session%E5%92%8Ccookie%E7%9A%84%E5%8C%BA%E5%88%AB%E5%92%8C%E8%81%94%E7%B3%BB%EF%BC%9F"><span class="toc-number">2.4.</span> <span class="toc-text">session和cookie的区别和联系？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#cookie%E7%9A%84%E6%A0%BC%E5%BC%8F%EF%BC%8C%E6%9C%89%E6%95%88%E6%9C%9F%EF%BC%8C%E8%AE%BF%E9%97%AE%E6%9D%83%E9%99%90%E6%8E%A7%E5%88%B6"><span class="toc-number">2.5.</span> <span class="toc-text">cookie的格式，有效期，访问权限控制</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B7%A8%E5%9F%9F%E9%99%90%E5%88%B6%E5%A6%82%E4%BD%95%E8%A7%A3%E5%86%B3%EF%BC%9F"><span class="toc-number">2.6.</span> <span class="toc-text">跨域限制如何解决？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#TCP%E7%9A%84%E4%B8%89%E6%AC%A1%E6%8F%A1%E6%89%8B%E5%92%8C4%E6%AC%A1%E6%8C%A5%E6%89%8B%E5%8D%8F%E8%AE%AE"><span class="toc-number">2.7.</span> <span class="toc-text">TCP的三次握手和4次挥手协议</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%89%E6%AC%A1%E6%8F%A1%E6%89%8B"><span class="toc-number">2.7.1.</span> <span class="toc-text">三次握手</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%B6%85%E6%97%B6%E9%87%8D%E4%BC%A0"><span class="toc-number">2.7.2.</span> <span class="toc-text">超时重传</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%9B%E6%AC%A1%E6%8C%A5%E6%89%8B"><span class="toc-number">2.7.3.</span> <span class="toc-text">四次挥手</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%A2%E6%88%B7%E7%AB%AF%E7%8A%B6%E6%80%81%E5%8F%98%E5%8C%96"><span class="toc-number">2.7.4.</span> <span class="toc-text">客户端状态变化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%8D%E5%8A%A1%E7%AB%AF%E7%8A%B6%E6%80%81%E5%8F%98%E5%8C%96"><span class="toc-number">2.7.5.</span> <span class="toc-text">服务端状态变化</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HTTPS%E5%92%8CHTTP%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-number">2.8.</span> <span class="toc-text">HTTPS和HTTP的区别</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93%E7%AF%87"><span class="toc-number">3.</span> <span class="toc-text">数据库篇</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#MyISAM%E5%92%8CInnoDB%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-number">3.1.</span> <span class="toc-text">MyISAM和InnoDB的区别</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%B4%A2%E5%BC%95%E7%BB%93%E6%9E%84"><span class="toc-number">3.2.</span> <span class="toc-text">索引结构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%B4%A2%E5%BC%95%E5%88%9B%E5%BB%BA%E7%9A%84%E4%B8%80%E4%BA%9B%E5%8E%9F%E5%88%99"><span class="toc-number">3.3.</span> <span class="toc-text">索引创建的一些原则</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E6%9F%A5%E7%9C%8Bsql%E8%AF%AD%E5%8F%A5%E6%80%A7%E8%83%BD"><span class="toc-number">3.4.</span> <span class="toc-text">如何查看sql语句性能</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E6%89%BE%E5%88%B0%E6%9F%A5%E8%AF%A2%E6%AF%94%E8%BE%83%E6%85%A2%E7%9A%84sql"><span class="toc-number">3.5.</span> <span class="toc-text">如何找到查询比较慢的sql</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%83%85%E5%86%B5%E4%B8%8B%E7%B4%A2%E5%BC%95%E6%97%A0%E6%95%88"><span class="toc-number">3.6.</span> <span class="toc-text">什么情况下索引无效</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93%E9%9A%94%E7%A6%BB%E7%BA%A7%E5%88%AB%E4%BB%80%E4%B9%88%E6%84%8F%E6%80%9D%EF%BC%9F"><span class="toc-number">3.7.</span> <span class="toc-text">数据库隔离级别什么意思？</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%BC%93%E5%AD%98%E7%AF%87"><span class="toc-number">4.</span> <span class="toc-text">缓存篇</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#memcache"><span class="toc-number">4.1.</span> <span class="toc-text">memcache</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#redis"><span class="toc-number">4.2.</span> <span class="toc-text">redis</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%98%9F%E5%88%97%E7%AF%87"><span class="toc-number">5.</span> <span class="toc-text">队列篇</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#beanstalkd"><span class="toc-number">5.1.</span> <span class="toc-text">beanstalkd</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#kafka"><span class="toc-number">5.2.</span> <span class="toc-text">kafka</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%88%86%E5%B8%83%E5%BC%8F"><span class="toc-number">6.</span> <span class="toc-text">分布式</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#CAP"><span class="toc-number">6.1.</span> <span class="toc-text">CAP</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%86%E5%B8%83%E5%BC%8F%E7%AE%97%E6%B3%95"><span class="toc-number">6.2.</span> <span class="toc-text">分布式算法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%A4%E9%98%B6%E6%AE%B5%E6%8F%90%E4%BA%A4%E5%92%8C%E4%B8%89%E9%98%B6%E6%AE%B5%E6%8F%90%E4%BA%A4"><span class="toc-number">6.2.1.</span> <span class="toc-text">两阶段提交和三阶段提交</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%A4%E9%98%B6%E6%AE%B5%E6%8F%90%E4%BA%A4"><span class="toc-number">6.2.1.1.</span> <span class="toc-text">两阶段提交</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%89%E9%98%B6%E6%AE%B5%E6%8F%90%E4%BA%A4"><span class="toc-number">6.2.1.2.</span> <span class="toc-text">三阶段提交</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#paxos-raft"><span class="toc-number">6.2.1.3.</span> <span class="toc-text">paxos &amp; raft</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%AB%98%E5%B9%B6%E5%8F%91"><span class="toc-number">7.</span> <span class="toc-text">高并发</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B8%B8%E8%A7%81%E7%9A%84%E6%96%B9%E6%B3%95"><span class="toc-number">7.1.</span> <span class="toc-text">常见的方法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AF%B4%E5%88%B0%E6%97%A0%E7%8A%B6%E6%80%81%EF%BC%8C%E5%88%86%E5%B8%83%E5%BC%8Fsession%E6%80%8E%E4%B9%88%E5%81%9A%EF%BC%9F"><span class="toc-number">7.2.</span> <span class="toc-text">说到无状态，分布式session怎么做？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SOA%E5%92%8C%E5%BE%AE%E6%9C%8D%E5%8A%A1%E7%9A%84%E5%8C%BA%E5%88%AB%EF%BC%9F"><span class="toc-number">7.3.</span> <span class="toc-text">SOA和微服务的区别？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%86%E8%A1%A8%E7%9A%84%E4%B8%80%E4%BA%9B%E5%81%9A%E6%B3%95"><span class="toc-number">7.4.</span> <span class="toc-text">分表的一些做法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%99%90%E6%B5%81"><span class="toc-number">7.5.</span> <span class="toc-text">限流</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E7%AF%87"><span class="toc-number">8.</span> <span class="toc-text">网络安全篇</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E7%AF%87"><span class="toc-number">9.</span> <span class="toc-text">设计模式篇</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%85%B6%E4%BB%96"><span class="toc-number">10.</span> <span class="toc-text">其他</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#PHP%E5%8F%98%E9%87%8F%E7%9A%84%E5%AE%9E%E7%8E%B0%E4%BB%A5%E5%8F%8A%E5%86%85%E5%AD%98%E5%9B%9E%E6%94%B6"><span class="toc-number">10.1.</span> <span class="toc-text">PHP变量的实现以及内存回收</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#PHP%E6%95%B0%E7%BB%84%E7%9A%84%E5%BA%95%E5%B1%82%E5%AE%9E%E7%8E%B0"><span class="toc-number">10.2.</span> <span class="toc-text">PHP数组的底层实现</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#PHP%E6%89%A9%E5%B1%95%E5%8F%AF%E4%BB%A5%E5%81%9A%E8%BF%9E%E6%8E%A5%E6%B1%A0%E5%90%97%EF%BC%9F"><span class="toc-number">10.3.</span> <span class="toc-text">PHP扩展可以做连接池吗？</span></a></li></ol></li></ol>
         </div>
         
 
         <h1 id="基础篇"><a href="#基础篇" class="headerlink" title="基础篇"></a>基础篇</h1><h2 id="PHP如何实现类自动加载？"><a href="#PHP如何实现类自动加载？" class="headerlink" title="PHP如何实现类自动加载？"></a>PHP如何实现类自动加载？</h2><ul>
-<li><p>设置自动加载目录 set_include_path(String $path)。</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">set_include_path(dirname(<span class="keyword">__file__</span>) . <span class="string">'/classes'</span>);</div></pre></td></tr></table></figure>
-</li>
-<li><p>修改php.ini文件include_path选项</p>
-</li>
-<li><p>写一个__autoload($class)方法。</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">__autoload</span><span class="params">($class)</span> </span>&#123;</div><div class="line">    $path = dirname(<span class="keyword">__FILE__</span>) . <span class="string">"/autoload/$class.php"</span>;</div><div class="line">    <span class="keyword">echo</span> $path;</div><div class="line">    <span class="keyword">if</span> (!file_exists($path)) &#123;</div><div class="line">        <span class="keyword">die</span> (<span class="string">"class $class can not load\n"</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">include</span> $path;</div><div class="line">&#125;</div><div class="line"></div><div class="line">$b = <span class="keyword">new</span> B();</div></pre></td></tr></table></figure>
-</li>
-<li><p>写一个加载器，然后用spl_autoload_register方法注册。</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;?php</span></div><div class="line">DEFINE(<span class="string">'ROOT_PATH'</span>, dirname(<span class="keyword">__FILE__</span>));</div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Loader</span> </span>&#123;</div><div class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="function"><span class="keyword">function</span> <span class="title">load</span><span class="params">($class)</span> </span>&#123;</div><div class="line">        $path = <span class="keyword">null</span>;</div><div class="line">        <span class="keyword">if</span> (substr($class, <span class="number">0</span> - strlen(<span class="string">'Controller'</span>)) == <span class="string">'Controller'</span>) &#123;</div><div class="line">            $path = ROOT_PATH . <span class="string">'/Controllers/'</span>;</div><div class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (substr($class, <span class="number">0</span> - strlen(<span class="string">'Model'</span>)) == <span class="string">'Model'</span>) &#123;</div><div class="line">            $path = ROOT_PATH . <span class="string">'/Models/'</span>;</div><div class="line">        &#125; <span class="keyword">else</span> &#123;</div><div class="line">            $path = ROOT_PATH . <span class="string">'/Components/'</span>;</div><div class="line">        &#125;</div><div class="line">        $path .= <span class="string">"$class.php"</span>;</div><div class="line"></div><div class="line">        <span class="keyword">if</span> (file_exists($path)) &#123;</div><div class="line">            <span class="keyword">include</span> $path;</div><div class="line">            <span class="keyword">return</span>;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">spl_autoload_register(<span class="keyword">array</span>(<span class="string">'Loader'</span>, <span class="string">'load'</span>), <span class="keyword">false</span>, <span class="keyword">false</span>);</div><div class="line"></div><div class="line"></div><div class="line">$controller = <span class="keyword">new</span> AController();</div></pre></td></tr></table></figure>
-</li>
+<li>设置自动加载目录 set_include_path(String $path)。<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_ invoke__">set_include_path</span>(<span class="title function_ invoke__">dirname</span>(__file__) . <span class="string">&#x27;/classes&#x27;</span>);</span><br></pre></td></tr></table></figure></li>
+<li>修改php.ini文件include_path选项</li>
+<li>写一个__autoload($class)方法。<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">__autoload</span>(<span class="params"><span class="variable">$class</span></span>) </span>&#123;</span><br><span class="line">    <span class="variable">$path</span> = <span class="title function_ invoke__">dirname</span>(<span class="keyword">__FILE__</span>) . <span class="string">&quot;/autoload/<span class="subst">$class</span>.php&quot;</span>;</span><br><span class="line">    <span class="keyword">echo</span> <span class="variable">$path</span>;</span><br><span class="line">    <span class="keyword">if</span> (!<span class="title function_ invoke__">file_exists</span>(<span class="variable">$path</span>)) &#123;</span><br><span class="line">        <span class="keyword">die</span> (<span class="string">&quot;class <span class="subst">$class</span> can not load\n&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">include</span> <span class="variable">$path</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="variable">$b</span> = <span class="keyword">new</span> <span class="title function_ invoke__">B</span>();</span><br></pre></td></tr></table></figure></li>
+<li>写一个加载器，然后用spl_autoload_register方法注册。<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="title function_ invoke__">DEFINE</span>(<span class="string">&#x27;ROOT_PATH&#x27;</span>, <span class="title function_ invoke__">dirname</span>(<span class="keyword">__FILE__</span>));</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Loader</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="built_in">static</span> <span class="function"><span class="keyword">function</span> <span class="title">load</span>(<span class="params"><span class="variable">$class</span></span>) </span>&#123;</span><br><span class="line">        <span class="variable">$path</span> = <span class="literal">null</span>;</span><br><span class="line">        <span class="keyword">if</span> (<span class="title function_ invoke__">substr</span>(<span class="variable">$class</span>, <span class="number">0</span> - <span class="title function_ invoke__">strlen</span>(<span class="string">&#x27;Controller&#x27;</span>)) == <span class="string">&#x27;Controller&#x27;</span>) &#123;</span><br><span class="line">            <span class="variable">$path</span> = ROOT_PATH . <span class="string">&#x27;/Controllers/&#x27;</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (<span class="title function_ invoke__">substr</span>(<span class="variable">$class</span>, <span class="number">0</span> - <span class="title function_ invoke__">strlen</span>(<span class="string">&#x27;Model&#x27;</span>)) == <span class="string">&#x27;Model&#x27;</span>) &#123;</span><br><span class="line">            <span class="variable">$path</span> = ROOT_PATH . <span class="string">&#x27;/Models/&#x27;</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="variable">$path</span> = ROOT_PATH . <span class="string">&#x27;/Components/&#x27;</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="variable">$path</span> .= <span class="string">&quot;<span class="subst">$class</span>.php&quot;</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (<span class="title function_ invoke__">file_exists</span>(<span class="variable">$path</span>)) &#123;</span><br><span class="line">            <span class="keyword">include</span> <span class="variable">$path</span>;</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="title function_ invoke__">spl_autoload_register</span>(<span class="keyword">array</span>(<span class="string">&#x27;Loader&#x27;</span>, <span class="string">&#x27;load&#x27;</span>), <span class="literal">false</span>, <span class="literal">false</span>);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="variable">$controller</span> = <span class="keyword">new</span> <span class="title class_">AController</span>();</span><br></pre></td></tr></table></figure></li>
 </ul>
 <p>推荐第四种，原因如下</p>
 <p>第一第二种不够灵活</p>
 <p>第三种灵活，但是__autoload只能被重写一次</p>
 <p>第四种相对灵活，而且在引用第三方差价或者工具的时候有非常明显的优势</p>
-<h2 id="include-include-once-require-require-once的区别？"><a href="#include-include-once-require-require-once的区别？" class="headerlink" title="include/include_once/require/require_once的区别？"></a>include/include_once/require/require_once的区别？</h2><p>include在文件不存在的时候会打印警告信息然后继续执行，而require会终止程序，相对来说include效率更高</p>
+<h2 id="include-include-once-require-require-once的区别？"><a href="#include-include-once-require-require-once的区别？" class="headerlink" title="include&#x2F;include_once&#x2F;require&#x2F;require_once的区别？"></a>include&#x2F;include_once&#x2F;require&#x2F;require_once的区别？</h2><p>include在文件不存在的时候会打印警告信息然后继续执行，而require会终止程序，相对来说include效率更高</p>
 <p>include_once和require_once在加载文件之前都会先判断文件是否已经被加载过，相对来说效率低一些</p>
-<a id="more"></a>
+<span id="more"></span>
 <h2 id="双引号和单引号的区别？"><a href="#双引号和单引号的区别？" class="headerlink" title="双引号和单引号的区别？"></a>双引号和单引号的区别？</h2><p>双引号会尝试解析替换里面的变量，而单引号不会，相对来说单引号效率高</p>
 <p>双引号解释转义字符，而单引号不解释转移字符，比如\n</p>
 <h2 id="常见的超全局变量"><a href="#常见的超全局变量" class="headerlink" title="常见的超全局变量"></a>常见的超全局变量</h2><ul>
@@ -159,7 +131,8 @@
 <li>从$_GLOBALS数组里面取</li>
 <li>global + 变量名</li>
 </ul>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">$a = <span class="number">1</span>;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">g1</span><span class="params">()</span> </span>&#123;</div><div class="line">    var_dump($GLOBALS[<span class="string">'a'</span>]);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">g2</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="keyword">global</span> $a;</div><div class="line">    var_dump($a);</div><div class="line">&#125;</div><div class="line"></div><div class="line">g1();</div><div class="line">g2();</div></pre></td></tr></table></figure>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$a</span> = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">g1</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="title function_ invoke__">var_dump</span>(<span class="variable">$GLOBALS</span>[<span class="string">&#x27;a&#x27;</span>]);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">g2</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">global</span> <span class="variable">$a</span>;</span><br><span class="line">    <span class="title function_ invoke__">var_dump</span>(<span class="variable">$a</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="title function_ invoke__">g1</span>();</span><br><span class="line"><span class="title function_ invoke__">g2</span>();</span><br></pre></td></tr></table></figure>
+
 <h2 id="PHP的几种魔术方法？"><a href="#PHP的几种魔术方法？" class="headerlink" title="PHP的几种魔术方法？"></a>PHP的几种魔术方法？</h2><ul>
 <li>__construct()：构造方法，new一个对象的时候调用</li>
 <li>__destruct()：析构方法，对象销毁的时候调用，通常一个资源的释放放在这里面</li>
@@ -177,11 +150,14 @@
 </ul>
 <h2 id="自定义错误日志级别"><a href="#自定义错误日志级别" class="headerlink" title="自定义错误日志级别"></a>自定义错误日志级别</h2><p>error_reporting方法</p>
 <h2 id="自定义异常"><a href="#自定义异常" class="headerlink" title="自定义异常"></a>自定义异常</h2><p>自定义一个class，继承系统系统的Exception</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyException</span> <span class="keyword">extends</span> <span class="title">Exception</span> </span>&#123;</div><div class="line"> &#125;</div><div class="line"></div><div class="line"><span class="keyword">throw</span> <span class="keyword">new</span> MyException(<span class="string">'MyException'</span>);</div></pre></td></tr></table></figure>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyException</span> <span class="keyword">extends</span> <span class="title">Exception</span> </span>&#123;</span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">MyException</span>(<span class="string">&#x27;MyException&#x27;</span>);</span><br></pre></td></tr></table></figure>
+
 <h2 id="自定义错误处理"><a href="#自定义错误处理" class="headerlink" title="自定义错误处理"></a>自定义错误处理</h2><p>通过set_error_handler设置自定义的错误处理，通常用来做一些日志记录</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;?php</span></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">ErrorHandler</span> </span>&#123;</div><div class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="function"><span class="keyword">function</span> <span class="title">error</span><span class="params">($errno, $errstr, $errfile, $errline)</span> </span>&#123;</div><div class="line">        <span class="keyword">echo</span> <span class="string">"error $errstr [$errno] triggered in $errfile line [$errline];\n"</span>;</div><div class="line">        <span class="keyword">die</span>;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">set_error_handler(<span class="keyword">array</span>(<span class="string">'ErrorHandler'</span>, <span class="string">'error'</span>));</div><div class="line"></div><div class="line">trigger_error(<span class="string">'test error'</span>);</div></pre></td></tr></table></figure>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ErrorHandler</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="built_in">static</span> <span class="function"><span class="keyword">function</span> <span class="title">error</span>(<span class="params"><span class="variable">$errno</span>, <span class="variable">$errstr</span>, <span class="variable">$errfile</span>, <span class="variable">$errline</span></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">echo</span> <span class="string">&quot;error <span class="subst">$errstr</span> [<span class="subst">$errno</span>] triggered in <span class="subst">$errfile</span> line [<span class="subst">$errline</span>];\n&quot;</span>;</span><br><span class="line">        <span class="keyword">die</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="title function_ invoke__">set_error_handler</span>(<span class="keyword">array</span>(<span class="string">&#x27;ErrorHandler&#x27;</span>, <span class="string">&#x27;error&#x27;</span>));</span><br><span class="line"></span><br><span class="line"><span class="title function_ invoke__">trigger_error</span>(<span class="string">&#x27;test error&#x27;</span>);</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
 <h2 id="自定义异常处理"><a href="#自定义异常处理" class="headerlink" title="自定义异常处理"></a>自定义异常处理</h2><p>通过set_exception_handler自定一个异常处理器</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;?php</span></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">ExceptionHandler</span> </span>&#123;</div><div class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="function"><span class="keyword">function</span> <span class="title">handler</span><span class="params">($exception)</span> </span>&#123;</div><div class="line">        <span class="keyword">echo</span> get_class($exception), <span class="string">": "</span>, $exception-&gt;getMessage(), <span class="string">"\n"</span>;</div><div class="line">        debug_print_backtrace();</div><div class="line">        <span class="keyword">die</span>;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">set_exception_handler(<span class="keyword">array</span>(<span class="string">'ExceptionHandler'</span>, <span class="string">'handler'</span>));</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyException</span> <span class="keyword">extends</span> <span class="title">Exception</span> </span>&#123;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">throw</span> <span class="keyword">new</span> MyException(<span class="string">"test exception"</span>);</div></pre></td></tr></table></figure>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ExceptionHandler</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="built_in">static</span> <span class="function"><span class="keyword">function</span> <span class="title">handler</span>(<span class="params"><span class="variable">$exception</span></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">echo</span> <span class="title function_ invoke__">get_class</span>(<span class="variable">$exception</span>), <span class="string">&quot;: &quot;</span>, <span class="variable">$exception</span>-&gt;<span class="title function_ invoke__">getMessage</span>(), <span class="string">&quot;\n&quot;</span>;</span><br><span class="line">        <span class="title function_ invoke__">debug_print_backtrace</span>();</span><br><span class="line">        <span class="keyword">die</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="title function_ invoke__">set_exception_handler</span>(<span class="keyword">array</span>(<span class="string">&#x27;ExceptionHandler&#x27;</span>, <span class="string">&#x27;handler&#x27;</span>));</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyException</span> <span class="keyword">extends</span> <span class="title">Exception</span> </span>&#123;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">MyException</span>(<span class="string">&quot;test exception&quot;</span>);</span><br></pre></td></tr></table></figure>
+
 <h2 id="什么是魔术引号"><a href="#什么是魔术引号" class="headerlink" title="什么是魔术引号"></a>什么是魔术引号</h2><p>magic_quotes_gpc，自动转义引号，不建议开启，在业务需要的时候去做即可；</p>
 <p>可以通过set_magic_quotes_runtime设置，get_magic_quotes_runtime获取配置。</p>
 <h2 id="方法前面加-和不加的区别"><a href="#方法前面加-和不加的区别" class="headerlink" title="方法前面加@和不加的区别"></a>方法前面加@和不加的区别</h2><p>方法前面加@会抑制错的打印，性能会有影响，不建议使用，应该在开发阶段尽量的把错误暴露出来。</p>
@@ -203,35 +179,36 @@
 <li>通常来说，GET请求和通过刷新重复访问，而POST请求不可以（chrome可以支持刷新再次访问，对于开发者来说也是坑，无意中多写了一条数据到数据库）</li>
 <li>长度限制，各家浏览器对于URL的长度都是有限制，通常1024字节；GET请求的参数室友限制的，理论上来说POST请求的参数是没有限制的</li>
 </ul>
-<h2 id="REST-RESTFUL接口是什么意思？"><a href="#REST-RESTFUL接口是什么意思？" class="headerlink" title="REST/RESTFUL接口是什么意思？"></a>REST/RESTFUL接口是什么意思？</h2><p>REST是参照了HTTP协议的初衷来设计的方式，即把所有的数据看做一个个的资源，把对数据的CRUD看做对资源的查看/创建/修改/删除，对应HTTP的GET/POST/PUT/DELETE方法；从语义上来说更加清晰，适用于比较简单的业务或者逻辑紧凑，高内聚的业务</p>
+<h2 id="REST-RESTFUL接口是什么意思？"><a href="#REST-RESTFUL接口是什么意思？" class="headerlink" title="REST&#x2F;RESTFUL接口是什么意思？"></a>REST&#x2F;RESTFUL接口是什么意思？</h2><p>REST是参照了HTTP协议的初衷来设计的方式，即把所有的数据看做一个个的资源，把对数据的CRUD看做对资源的查看&#x2F;创建&#x2F;修改&#x2F;删除，对应HTTP的GET&#x2F;POST&#x2F;PUT&#x2F;DELETE方法；从语义上来说更加清晰，适用于比较简单的业务或者逻辑紧凑，高内聚的业务</p>
 <p>比如以新闻为例来设计接口</p>
-<p>/api/news：GET方法，表示获取新闻列表，返回数据格式是一个list</p>
-<p>/api/news/1：GET方法，表示获取信id=1的新闻详情，返回数据格式是一个dict/object</p>
-<p>/api/news/：POST方法，表示创建一条新闻，返回数据格式是一个dict/object，包含新闻id</p>
-<p>/api/news/1：PUT方法，表示修改id=1的新闻信息，返回格式是一个dict/object</p>
-<p>/api/news/1：DELETE方法：表示删除id=1的新闻信息，可以不返回body部分</p>
+<p>&#x2F;api&#x2F;news：GET方法，表示获取新闻列表，返回数据格式是一个list</p>
+<p>&#x2F;api&#x2F;news&#x2F;1：GET方法，表示获取信id&#x3D;1的新闻详情，返回数据格式是一个dict&#x2F;object</p>
+<p>&#x2F;api&#x2F;news&#x2F;：POST方法，表示创建一条新闻，返回数据格式是一个dict&#x2F;object，包含新闻id</p>
+<p>&#x2F;api&#x2F;news&#x2F;1：PUT方法，表示修改id&#x3D;1的新闻信息，返回格式是一个dict&#x2F;object</p>
+<p>&#x2F;api&#x2F;news&#x2F;1：DELETE方法：表示删除id&#x3D;1的新闻信息，可以不返回body部分</p>
 <h2 id="session和cookie的区别和联系？"><a href="#session和cookie的区别和联系？" class="headerlink" title="session和cookie的区别和联系？"></a>session和cookie的区别和联系？</h2><ul>
 <li>存储上说session存在服务端，cookie存在客户端；时间上来说cookie的有效期比session长；安全性上说session相对cookie安全。</li>
 <li>session是会话相关的，会话没了（比如浏览器被关了），session也就不存在了。</li>
 <li>session依靠cookie，因为session的识别是通过cookie传过来的（通常key是PHPSESSIONID），浏览器禁用了cookie，session也就没法识别了</li>
 </ul>
 <p>建议重要信息和敏感信息都放在session，不重要的放到cookie</p>
-<h2 id="cookie的格式，有效期，访问权限控制"><a href="#cookie的格式，有效期，访问权限控制" class="headerlink" title="cookie的格式，有效期，访问权限控制"></a>cookie的格式，有效期，访问权限控制</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">key1=value1; key2=value2; 过期时间; 路径; 域名</div></pre></td></tr></table></figure>
-<p>过期时间，路劲，和域都不是必须的；默认是根路径（/）；默认域名是当前域名</p>
+<h2 id="cookie的格式，有效期，访问权限控制"><a href="#cookie的格式，有效期，访问权限控制" class="headerlink" title="cookie的格式，有效期，访问权限控制"></a>cookie的格式，有效期，访问权限控制</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">key1=value1; key2=value2; 过期时间; 路径; 域名</span><br></pre></td></tr></table></figure>
+
+<p>过期时间，路劲，和域都不是必须的；默认是根路径（&#x2F;）；默认域名是当前域名</p>
 <p>子域名（pan.baidu.com）可以访问父域名(.baidu.com)的下cookie，反过来不行</p>
 <p>通过set_cookie或者header方法可以设置cookie。</p>
 <h2 id="跨域限制如何解决？"><a href="#跨域限制如何解决？" class="headerlink" title="跨域限制如何解决？"></a>跨域限制如何解决？</h2><ul>
 <li>异步处理可以使用ajax + jsonp搞定</li>
 <li>p3p协议授权</li>
 </ul>
-<h2 id="TCP的三次握手和4次挥手协议"><a href="#TCP的三次握手和4次挥手协议" class="headerlink" title="TCP的三次握手和4次挥手协议"></a>TCP的三次握手和4次挥手协议</h2><p><a href="http://blog.csdn.net/whuslei/article/details/6667471/" target="_blank" rel="external">http://blog.csdn.net/whuslei/article/details/6667471/</a></p>
+<h2 id="TCP的三次握手和4次挥手协议"><a href="#TCP的三次握手和4次挥手协议" class="headerlink" title="TCP的三次握手和4次挥手协议"></a>TCP的三次握手和4次挥手协议</h2><p><a target="_blank" rel="noopener" href="http://blog.csdn.net/whuslei/article/details/6667471/">http://blog.csdn.net/whuslei/article/details/6667471/</a></p>
 <h3 id="三次握手"><a href="#三次握手" class="headerlink" title="三次握手"></a>三次握手</h3><p>客户端发送SYN</p>
 <p>服务端收到SYN：此时服务端知道客户端可以正常发送数据包，同时也知道服务端可以正常接收数据包</p>
 <p>服务端发送SYN + ACK：</p>
 <p>客户端收到SYN + ACK: 此时客户端知道自己可正常发送和接收数据包，同时知道服务端也可以正常发送和接收数据包（为什么？因为服务端收到了SYN才会给客户端发送SYN+ACK）</p>
 <p>客户端发送ACK：</p>
 <p>服务端接收ACK：此时服务端知道客户端可以正常接收数据包（为什么？客户端收到了SYN+ACK之后才会给服务端发送ACK）</p>
-<p><strong><em>注意</em></strong>：三次握手不保证传输可靠性（不丢包），只是确保了双方都可以正常接收和发送数据包；至于不丢包是通过超时重传保证的</p>
+<p><em><strong>注意</strong></em>：三次握手不保证传输可靠性（不丢包），只是确保了双方都可以正常接收和发送数据包；至于不丢包是通过超时重传保证的</p>
 <h3 id="超时重传"><a href="#超时重传" class="headerlink" title="超时重传"></a>超时重传</h3><p>发送方每次发送数据包的时候，都会带上一个随机数，接收方收到数据之后会回应一个响应包（ack），然后加上一个数字（之前的随机数+1），发送方收到ack之后就知道接接收方已经收到数据包了，如果超过一定时间没有收到ack，发送方就认为数据包丢了，会再发一次数据包；所以接收方在理论上可能接到统一份数据包多次，需要做去重处理（系统已经做了）</p>
 <h3 id="四次挥手"><a href="#四次挥手" class="headerlink" title="四次挥手"></a>四次挥手</h3><ul>
 <li>客户端发送关闭请求（FIN）：我该发的数据发完了，我准备关闭了</li>
@@ -254,17 +231,17 @@
 <p>LAST-ACK：服务端数据传输完了，发送ACK通知客户端</p>
 <p>CLOSE：客户端收到了FIN，并且ACK了，服务端关闭连接</p>
 <p>如何查看服务器上的tcp链接</p>
-<p>netstat命令：<a href="http://man.linuxde.net/netstat" target="_blank" rel="external">http://man.linuxde.net/netstat</a></p>
-<h2 id="HTTPS和HTTP的区别"><a href="#HTTPS和HTTP的区别" class="headerlink" title="HTTPS和HTTP的区别"></a>HTTPS和HTTP的区别</h2><p><a href="http://www.ruanyifeng.com/blog/2011/02/seven_myths_about_https.html" target="_blank" rel="external">http://www.ruanyifeng.com/blog/2011/02/seven_myths_about_https.html</a></p>
-<p><a href="http://www.ruanyifeng.com/blog/2014/09/illustration-ssl.html" target="_blank" rel="external">http://www.ruanyifeng.com/blog/2014/09/illustration-ssl.html</a></p>
-<p>HTTPS=HTTP + SSL/TLS</p>
+<p>netstat命令：<a target="_blank" rel="noopener" href="http://man.linuxde.net/netstat">http://man.linuxde.net/netstat</a></p>
+<h2 id="HTTPS和HTTP的区别"><a href="#HTTPS和HTTP的区别" class="headerlink" title="HTTPS和HTTP的区别"></a>HTTPS和HTTP的区别</h2><p><a target="_blank" rel="noopener" href="http://www.ruanyifeng.com/blog/2011/02/seven_myths_about_https.html">http://www.ruanyifeng.com/blog/2011/02/seven_myths_about_https.html</a></p>
+<p><a target="_blank" rel="noopener" href="http://www.ruanyifeng.com/blog/2014/09/illustration-ssl.html">http://www.ruanyifeng.com/blog/2014/09/illustration-ssl.html</a></p>
+<p>HTTPS&#x3D;HTTP + SSL&#x2F;TLS</p>
 <p>本质上就是HTTP协议，只不过在开始之前会有一次握手协商加密密钥</p>
 <p>服务器配置的证书只是为了加密传输最后一个随机数，因为是从客户端往服务端发的，且服务端持有的是私钥，所以被破解的概率很小；因为最后一个随机数被破解的概率小，所以也就保证了整个会话过程密钥被破解的概率很小；同时每次会话都会生成不同的密钥，所以暴力破解的希望也不大。</p>
 <h1 id="数据库篇"><a href="#数据库篇" class="headerlink" title="数据库篇"></a>数据库篇</h1><h2 id="MyISAM和InnoDB的区别"><a href="#MyISAM和InnoDB的区别" class="headerlink" title="MyISAM和InnoDB的区别"></a>MyISAM和InnoDB的区别</h2><p>MyISAM：不支持事务；表级锁；索引和数据存放在一起；数据恢复相对困难；查询相对快。</p>
 <p>InnoDB：支持事务；行级锁，索引和数据分开存放；数据恢复相对简单；查询相对慢。</p>
 <p>一般来说现在说的都是InnoDB存储引擎</p>
 <h2 id="索引结构"><a href="#索引结构" class="headerlink" title="索引结构"></a>索引结构</h2><p>B+Tree：最常见的索引结构，默认说的索引就是B+数索引</p>
-<p>Hash索引：从名字就可以看出来，索引算法是hash算法，只适用于等值查询(a = ‘xxxxxx’)，对于范围查询不适用</p>
+<p>Hash索引：从名字就可以看出来，索引算法是hash算法，只适用于等值查询(a &#x3D; ‘xxxxxx’)，对于范围查询不适用</p>
 <h2 id="索引创建的一些原则"><a href="#索引创建的一些原则" class="headerlink" title="索引创建的一些原则"></a>索引创建的一些原则</h2><ul>
 <li>区分度越来越好；根据索引查询时扫描的行数少</li>
 <li>索引长度越短越好；单页存储的索引数据多，IO次数少</li>
@@ -274,8 +251,10 @@
 <li>索引不是越多越好；索引也占据磁盘空间，写入的时候构建索引也耗时</li>
 </ul>
 <h2 id="如何查看sql语句性能"><a href="#如何查看sql语句性能" class="headerlink" title="如何查看sql语句性能"></a>如何查看sql语句性能</h2><p>使用explain</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">explain</span> <span class="keyword">select</span> c <span class="keyword">from</span> t <span class="keyword">where</span> <span class="keyword">id</span> = <span class="number">5</span>;</div></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">*************************** 1. row ***************************</div><div class="line">           id: 1</div><div class="line">  select_type: SIMPLE</div><div class="line">        table: NULL</div><div class="line">   partitions: NULL</div><div class="line">         type: NULL</div><div class="line">possible_keys: NULL</div><div class="line">          key: NULL</div><div class="line">      key_len: NULL</div><div class="line">          ref: NULL</div><div class="line">         rows: NULL</div><div class="line">     filtered: NULL</div><div class="line">        Extra: no matching row in const table</div><div class="line">1 row in set, 1 warning (0.00 sec)</div></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">explain <span class="keyword">select</span> c <span class="keyword">from</span> t <span class="keyword">where</span> id <span class="operator">=</span> <span class="number">5</span>;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">*************************** 1. row ***************************</span><br><span class="line">           id: 1</span><br><span class="line">  select_type: SIMPLE</span><br><span class="line">        table: NULL</span><br><span class="line">   partitions: NULL</span><br><span class="line">         type: NULL</span><br><span class="line">possible_keys: NULL</span><br><span class="line">          key: NULL</span><br><span class="line">      key_len: NULL</span><br><span class="line">          ref: NULL</span><br><span class="line">         rows: NULL</span><br><span class="line">     filtered: NULL</span><br><span class="line">        Extra: no matching row in const table</span><br><span class="line">1 row in set, 1 warning (0.00 sec)</span><br></pre></td></tr></table></figure>
+
 <p>关注的列</p>
 <ul>
 <li>type</li>
@@ -292,16 +271,20 @@
 <li><p>通过索引扫描行数大于总数据20%时不会走索引；走索引会大量随机IO，性能可能不如全表扫描走顺序IO效率高</p>
 </li>
 <li><p>最左前缀匹配原则</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">create</span> <span class="keyword">index</span> <span class="string">`idx_xxx`</span> (<span class="string">`a`</span>, <span class="string">`b`</span>, <span class="string">`c`</span>);</div></pre></td></tr></table></figure>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">select</span> * <span class="keyword">from</span> t <span class="keyword">where</span> a = <span class="number">1</span> <span class="keyword">and</span> b = <span class="number">2</span> <span class="keyword">and</span> c = <span class="number">3</span>;</div></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">create</span> index `idx_xxx` (`a`, `b`, `c`);</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> t <span class="keyword">where</span> a <span class="operator">=</span> <span class="number">1</span> <span class="keyword">and</span> b <span class="operator">=</span> <span class="number">2</span> <span class="keyword">and</span> c <span class="operator">=</span> <span class="number">3</span>;</span><br></pre></td></tr></table></figure>
+
 <p>会用到索引的所有部分</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">select</span> * <span class="keyword">from</span> t <span class="keyword">where</span> a = <span class="number">1</span> <span class="keyword">and</span> c = <span class="number">3</span>;</div></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> t <span class="keyword">where</span> a <span class="operator">=</span> <span class="number">1</span> <span class="keyword">and</span> c <span class="operator">=</span> <span class="number">3</span>;</span><br></pre></td></tr></table></figure>
+
 <p>会用到索引的a部分</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">select</span> * <span class="keyword">from</span> t <span class="keyword">where</span> b = <span class="number">2</span> <span class="keyword">and</span> c = <span class="number">1</span></div></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> t <span class="keyword">where</span> b <span class="operator">=</span> <span class="number">2</span> <span class="keyword">and</span> c <span class="operator">=</span> <span class="number">1</span></span><br></pre></td></tr></table></figure>
+
 <p>不会用到索引</p>
 </li>
 </ul>
-<h2 id="数据库隔离级别什么意思？"><a href="#数据库隔离级别什么意思？" class="headerlink" title="数据库隔离级别什么意思？"></a>数据库隔离级别什么意思？</h2><p>mysql做到了RR级别<br><a href="https://mp.weixin.qq.com/s?__biz=MzAxOTc0NzExNg==&amp;mid=2665513435&amp;idx=1&amp;sn=41ffb114be4a5b53de87831b9c8427bf&amp;chksm=80d67998b7a1f08e1b1187915609ecc43715151b015ac156ce5a9645e654910cdda1d48d5883&amp;mpshare=1&amp;scene=1&amp;srcid=06023qmtatDjl2iUrO9YjeUw&amp;key=7dffde877c8eec6a2f4bcfbae75c619b4add5dfa71357aa804b426737c57081f21daff3d1e925dc6eebd3424cdd0e92f1e314c867cd1e2987aa6f2292875952e582abf0ab35de6e98869a7c8a2e82009&amp;ascene=0&amp;uin=OTkyNDg2MDgx&amp;devicetype=iMac+MacBookPro11%2C2+OSX+OSX+10.12.4+build(16E195" target="_blank" rel="external">微信上一篇讲隔离级别比较好的文章</a>&amp;version=12020510&amp;nettype=WIFI&amp;fontScale=100&amp;pass_ticket=Vp76quG8JQIgm40HO1JQshMZuSEvKCAkEKOsSnlTetkRzpT2f3QD%2FkM0eHVx8DKT)</p>
+<h2 id="数据库隔离级别什么意思？"><a href="#数据库隔离级别什么意思？" class="headerlink" title="数据库隔离级别什么意思？"></a>数据库隔离级别什么意思？</h2><p>mysql做到了RR级别<br><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=MzAxOTc0NzExNg==&mid=2665513435&idx=1&sn=41ffb114be4a5b53de87831b9c8427bf&chksm=80d67998b7a1f08e1b1187915609ecc43715151b015ac156ce5a9645e654910cdda1d48d5883&mpshare=1&scene=1&srcid=06023qmtatDjl2iUrO9YjeUw&key=7dffde877c8eec6a2f4bcfbae75c619b4add5dfa71357aa804b426737c57081f21daff3d1e925dc6eebd3424cdd0e92f1e314c867cd1e2987aa6f2292875952e582abf0ab35de6e98869a7c8a2e82009&ascene=0&uin=OTkyNDg2MDgx&devicetype=iMac+MacBookPro11,2+OSX+OSX+10.12.4+build(16E195)&version=12020510&nettype=WIFI&fontScale=100&pass_ticket=Vp76quG8JQIgm40HO1JQshMZuSEvKCAkEKOsSnlTetkRzpT2f3QD/kM0eHVx8DKT">微信上一篇讲隔离级别比较好的文章</a></p>
 <h1 id="缓存篇"><a href="#缓存篇" class="headerlink" title="缓存篇"></a>缓存篇</h1><h2 id="memcache"><a href="#memcache" class="headerlink" title="memcache"></a>memcache</h2><ul>
 <li>纯内存数据，无法备灾</li>
 <li>不支持主从结构</li>
@@ -312,7 +295,7 @@
 <h2 id="redis"><a href="#redis" class="headerlink" title="redis"></a>redis</h2><ul>
 <li><p>非纯内存结构，直接持久化到磁盘：两种形式，RDB(快照)，或者AOF(写请求日志)，数据恢复时优先选择AOF，类似mysql binlog</p>
 </li>
-<li><p>支持主从结构：全量同步/增量同步，全量同步步骤</p>
+<li><p>支持主从结构：全量同步&#x2F;增量同步，全量同步步骤</p>
 <ul>
 <li>1、从连主，发送sync命令</li>
 <li>2、主bgsave生成快照</li>
@@ -344,7 +327,7 @@
 <li>A: 可用性</li>
 <li>P：容错性<br>  CAP只能同时满足其中的两个，不能同时满足三个，系统设计都是在CAP中权衡；通常性能一致性，通过补偿机制来保证最终一致性</li>
 </ul>
-<h2 id="分布式算法"><a href="#分布式算法" class="headerlink" title="分布式算法"></a>分布式算法</h2><h3 id="两阶段提交和三阶段提交"><a href="#两阶段提交和三阶段提交" class="headerlink" title="两阶段提交和三阶段提交"></a>两阶段提交和三阶段提交</h3><p><a href="http://blog.jobbole.com/95632/" target="_blank" rel="external">http://blog.jobbole.com/95632/</a></p>
+<h2 id="分布式算法"><a href="#分布式算法" class="headerlink" title="分布式算法"></a>分布式算法</h2><h3 id="两阶段提交和三阶段提交"><a href="#两阶段提交和三阶段提交" class="headerlink" title="两阶段提交和三阶段提交"></a>两阶段提交和三阶段提交</h3><p><a target="_blank" rel="noopener" href="http://blog.jobbole.com/95632/">http://blog.jobbole.com/95632/</a></p>
 <h4 id="两阶段提交"><a href="#两阶段提交" class="headerlink" title="两阶段提交"></a>两阶段提交</h4><ul>
 <li>1、协调者向所有参与者发送提交请求，并接收响应</li>
 <li>2、有一个失败然后就发送回滚请求</li>
@@ -355,32 +338,32 @@
 <li>3、doCommmit</li>
 <li>4、超时机制</li>
 </ul>
-<h4 id="paxos-amp-raft"><a href="#paxos-amp-raft" class="headerlink" title="paxos &amp; raft"></a>paxos &amp; raft</h4><p><a href="http://www.cnblogs.com/cchust/p/5617989.html" target="_blank" rel="external">http://www.cnblogs.com/cchust/p/5617989.html</a><br>paxos是比较经典的分布式一致性算法；业界已经有现成的实现 zookeeper<br>raft是paxos的精简版本</p>
+<h4 id="paxos-raft"><a href="#paxos-raft" class="headerlink" title="paxos &amp; raft"></a>paxos &amp; raft</h4><p><a target="_blank" rel="noopener" href="http://www.cnblogs.com/cchust/p/5617989.html">http://www.cnblogs.com/cchust/p/5617989.html</a><br>paxos是比较经典的分布式一致性算法；业界已经有现成的实现 zookeeper<br>raft是paxos的精简版本</p>
 <h1 id="高并发"><a href="#高并发" class="headerlink" title="高并发"></a>高并发</h1><h2 id="常见的方法"><a href="#常见的方法" class="headerlink" title="常见的方法"></a>常见的方法</h2><ul>
 <li>系统尽量做到无状态，可以通过扩容来提升服务能力</li>
 <li>使用缓存来减轻db压力，提升响应速度</li>
 <li>使用队列异步化一些比较耗时的操作</li>
 <li>数据库层面还可以做读写分离</li>
 <li>数据量特别大的时候可以对数据做，分库分表处理，也可以做分区处理（通常用在实时性要求，不高或者写入多读取少的场景）</li>
-<li>有可能设计到分布式锁，可以使用redis来实现setNx <a href="http://blog.csdn.net/lihao21/article/details/49104695" target="_blank" rel="external">http://blog.csdn.net/lihao21/article/details/49104695</a></li>
-<li>限流/过载保护</li>
+<li>有可能设计到分布式锁，可以使用redis来实现setNx <a target="_blank" rel="noopener" href="http://blog.csdn.net/lihao21/article/details/49104695">http://blog.csdn.net/lihao21/article/details/49104695</a></li>
+<li>限流&#x2F;过载保护</li>
 </ul>
 <h2 id="说到无状态，分布式session怎么做？"><a href="#说到无状态，分布式session怎么做？" class="headerlink" title="说到无状态，分布式session怎么做？"></a>说到无状态，分布式session怎么做？</h2><ul>
 <li>复制：每台机器都有全部的session数据，机器之前互相拷贝；容量有瓶颈，同时浪费资源</li>
 <li>hash：相同ip的请求始终落到一台后端机器上，每个机器只存自己的那一份session数据就好了；宕机了一部分session就丢了，hash策略换了也比较麻烦</li>
 <li>集中管理：做一个独立的session服务器，常见的用db或者缓存来做（redis）</li>
 </ul>
-<h2 id="SOA和微服务的区别？"><a href="#SOA和微服务的区别？" class="headerlink" title="SOA和微服务的区别？"></a>SOA和微服务的区别？</h2><p><a href="https://www.zhihu.com/question/37808426" target="_blank" rel="external">https://www.zhihu.com/question/37808426</a></p>
+<h2 id="SOA和微服务的区别？"><a href="#SOA和微服务的区别？" class="headerlink" title="SOA和微服务的区别？"></a>SOA和微服务的区别？</h2><p><a target="_blank" rel="noopener" href="https://www.zhihu.com/question/37808426">https://www.zhihu.com/question/37808426</a></p>
 <h2 id="分表的一些做法"><a href="#分表的一些做法" class="headerlink" title="分表的一些做法"></a>分表的一些做法</h2><ul>
 <li>横切：每张表的数据结构一致，只是数据不同，通常根据用户的一些属性来分表（比如user_id）；常见的分表策略有两种<ul>
-<li>根据分片键取模：比如  user_id % 100 = 1 的在一张表，=2的在另一张表；缺陷就是取模可能导致没张表的数据不均衡，同时再次扩容的时候数据迁移也是麻烦</li>
-<li>根据分片键范围：比如 user_id &lt; 10000的在一张表，10000 - 20000 的在另一张表，缺陷就是最后一张表数据可能比较少，不均衡，同时如果想改变分片策略也很麻烦，但是扩容比较容易 </li>
+<li>根据分片键取模：比如  user_id % 100 &#x3D; 1 的在一张表，&#x3D;2的在另一张表；缺陷就是取模可能导致没张表的数据不均衡，同时再次扩容的时候数据迁移也是麻烦</li>
+<li>根据分片键范围：比如 user_id &lt; 10000的在一张表，10000 - 20000 的在另一张表，缺陷就是最后一张表数据可能比较少，不均衡，同时如果想改变分片策略也很麻烦，但是扩容比较容易</li>
 </ul>
 </li>
 <li>纵切：把一张大小拆分成几张小表，没张表的数据一样多，但是数据结构不一样，比如把用户表拆分核心字段表(用户名，密码，手机）和扩展字段表（积分，等级，简介等等）</li>
 </ul>
 <h2 id="限流"><a href="#限流" class="headerlink" title="限流"></a>限流</h2><p>限流，顾名思义，即限制系统的访问流量，常见的限流算法：计数器，漏通，令牌桶</p>
-<p><a href="http://www.cnblogs.com/clds/p/5850070.html" target="_blank" rel="external">http://www.cnblogs.com/clds/p/5850070.html</a></p>
+<p><a target="_blank" rel="noopener" href="http://www.cnblogs.com/clds/p/5850070.html">http://www.cnblogs.com/clds/p/5850070.html</a></p>
 <h1 id="网络安全篇"><a href="#网络安全篇" class="headerlink" title="网络安全篇"></a>网络安全篇</h1><ul>
 <li>XSS：跨站脚本攻击，用户输入带有一些html或者js标签，展示的时候如果不处理会有一些意想不到的效果；转义处理就好</li>
 <li>CSRF: 跨站请求伪造，尽量不要用GET方法操作数据；数据处理的时候做权限校验；敏感操作加验证码；表单隐藏提交一个token做校验</li>
@@ -405,16 +388,16 @@
 <li>依赖倒置原则（DIP）：高层模块不要依赖底层模块；面向接口编程，不依赖具体实现</li>
 <li>接口隔离原则（ISP）：使用多个专门的接口比使用单个接口要好的多</li>
 </ul>
-<h1 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h1><h2 id="PHP变量的实现以及内存回收"><a href="#PHP变量的实现以及内存回收" class="headerlink" title="PHP变量的实现以及内存回收"></a>PHP变量的实现以及内存回收</h2><p>变量实现：<a href="http://www.cunmou.com/phpbook/2.md" target="_blank" rel="external">http://www.cunmou.com/phpbook/2.md</a><br>内存管理：<a href="http://www.cunmou.com/phpbook/3.md" target="_blank" rel="external">http://www.cunmou.com/phpbook/3.md</a></p>
-<h2 id="PHP数组的底层实现"><a href="#PHP数组的底层实现" class="headerlink" title="PHP数组的底层实现"></a>PHP数组的底层实现</h2><p><a href="http://www.cunmou.com/phpbook/8.md" target="_blank" rel="external">http://www.cunmou.com/phpbook/8.md</a></p>
-<h2 id="PHP扩展可以做连接池吗？"><a href="#PHP扩展可以做连接池吗？" class="headerlink" title="PHP扩展可以做连接池吗？"></a>PHP扩展可以做连接池吗？</h2><p>可以，参考模块的加载流程，在MINIT方法里申请资源，MSHUTDOWN里面销毁资源<br><a href="http://www.cunmou.com/phpbook/1.3.md" target="_blank" rel="external">http://www.cunmou.com/phpbook/1.3.md</a></p>
+<h1 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h1><h2 id="PHP变量的实现以及内存回收"><a href="#PHP变量的实现以及内存回收" class="headerlink" title="PHP变量的实现以及内存回收"></a>PHP变量的实现以及内存回收</h2><p>变量实现：<a target="_blank" rel="noopener" href="http://www.cunmou.com/phpbook/2.md">http://www.cunmou.com/phpbook/2.md</a><br>内存管理：<a target="_blank" rel="noopener" href="http://www.cunmou.com/phpbook/3.md">http://www.cunmou.com/phpbook/3.md</a></p>
+<h2 id="PHP数组的底层实现"><a href="#PHP数组的底层实现" class="headerlink" title="PHP数组的底层实现"></a>PHP数组的底层实现</h2><p><a target="_blank" rel="noopener" href="http://www.cunmou.com/phpbook/8.md">http://www.cunmou.com/phpbook/8.md</a></p>
+<h2 id="PHP扩展可以做连接池吗？"><a href="#PHP扩展可以做连接池吗？" class="headerlink" title="PHP扩展可以做连接池吗？"></a>PHP扩展可以做连接池吗？</h2><p>可以，参考模块的加载流程，在MINIT方法里申请资源，MSHUTDOWN里面销毁资源<br><a target="_blank" rel="noopener" href="http://www.cunmou.com/phpbook/1.3.md">http://www.cunmou.com/phpbook/1.3.md</a></p>
 
       
     </div>
     <footer class="article-footer">
       <div class="article-footer-tag">
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/PHP/">PHP</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/PHP/" rel="tag">PHP</a></li></ul>
 
       </div>
       <!-- JiaThis Button BEGIN -->
@@ -450,7 +433,7 @@
     </a>
   
   
-    <a href="/2017/03/21/类和接口/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2017/03/21/%E7%B1%BB%E5%92%8C%E6%8E%A5%E5%8F%A3/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Older</strong>
       <div class="article-nav-title">类和接口</div>
     </a>
@@ -463,7 +446,7 @@
 
 <section id="comments">
 <!-- 多说评论框 start -->
-<div class="ds-thread" data-thread-key="post-PHP总结" data-title="PHP总结" data-url="http://kennethfan.github.io/2017/06/05/PHP总结/"></div>
+<div class="ds-thread" data-thread-key="post-PHP总结" data-title="PHP总结" data-url="http://kennethfan.github.io/2017/06/05/PHP%E6%80%BB%E7%BB%93/"></div>
 <!-- 多说评论框 end -->
 <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 <script type="text/javascript">
@@ -491,7 +474,7 @@ var duoshuoQuery = {short_name:'kennethfan'};
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Effective-Java/">Effective Java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PHP/">PHP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PHPUnit/">PHPUnit</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/c/">c</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cache/">cache</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/memcached/">memcached</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/redis/">redis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/shell/">shell</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vim/">vim</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/zsh/">zsh</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/笔记/">笔记</a></li></ul>
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Effective-Java/" rel="tag">Effective Java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/" rel="tag">Java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PHP/" rel="tag">PHP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PHPUnit/" rel="tag">PHPUnit</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/c/" rel="tag">c</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cache/" rel="tag">cache</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/memcached/" rel="tag">memcached</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/redis/" rel="tag">redis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/shell/" rel="tag">shell</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vim/" rel="tag">vim</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/zsh/" rel="tag">zsh</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%AC%94%E8%AE%B0/" rel="tag">笔记</a></li></ul>
     </div>
   </div>
 
@@ -501,7 +484,7 @@ var duoshuoQuery = {short_name:'kennethfan'};
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Effective-Java/" style="font-size: 13.33px;">Effective Java</a> <a href="/tags/Java/" style="font-size: 13.33px;">Java</a> <a href="/tags/PHP/" style="font-size: 13.33px;">PHP</a> <a href="/tags/PHPUnit/" style="font-size: 10px;">PHPUnit</a> <a href="/tags/c/" style="font-size: 10px;">c</a> <a href="/tags/cache/" style="font-size: 20px;">cache</a> <a href="/tags/memcached/" style="font-size: 10px;">memcached</a> <a href="/tags/redis/" style="font-size: 20px;">redis</a> <a href="/tags/shell/" style="font-size: 16.67px;">shell</a> <a href="/tags/vim/" style="font-size: 16.67px;">vim</a> <a href="/tags/zsh/" style="font-size: 16.67px;">zsh</a> <a href="/tags/笔记/" style="font-size: 10px;">笔记</a>
+      <a href="/tags/Effective-Java/" style="font-size: 13.33px;">Effective Java</a> <a href="/tags/Java/" style="font-size: 13.33px;">Java</a> <a href="/tags/PHP/" style="font-size: 13.33px;">PHP</a> <a href="/tags/PHPUnit/" style="font-size: 10px;">PHPUnit</a> <a href="/tags/c/" style="font-size: 10px;">c</a> <a href="/tags/cache/" style="font-size: 20px;">cache</a> <a href="/tags/memcached/" style="font-size: 10px;">memcached</a> <a href="/tags/redis/" style="font-size: 20px;">redis</a> <a href="/tags/shell/" style="font-size: 16.67px;">shell</a> <a href="/tags/vim/" style="font-size: 16.67px;">vim</a> <a href="/tags/zsh/" style="font-size: 16.67px;">zsh</a> <a href="/tags/%E7%AC%94%E8%AE%B0/" style="font-size: 10px;">笔记</a>
     </div>
   </div>
 
@@ -523,7 +506,7 @@ var duoshuoQuery = {short_name:'kennethfan'};
       <ul>
         
           <li>
-            <a href="/2018/03/20/架构师图谱/">架构师图谱</a>
+            <a href="/2018/03/20/%E6%9E%B6%E6%9E%84%E5%B8%88%E5%9B%BE%E8%B0%B1/">架构师图谱</a>
           </li>
         
           <li>
@@ -553,19 +536,11 @@ var duoshuoQuery = {short_name:'kennethfan'};
       <ul>
           
           <li>
-            <a href="http://pedroneer.github.io">死胖子</a>
+            <a target="_blank" rel="noopener" href="https://github.com/buptzhanghao">好神</a>
           </li>
           
           <li>
-            <a href="https://github.com/buptzhanghao">好神</a>
-          </li>
-          
-          <li>
-            <a href="http://www.bencaimao.com/">笨财猫</a>
-          </li>
-          
-          <li>
-            <a href="http://www.beva.com">贝瓦网</a>
+            <a href="https://kennethfan.github.io/gitbook">椒哥gitbook</a>
           </li>
           
       </ul>
@@ -580,7 +555,7 @@ var duoshuoQuery = {short_name:'kennethfan'};
   
   <div class="outer">
     <div id="footer-info" class="inner">
-      &copy; 2018 Kenneth Fan<br>
+      &copy; 2024 Kenneth Fan<br>
       Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>
@@ -598,11 +573,17 @@ var duoshuoQuery = {short_name:'kennethfan'};
 <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 
 
-  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
-  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
 
 
 <script src="/js/script.js"></script>
+
 
   </div>
 </body>

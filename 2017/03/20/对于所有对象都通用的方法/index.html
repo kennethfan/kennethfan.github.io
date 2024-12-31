@@ -6,33 +6,21 @@
   <title>对于所有对象都通用的方法 | 夜未央</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
-  <meta name="keyword" content="c,PHP,memcached,PHPUnit,redis,cache,vim,zsh,shell,Java,Effective Java,笔记">
+  <meta name="keyword" content="PHP,c,memcached,PHPUnit,redis,cache,vim,zsh,shell,Java,Effective Java,笔记">
   
-  <meta name="description" content="覆盖equals时请遵守通用约定不覆盖equals方法的几种情况
-
-类的每个实例本质上都是唯一的；例如Thead。
-不关心类是否提供了”逻辑相等（logical equality）”的测试功能；例如Rondom。
-超类已经覆盖了equals，从超类继承过来的行为对于子类也是合适的；例如大多数Set都实现从AbtractSet继承的equals实现。
-类是私有的或者包级私有的，可以确定它的equal">
+  <meta name="description" content="覆盖equals时请遵守通用约定不覆盖equals方法的几种情况  类的每个实例本质上都是唯一的；例如Thead。 不关心类是否提供了”逻辑相等（logical equality）”的测试功能；例如Rondom。 超类已经覆盖了equals，从超类继承过来的行为对于子类也是合适的；例如大多数Set都实现从AbtractSet继承的equals实现。 类是私有的或者包级私有的，可以确定它的equal">
 <meta property="og:type" content="article">
 <meta property="og:title" content="对于所有对象都通用的方法">
-<meta property="og:url" content="http://kennethfan.github.io/2017/03/20/对于所有对象都通用的方法/index.html">
+<meta property="og:url" content="http://kennethfan.github.io/2017/03/20/%E5%AF%B9%E4%BA%8E%E6%89%80%E6%9C%89%E5%AF%B9%E8%B1%A1%E9%83%BD%E9%80%9A%E7%94%A8%E7%9A%84%E6%96%B9%E6%B3%95/index.html">
 <meta property="og:site_name" content="夜未央">
-<meta property="og:description" content="覆盖equals时请遵守通用约定不覆盖equals方法的几种情况
-
-类的每个实例本质上都是唯一的；例如Thead。
-不关心类是否提供了”逻辑相等（logical equality）”的测试功能；例如Rondom。
-超类已经覆盖了equals，从超类继承过来的行为对于子类也是合适的；例如大多数Set都实现从AbtractSet继承的equals实现。
-类是私有的或者包级私有的，可以确定它的equal">
-<meta property="og:updated_time" content="2017-06-05T12:40:17.000Z">
+<meta property="og:description" content="覆盖equals时请遵守通用约定不覆盖equals方法的几种情况  类的每个实例本质上都是唯一的；例如Thead。 不关心类是否提供了”逻辑相等（logical equality）”的测试功能；例如Rondom。 超类已经覆盖了equals，从超类继承过来的行为对于子类也是合适的；例如大多数Set都实现从AbtractSet继承的equals实现。 类是私有的或者包级私有的，可以确定它的equal">
+<meta property="og:locale">
+<meta property="article:published_time" content="2017-03-20T14:31:20.000Z">
+<meta property="article:modified_time" content="2017-06-05T12:40:17.000Z">
+<meta property="article:author" content="Kenneth Fan">
+<meta property="article:tag" content="Java">
+<meta property="article:tag" content="Effective Java">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="对于所有对象都通用的方法">
-<meta name="twitter:description" content="覆盖equals时请遵守通用约定不覆盖equals方法的几种情况
-
-类的每个实例本质上都是唯一的；例如Thead。
-不关心类是否提供了”逻辑相等（logical equality）”的测试功能；例如Rondom。
-超类已经覆盖了equals，从超类继承过来的行为对于子类也是合适的；例如大多数Set都实现从AbtractSet继承的equals实现。
-类是私有的或者包级私有的，可以确定它的equal">
   
     <link rel="alternate" href="/atom.xml" title="夜未央" type="application/atom+xml">
   
@@ -42,10 +30,12 @@
   
     <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
   
-  <link rel="stylesheet" href="/css/style.css">
+  
+<link rel="stylesheet" href="/css/style.css">
+
   
 
-</head>
+<meta name="generator" content="Hexo 6.3.0"></head>
 
 <body>
   <div id="container">
@@ -57,10 +47,6 @@
       <h1 id="logo-wrap">
         <a href="/" id="logo">夜未央</a>
       </h1>
-      
-        <h2 id="subtitle-wrap">
-          <a href="/" id="subtitle">感恩 &amp; 回馈 | 理解 &amp; 释怀 | 热爱 &amp; 敬畏</a>
-        </h2>
       
     </div>
     <div id="header-inner" class="inner">
@@ -79,7 +65,7 @@
         <a id="nav-search-btn" class="nav-icon" title="Search"></a>
       </nav>
       <div id="search-form-wrap">
-        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://kennethfan.github.io"></form>
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://kennethfan.github.io"></form>
       </div>
     </div>
   </div>
@@ -88,7 +74,7 @@
       <div class="outer">
         <section id="main"><article id="post-对于所有对象都通用的方法" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2017/03/20/对于所有对象都通用的方法/" class="article-date">
+    <a href="/2017/03/20/%E5%AF%B9%E4%BA%8E%E6%89%80%E6%9C%89%E5%AF%B9%E8%B1%A1%E9%83%BD%E9%80%9A%E7%94%A8%E7%9A%84%E6%96%B9%E6%B3%95/" class="article-date">
   <time datetime="2017-03-20T14:31:20.000Z" itemprop="datePublished">2017-03-20</time>
 </a>
     
@@ -113,7 +99,7 @@
         
         <div id="toc" class="toc-article">
         <strong class="toc-title">文章目录</strong>
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#覆盖equals时请遵守通用约定"><span class="toc-number">1.</span> <span class="toc-text">覆盖equals时请遵守通用约定</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#覆盖equals时总要覆盖hashCode"><span class="toc-number">2.</span> <span class="toc-text">覆盖equals时总要覆盖hashCode</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#始终要覆盖toString"><span class="toc-number">3.</span> <span class="toc-text">始终要覆盖toString</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#谨慎的覆盖clone"><span class="toc-number">4.</span> <span class="toc-text">谨慎的覆盖clone</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#考虑实现Comparable接口"><span class="toc-number">5.</span> <span class="toc-text">考虑实现Comparable接口</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%A6%86%E7%9B%96equals%E6%97%B6%E8%AF%B7%E9%81%B5%E5%AE%88%E9%80%9A%E7%94%A8%E7%BA%A6%E5%AE%9A"><span class="toc-number">1.</span> <span class="toc-text">覆盖equals时请遵守通用约定</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%A6%86%E7%9B%96equals%E6%97%B6%E6%80%BB%E8%A6%81%E8%A6%86%E7%9B%96hashCode"><span class="toc-number">2.</span> <span class="toc-text">覆盖equals时总要覆盖hashCode</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%A7%8B%E7%BB%88%E8%A6%81%E8%A6%86%E7%9B%96toString"><span class="toc-number">3.</span> <span class="toc-text">始终要覆盖toString</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%B0%A8%E6%85%8E%E7%9A%84%E8%A6%86%E7%9B%96clone"><span class="toc-number">4.</span> <span class="toc-text">谨慎的覆盖clone</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%80%83%E8%99%91%E5%AE%9E%E7%8E%B0Comparable%E6%8E%A5%E5%8F%A3"><span class="toc-number">5.</span> <span class="toc-text">考虑实现Comparable接口</span></a></li></ol>
         </div>
         
 
@@ -132,10 +118,11 @@
 <li>传递性（transitive）。对于任何非null的引用值x、y和z，如果x.equals(y)返回true且y.equals(z)也返回true，那么x.equals(z)也必须返回true。</li>
 <li>一致性（consistent）。对于任何非null的引用值x和y，只要equals的比较操作在对象所用的信息没有被修改，多次调用x.equals(y)就会一致地返回true或者false。</li>
 </ul>
-<a id="more"></a>
+<span id="more"></span>
+
 <p>一些诀窍：</p>
 <ul>
-<li>使用==操作符检查”参数是否为这个对象的引用”。如果是则返回 true。</li>
+<li>使用&#x3D;&#x3D;操作符检查”参数是否为这个对象的引用”。如果是则返回 true。</li>
 <li>使用instanceof操作符检查”参数是否为正确的类型”。如果不是则返回 false。</li>
 <li>把参数转换成正确的类型。</li>
 <li>对于该类种的每个”关键（significant）”域，检查参数中的域是否与该对象中对应的域相匹配。如果这些测试全部成功，则返回true；否则返回false。</li>
@@ -153,10 +140,10 @@
 <h1 id="考虑实现Comparable接口"><a href="#考虑实现Comparable接口" class="headerlink" title="考虑实现Comparable接口"></a>考虑实现Comparable接口</h1><p>约定sng（表达式）会根据(expression)的值为负值、零和正直分别返回-1、0或1。</p>
 <p>实现comparable的一些约定</p>
 <ul>
-<li>必须确保所有的x和y都满足sgn(x.compareTo(y)) == -sgn(y.compareTo(x))</li>
+<li>必须确保所有的x和y都满足sgn(x.compareTo(y)) &#x3D;&#x3D; -sgn(y.compareTo(x))</li>
 <li>比较关系是可传递的：（x.compareTo(y) &gt;0 &amp;&amp; y.compareTo(x) &gt; 0）则x.compareTo(z) &gt; 0</li>
-<li>确保x.compareTo(y) == 0则sgn(x.compareTo(z)) == sgn(y.compareTo(z))</li>
-<li>强烈建议(x.compareTo(y) == 0) == (x.equals(y))</li>
+<li>确保x.compareTo(y) &#x3D;&#x3D; 0则sgn(x.compareTo(z)) &#x3D;&#x3D; sgn(y.compareTo(z))</li>
+<li>强烈建议(x.compareTo(y) &#x3D;&#x3D; 0) &#x3D;&#x3D; (x.equals(y))</li>
 </ul>
 
       
@@ -164,7 +151,7 @@
     <footer class="article-footer">
       <div class="article-footer-tag">
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Effective-Java/">Effective Java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Effective-Java/" rel="tag">Effective Java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/" rel="tag">Java</a></li></ul>
 
       </div>
       <!-- JiaThis Button BEGIN -->
@@ -190,7 +177,7 @@
     
 <nav id="article-nav">
   
-    <a href="/2017/03/21/类和接口/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2017/03/21/%E7%B1%BB%E5%92%8C%E6%8E%A5%E5%8F%A3/" id="article-nav-newer" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Newer</strong>
       <div class="article-nav-title">
         
@@ -200,7 +187,7 @@
     </a>
   
   
-    <a href="/2017/03/19/创建和销毁对象/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2017/03/19/%E5%88%9B%E5%BB%BA%E5%92%8C%E9%94%80%E6%AF%81%E5%AF%B9%E8%B1%A1/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Older</strong>
       <div class="article-nav-title">创建和销毁对象</div>
     </a>
@@ -213,7 +200,7 @@
 
 <section id="comments">
 <!-- 多说评论框 start -->
-<div class="ds-thread" data-thread-key="post-对于所有对象都通用的方法" data-title="对于所有对象都通用的方法" data-url="http://kennethfan.github.io/2017/03/20/对于所有对象都通用的方法/"></div>
+<div class="ds-thread" data-thread-key="post-对于所有对象都通用的方法" data-title="对于所有对象都通用的方法" data-url="http://kennethfan.github.io/2017/03/20/%E5%AF%B9%E4%BA%8E%E6%89%80%E6%9C%89%E5%AF%B9%E8%B1%A1%E9%83%BD%E9%80%9A%E7%94%A8%E7%9A%84%E6%96%B9%E6%B3%95/"></div>
 <!-- 多说评论框 end -->
 <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 <script type="text/javascript">
@@ -241,7 +228,7 @@ var duoshuoQuery = {short_name:'kennethfan'};
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Effective-Java/">Effective Java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PHP/">PHP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PHPUnit/">PHPUnit</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/c/">c</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cache/">cache</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/memcached/">memcached</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/redis/">redis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/shell/">shell</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vim/">vim</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/zsh/">zsh</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/笔记/">笔记</a></li></ul>
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Effective-Java/" rel="tag">Effective Java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/" rel="tag">Java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PHP/" rel="tag">PHP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PHPUnit/" rel="tag">PHPUnit</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/c/" rel="tag">c</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cache/" rel="tag">cache</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/memcached/" rel="tag">memcached</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/redis/" rel="tag">redis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/shell/" rel="tag">shell</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vim/" rel="tag">vim</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/zsh/" rel="tag">zsh</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%AC%94%E8%AE%B0/" rel="tag">笔记</a></li></ul>
     </div>
   </div>
 
@@ -251,7 +238,7 @@ var duoshuoQuery = {short_name:'kennethfan'};
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Effective-Java/" style="font-size: 13.33px;">Effective Java</a> <a href="/tags/Java/" style="font-size: 13.33px;">Java</a> <a href="/tags/PHP/" style="font-size: 13.33px;">PHP</a> <a href="/tags/PHPUnit/" style="font-size: 10px;">PHPUnit</a> <a href="/tags/c/" style="font-size: 10px;">c</a> <a href="/tags/cache/" style="font-size: 20px;">cache</a> <a href="/tags/memcached/" style="font-size: 10px;">memcached</a> <a href="/tags/redis/" style="font-size: 20px;">redis</a> <a href="/tags/shell/" style="font-size: 16.67px;">shell</a> <a href="/tags/vim/" style="font-size: 16.67px;">vim</a> <a href="/tags/zsh/" style="font-size: 16.67px;">zsh</a> <a href="/tags/笔记/" style="font-size: 10px;">笔记</a>
+      <a href="/tags/Effective-Java/" style="font-size: 13.33px;">Effective Java</a> <a href="/tags/Java/" style="font-size: 13.33px;">Java</a> <a href="/tags/PHP/" style="font-size: 13.33px;">PHP</a> <a href="/tags/PHPUnit/" style="font-size: 10px;">PHPUnit</a> <a href="/tags/c/" style="font-size: 10px;">c</a> <a href="/tags/cache/" style="font-size: 20px;">cache</a> <a href="/tags/memcached/" style="font-size: 10px;">memcached</a> <a href="/tags/redis/" style="font-size: 20px;">redis</a> <a href="/tags/shell/" style="font-size: 16.67px;">shell</a> <a href="/tags/vim/" style="font-size: 16.67px;">vim</a> <a href="/tags/zsh/" style="font-size: 16.67px;">zsh</a> <a href="/tags/%E7%AC%94%E8%AE%B0/" style="font-size: 10px;">笔记</a>
     </div>
   </div>
 
@@ -273,7 +260,7 @@ var duoshuoQuery = {short_name:'kennethfan'};
       <ul>
         
           <li>
-            <a href="/2018/03/20/架构师图谱/">架构师图谱</a>
+            <a href="/2018/03/20/%E6%9E%B6%E6%9E%84%E5%B8%88%E5%9B%BE%E8%B0%B1/">架构师图谱</a>
           </li>
         
           <li>
@@ -303,19 +290,11 @@ var duoshuoQuery = {short_name:'kennethfan'};
       <ul>
           
           <li>
-            <a href="http://pedroneer.github.io">死胖子</a>
+            <a target="_blank" rel="noopener" href="https://github.com/buptzhanghao">好神</a>
           </li>
           
           <li>
-            <a href="https://github.com/buptzhanghao">好神</a>
-          </li>
-          
-          <li>
-            <a href="http://www.bencaimao.com/">笨财猫</a>
-          </li>
-          
-          <li>
-            <a href="http://www.beva.com">贝瓦网</a>
+            <a href="https://kennethfan.github.io/gitbook">椒哥gitbook</a>
           </li>
           
       </ul>
@@ -330,7 +309,7 @@ var duoshuoQuery = {short_name:'kennethfan'};
   
   <div class="outer">
     <div id="footer-info" class="inner">
-      &copy; 2018 Kenneth Fan<br>
+      &copy; 2024 Kenneth Fan<br>
       Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>
@@ -348,11 +327,17 @@ var duoshuoQuery = {short_name:'kennethfan'};
 <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 
 
-  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
-  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
 
 
 <script src="/js/script.js"></script>
+
 
   </div>
 </body>

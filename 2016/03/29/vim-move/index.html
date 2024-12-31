@@ -6,42 +6,20 @@
   <title>Vim系列之移动(三) | 夜未央</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
-  <meta name="keyword" content="c,PHP,memcached,PHPUnit,redis,cache,vim,zsh,shell,Java,Effective Java,笔记">
+  <meta name="keyword" content="PHP,c,memcached,PHPUnit,redis,cache,vim,zsh,shell,Java,Effective Java,笔记">
   
-  <meta name="description" content="约定 除特殊说明以外，本篇所有操作都是在普通模式下进行的。
-上下左右移动（基本操作）k/j/h/l可以操作光标在vim中上下左右移动。
-k：光标向上移动一行
-j：光标向下移动一行
-h：光标向左移动一个字符
-l：光标向右移动一个字符
-数字N加上kjhl相当于连续N次操作，比如5j表示光标向下移动5行。
-以word为单位的移动w/b/W/B可以操作光标在vim中以word为单位移动。
-w：光标向后移动">
+  <meta name="description" content="约定 除特殊说明以外，本篇所有操作都是在普通模式下进行的。 上下左右移动（基本操作）k&#x2F;j&#x2F;h&#x2F;l可以操作光标在vim中上下左右移动。 k：光标向上移动一行 j：光标向下移动一行 h：光标向左移动一个字符 l：光标向右移动一个字符 数字N加上kjhl相当于连续N次操作，比如5j表示光标向下移动5行。 以word为单位的移动w&#x2F;b&#x2F;W&#x2F;B可">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Vim系列之移动(三)">
 <meta property="og:url" content="http://kennethfan.github.io/2016/03/29/vim-move/index.html">
 <meta property="og:site_name" content="夜未央">
-<meta property="og:description" content="约定 除特殊说明以外，本篇所有操作都是在普通模式下进行的。
-上下左右移动（基本操作）k/j/h/l可以操作光标在vim中上下左右移动。
-k：光标向上移动一行
-j：光标向下移动一行
-h：光标向左移动一个字符
-l：光标向右移动一个字符
-数字N加上kjhl相当于连续N次操作，比如5j表示光标向下移动5行。
-以word为单位的移动w/b/W/B可以操作光标在vim中以word为单位移动。
-w：光标向后移动">
-<meta property="og:updated_time" content="2017-06-05T12:40:03.000Z">
+<meta property="og:description" content="约定 除特殊说明以外，本篇所有操作都是在普通模式下进行的。 上下左右移动（基本操作）k&#x2F;j&#x2F;h&#x2F;l可以操作光标在vim中上下左右移动。 k：光标向上移动一行 j：光标向下移动一行 h：光标向左移动一个字符 l：光标向右移动一个字符 数字N加上kjhl相当于连续N次操作，比如5j表示光标向下移动5行。 以word为单位的移动w&#x2F;b&#x2F;W&#x2F;B可">
+<meta property="og:locale">
+<meta property="article:published_time" content="2016-03-29T11:48:35.000Z">
+<meta property="article:modified_time" content="2017-06-05T12:40:03.000Z">
+<meta property="article:author" content="Kenneth Fan">
+<meta property="article:tag" content="vim">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Vim系列之移动(三)">
-<meta name="twitter:description" content="约定 除特殊说明以外，本篇所有操作都是在普通模式下进行的。
-上下左右移动（基本操作）k/j/h/l可以操作光标在vim中上下左右移动。
-k：光标向上移动一行
-j：光标向下移动一行
-h：光标向左移动一个字符
-l：光标向右移动一个字符
-数字N加上kjhl相当于连续N次操作，比如5j表示光标向下移动5行。
-以word为单位的移动w/b/W/B可以操作光标在vim中以word为单位移动。
-w：光标向后移动">
   
     <link rel="alternate" href="/atom.xml" title="夜未央" type="application/atom+xml">
   
@@ -51,10 +29,12 @@ w：光标向后移动">
   
     <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
   
-  <link rel="stylesheet" href="/css/style.css">
+  
+<link rel="stylesheet" href="/css/style.css">
+
   
 
-</head>
+<meta name="generator" content="Hexo 6.3.0"></head>
 
 <body>
   <div id="container">
@@ -66,10 +46,6 @@ w：光标向后移动">
       <h1 id="logo-wrap">
         <a href="/" id="logo">夜未央</a>
       </h1>
-      
-        <h2 id="subtitle-wrap">
-          <a href="/" id="subtitle">感恩 &amp; 回馈 | 理解 &amp; 释怀 | 热爱 &amp; 敬畏</a>
-        </h2>
       
     </div>
     <div id="header-inner" class="inner">
@@ -88,7 +64,7 @@ w：光标向后移动">
         <a id="nav-search-btn" class="nav-icon" title="Search"></a>
       </nav>
       <div id="search-form-wrap">
-        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://kennethfan.github.io"></form>
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://kennethfan.github.io"></form>
       </div>
     </div>
   </div>
@@ -122,56 +98,63 @@ w：光标向后移动">
         
         <div id="toc" class="toc-article">
         <strong class="toc-title">文章目录</strong>
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#约定"><span class="toc-number">1.</span> <span class="toc-text">约定</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#上下左右移动（基本操作）"><span class="toc-number">2.</span> <span class="toc-text">上下左右移动（基本操作）</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#以word为单位的移动"><span class="toc-number">3.</span> <span class="toc-text">以word为单位的移动</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#移动到行尾或行首"><span class="toc-number">4.</span> <span class="toc-text">移动到行尾或行首</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#移动到指定的字符上"><span class="toc-number">5.</span> <span class="toc-text">移动到指定的字符上</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#匹配括号的移动"><span class="toc-number">6.</span> <span class="toc-text">匹配括号的移动</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#移动到指定位置"><span class="toc-number">7.</span> <span class="toc-text">移动到指定位置</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#移动到指定行位置"><span class="toc-number">7.1.</span> <span class="toc-text">移动到指定行位置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#移动到屏幕指定位置"><span class="toc-number">7.2.</span> <span class="toc-text">移动到屏幕指定位置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#移动到文件指定位置"><span class="toc-number">7.3.</span> <span class="toc-text">移动到文件指定位置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#显示当前位置"><span class="toc-number">7.4.</span> <span class="toc-text">显示当前位置</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#滚动"><span class="toc-number">8.</span> <span class="toc-text">滚动</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%BA%A6%E5%AE%9A"><span class="toc-number">1.</span> <span class="toc-text">约定</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%8A%E4%B8%8B%E5%B7%A6%E5%8F%B3%E7%A7%BB%E5%8A%A8%EF%BC%88%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C%EF%BC%89"><span class="toc-number">2.</span> <span class="toc-text">上下左右移动（基本操作）</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BB%A5word%E4%B8%BA%E5%8D%95%E4%BD%8D%E7%9A%84%E7%A7%BB%E5%8A%A8"><span class="toc-number">3.</span> <span class="toc-text">以word为单位的移动</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%A7%BB%E5%8A%A8%E5%88%B0%E8%A1%8C%E5%B0%BE%E6%88%96%E8%A1%8C%E9%A6%96"><span class="toc-number">4.</span> <span class="toc-text">移动到行尾或行首</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%A7%BB%E5%8A%A8%E5%88%B0%E6%8C%87%E5%AE%9A%E7%9A%84%E5%AD%97%E7%AC%A6%E4%B8%8A"><span class="toc-number">5.</span> <span class="toc-text">移动到指定的字符上</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8C%B9%E9%85%8D%E6%8B%AC%E5%8F%B7%E7%9A%84%E7%A7%BB%E5%8A%A8"><span class="toc-number">6.</span> <span class="toc-text">匹配括号的移动</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%A7%BB%E5%8A%A8%E5%88%B0%E6%8C%87%E5%AE%9A%E4%BD%8D%E7%BD%AE"><span class="toc-number">7.</span> <span class="toc-text">移动到指定位置</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A7%BB%E5%8A%A8%E5%88%B0%E6%8C%87%E5%AE%9A%E8%A1%8C%E4%BD%8D%E7%BD%AE"><span class="toc-number">7.1.</span> <span class="toc-text">移动到指定行位置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A7%BB%E5%8A%A8%E5%88%B0%E5%B1%8F%E5%B9%95%E6%8C%87%E5%AE%9A%E4%BD%8D%E7%BD%AE"><span class="toc-number">7.2.</span> <span class="toc-text">移动到屏幕指定位置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A7%BB%E5%8A%A8%E5%88%B0%E6%96%87%E4%BB%B6%E6%8C%87%E5%AE%9A%E4%BD%8D%E7%BD%AE"><span class="toc-number">7.3.</span> <span class="toc-text">移动到文件指定位置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%98%BE%E7%A4%BA%E5%BD%93%E5%89%8D%E4%BD%8D%E7%BD%AE"><span class="toc-number">7.4.</span> <span class="toc-text">显示当前位置</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%BB%9A%E5%8A%A8"><span class="toc-number">8.</span> <span class="toc-text">滚动</span></a></li></ol>
         </div>
         
 
         <h1 id="约定"><a href="#约定" class="headerlink" title="约定"></a>约定</h1><p> 除特殊说明以外，本篇所有操作都是在普通模式下进行的。</p>
-<h1 id="上下左右移动（基本操作）"><a href="#上下左右移动（基本操作）" class="headerlink" title="上下左右移动（基本操作）"></a>上下左右移动（基本操作）</h1><p>k/j/h/l可以操作光标在vim中上下左右移动。</p>
+<h1 id="上下左右移动（基本操作）"><a href="#上下左右移动（基本操作）" class="headerlink" title="上下左右移动（基本操作）"></a>上下左右移动（基本操作）</h1><p>k&#x2F;j&#x2F;h&#x2F;l可以操作光标在vim中上下左右移动。</p>
 <p>k：光标向上移动一行</p>
 <p>j：光标向下移动一行</p>
 <p>h：光标向左移动一个字符</p>
 <p>l：光标向右移动一个字符</p>
 <p>数字N加上kjhl相当于连续N次操作，比如5j表示光标向下移动5行。</p>
-<h1 id="以word为单位的移动"><a href="#以word为单位的移动" class="headerlink" title="以word为单位的移动"></a>以word为单位的移动</h1><p>w/b/W/B可以操作光标在vim中以word为单位移动。</p>
+<h1 id="以word为单位的移动"><a href="#以word为单位的移动" class="headerlink" title="以word为单位的移动"></a>以word为单位的移动</h1><p>w&#x2F;b&#x2F;W&#x2F;B可以操作光标在vim中以word为单位移动。</p>
 <p>w：光标向后移动一个word；特殊字符作为分隔符(通常为非数字和字母的字符，比如逗号，空格，下划线等一些符号)</p>
 <p>b：光标向前移动一个word；分隔符同w</p>
 <p>W：光标向后移动一个word；空白作为分隔符(连续的多个空白当做一个)</p>
 <p>B：光标向前移动一个word；分隔符同W</p>
 <p>wbWB同kjhl一样可以结合数字连续多次操作</p>
-<h1 id="移动到行尾或行首"><a href="#移动到行尾或行首" class="headerlink" title="移动到行尾或行首"></a>移动到行尾或行首</h1><p>^/0/$可以操作光标移动到行尾或者行首。</p>
+<h1 id="移动到行尾或行首"><a href="#移动到行尾或行首" class="headerlink" title="移动到行尾或行首"></a>移动到行尾或行首</h1><p>^&#x2F;0&#x2F;$可以操作光标移动到行尾或者行首。</p>
 <p>^：光标移动到行首的第一个非空白字符处</p>
 <p>0：光标移动到行首</p>
 <p>$：光标移动到行尾</p>
-<a id="more"></a>
-<h1 id="移动到指定的字符上"><a href="#移动到指定的字符上" class="headerlink" title="移动到指定的字符上"></a>移动到指定的字符上</h1><p>f/F加上字符可以操作光标移动到指定的字符上。</p>
+<span id="more"></span>
+
+<h1 id="移动到指定的字符上"><a href="#移动到指定的字符上" class="headerlink" title="移动到指定的字符上"></a>移动到指定的字符上</h1><p>f&#x2F;F加上字符可以操作光标移动到指定的字符上。</p>
 <p>f+字符：向后查找，移动到指定的字符上，比如fa会把光标向后移动到第一个a字符处。</p>
 <p>F+字符：向前查找，移动到自定的字符上。</p>
 <h1 id="匹配括号的移动"><a href="#匹配括号的移动" class="headerlink" title="匹配括号的移动"></a>匹配括号的移动</h1><p>百分号（%）可以操作光标移动到当前括号所匹配的括号处（括号、中括号、花括号），比如当前光标在花括号（{）上，按下%键，光标将移动到当前花括号对应的匹配花括号（}）处。</p>
 <h1 id="移动到指定位置"><a href="#移动到指定位置" class="headerlink" title="移动到指定位置"></a>移动到指定位置</h1><h2 id="移动到指定行位置"><a href="#移动到指定行位置" class="headerlink" title="移动到指定行位置"></a>移动到指定行位置</h2><p>冒号（:）+数字可以移动到指定行数的位置，比如:5光标将会移动到第5行。</p>
 <p>数字+百分号（%）可以移动到文件指定的位置，假如一个文件有100行，90%光标将会移动到第90行</p>
-<h2 id="移动到屏幕指定位置"><a href="#移动到屏幕指定位置" class="headerlink" title="移动到屏幕指定位置"></a>移动到屏幕指定位置</h2><p>H/M/L可以操作光标移动到屏幕的指定位置。</p>
+<h2 id="移动到屏幕指定位置"><a href="#移动到屏幕指定位置" class="headerlink" title="移动到屏幕指定位置"></a>移动到屏幕指定位置</h2><p>H&#x2F;M&#x2F;L可以操作光标移动到屏幕的指定位置。</p>
 <p>H：Home的意思，移动到屏幕的第一行。</p>
 <p>M：Middle的意思，移动到屏幕的中间位置。</p>
 <p>L：Last的意思，移动到屏幕的最后一行</p>
-<h2 id="移动到文件指定位置"><a href="#移动到文件指定位置" class="headerlink" title="移动到文件指定位置"></a>移动到文件指定位置</h2><p>gg/G可以操作光标移动到文件的头部或者尾部。</p>
+<h2 id="移动到文件指定位置"><a href="#移动到文件指定位置" class="headerlink" title="移动到文件指定位置"></a>移动到文件指定位置</h2><p>gg&#x2F;G可以操作光标移动到文件的头部或者尾部。</p>
 <p>gg：光标移动到文件第一行</p>
 <p>G：光标移动到文件最后一行</p>
 <h2 id="显示当前位置"><a href="#显示当前位置" class="headerlink" title="显示当前位置"></a>显示当前位置</h2><p>CTRL+G命令可以得到文件的一些基本信息（假设ruler选项关闭）</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="string">"usr_03.txt"</span> line 233 of 650 --35%-- col 45-52</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&quot;usr_03.txt&quot;</span> line 233 of 650 --35%-- col 45-52</span><br></pre></td></tr></table></figure>
+
 <p>上图展示了当前正在编辑的文件名，当前光标所在的行号，文件总的行数，当前行在文件总行的百分比，当前光标所在的列；有时候你会看到两个以-分隔的数字来表示列, 如”col 2-9”. 这意味着你的光标位于第二个字符上, 因为第一个字符是一个跳格键, 占了8个字符的位置, 所以屏幕上看起来该列位置是9。</p>
 <p>设置’number’选项，在每一行的前面显示行号</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">:<span class="built_in">set</span> number</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">:<span class="built_in">set</span> number</span><br></pre></td></tr></table></figure>
+
 <p>关闭可以使用’nonumber’选项即set nonumber。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">:<span class="built_in">set</span> nonumber</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">:<span class="built_in">set</span> nonumber</span><br></pre></td></tr></table></figure>
+
 <p>number和nonumber可以分别简写为nu和nonu。</p>
 <p>设置’ruler’选项，可以在vim窗口的右下角显示当前光标位置。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">:<span class="built_in">set</span> ruler</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">:<span class="built_in">set</span> ruler</span><br></pre></td></tr></table></figure>
+
 <p>显示结果如下</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">3,7           Top</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">3,7           Top</span><br></pre></td></tr></table></figure>
+
 <p>关闭可以设置’noruler’选项。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">:<span class="built_in">set</span> noruler</div></pre></td></tr></table></figure>
-<h1 id="滚动"><a href="#滚动" class="headerlink" title="滚动"></a>滚动</h1><p>CTRL +U/D/B/F/Y/E可以文本在屏幕中滚动。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">:<span class="built_in">set</span> noruler</span><br></pre></td></tr></table></figure>
+
+<h1 id="滚动"><a href="#滚动" class="headerlink" title="滚动"></a>滚动</h1><p>CTRL +U&#x2F;D&#x2F;B&#x2F;F&#x2F;Y&#x2F;E可以文本在屏幕中滚动。</p>
 <p>CTRL+U：文本向下滚动半屏（也可以想象为在显示文本的窗口向上滚动了半屏）</p>
 <p>CTRL+D：文本向上滚动半屏</p>
 <p>CTRL+B：文本向下滚动一屏</p>
@@ -184,7 +167,7 @@ w：光标向后移动">
     <footer class="article-footer">
       <div class="article-footer-tag">
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/vim/">vim</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/vim/" rel="tag">vim</a></li></ul>
 
       </div>
       <!-- JiaThis Button BEGIN -->
@@ -261,7 +244,7 @@ var duoshuoQuery = {short_name:'kennethfan'};
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Effective-Java/">Effective Java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PHP/">PHP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PHPUnit/">PHPUnit</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/c/">c</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cache/">cache</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/memcached/">memcached</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/redis/">redis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/shell/">shell</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vim/">vim</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/zsh/">zsh</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/笔记/">笔记</a></li></ul>
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Effective-Java/" rel="tag">Effective Java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/" rel="tag">Java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PHP/" rel="tag">PHP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PHPUnit/" rel="tag">PHPUnit</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/c/" rel="tag">c</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cache/" rel="tag">cache</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/memcached/" rel="tag">memcached</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/redis/" rel="tag">redis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/shell/" rel="tag">shell</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vim/" rel="tag">vim</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/zsh/" rel="tag">zsh</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%AC%94%E8%AE%B0/" rel="tag">笔记</a></li></ul>
     </div>
   </div>
 
@@ -271,7 +254,7 @@ var duoshuoQuery = {short_name:'kennethfan'};
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Effective-Java/" style="font-size: 13.33px;">Effective Java</a> <a href="/tags/Java/" style="font-size: 13.33px;">Java</a> <a href="/tags/PHP/" style="font-size: 13.33px;">PHP</a> <a href="/tags/PHPUnit/" style="font-size: 10px;">PHPUnit</a> <a href="/tags/c/" style="font-size: 10px;">c</a> <a href="/tags/cache/" style="font-size: 20px;">cache</a> <a href="/tags/memcached/" style="font-size: 10px;">memcached</a> <a href="/tags/redis/" style="font-size: 20px;">redis</a> <a href="/tags/shell/" style="font-size: 16.67px;">shell</a> <a href="/tags/vim/" style="font-size: 16.67px;">vim</a> <a href="/tags/zsh/" style="font-size: 16.67px;">zsh</a> <a href="/tags/笔记/" style="font-size: 10px;">笔记</a>
+      <a href="/tags/Effective-Java/" style="font-size: 13.33px;">Effective Java</a> <a href="/tags/Java/" style="font-size: 13.33px;">Java</a> <a href="/tags/PHP/" style="font-size: 13.33px;">PHP</a> <a href="/tags/PHPUnit/" style="font-size: 10px;">PHPUnit</a> <a href="/tags/c/" style="font-size: 10px;">c</a> <a href="/tags/cache/" style="font-size: 20px;">cache</a> <a href="/tags/memcached/" style="font-size: 10px;">memcached</a> <a href="/tags/redis/" style="font-size: 20px;">redis</a> <a href="/tags/shell/" style="font-size: 16.67px;">shell</a> <a href="/tags/vim/" style="font-size: 16.67px;">vim</a> <a href="/tags/zsh/" style="font-size: 16.67px;">zsh</a> <a href="/tags/%E7%AC%94%E8%AE%B0/" style="font-size: 10px;">笔记</a>
     </div>
   </div>
 
@@ -293,7 +276,7 @@ var duoshuoQuery = {short_name:'kennethfan'};
       <ul>
         
           <li>
-            <a href="/2018/03/20/架构师图谱/">架构师图谱</a>
+            <a href="/2018/03/20/%E6%9E%B6%E6%9E%84%E5%B8%88%E5%9B%BE%E8%B0%B1/">架构师图谱</a>
           </li>
         
           <li>
@@ -323,19 +306,11 @@ var duoshuoQuery = {short_name:'kennethfan'};
       <ul>
           
           <li>
-            <a href="http://pedroneer.github.io">死胖子</a>
+            <a target="_blank" rel="noopener" href="https://github.com/buptzhanghao">好神</a>
           </li>
           
           <li>
-            <a href="https://github.com/buptzhanghao">好神</a>
-          </li>
-          
-          <li>
-            <a href="http://www.bencaimao.com/">笨财猫</a>
-          </li>
-          
-          <li>
-            <a href="http://www.beva.com">贝瓦网</a>
+            <a href="https://kennethfan.github.io/gitbook">椒哥gitbook</a>
           </li>
           
       </ul>
@@ -350,7 +325,7 @@ var duoshuoQuery = {short_name:'kennethfan'};
   
   <div class="outer">
     <div id="footer-info" class="inner">
-      &copy; 2018 Kenneth Fan<br>
+      &copy; 2024 Kenneth Fan<br>
       Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>
@@ -368,11 +343,17 @@ var duoshuoQuery = {short_name:'kennethfan'};
 <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 
 
-  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
-  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
 
 
 <script src="/js/script.js"></script>
+
 
   </div>
 </body>
