@@ -290,13 +290,6 @@
   </url>
   
   <url>
-    <loc>http://kennethfan.github.io/tags/%E7%AC%94%E8%AE%B0/</loc>
-    <lastmod>2024-12-31</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>http://kennethfan.github.io/tags/Java/</loc>
     <lastmod>2024-12-31</lastmod>
     <changefreq>weekly</changefreq>
@@ -305,6 +298,13 @@
   
   <url>
     <loc>http://kennethfan.github.io/tags/Effective-Java/</loc>
+    <lastmod>2024-12-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>http://kennethfan.github.io/tags/%E7%AC%94%E8%AE%B0/</loc>
     <lastmod>2024-12-31</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
